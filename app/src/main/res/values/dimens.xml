@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pitch_margin_top">50dp</dimen>  //height/5
+    <dimen name="pitch_margin_top_2">51dp</dimen>  //pitch_margin_top+2
+    <dimen name="pitch_height">250dp</dimen>
+
+
+    <dimen name="keyboard_margin">125dp</dimen>
+    <dimen name="piano_height">240dp</dimen>
+</resources>

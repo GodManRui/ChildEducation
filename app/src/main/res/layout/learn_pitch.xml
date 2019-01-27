@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_hand"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pitch"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pitch_height"
+        android:layout_below="@id/ll_hand"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/pitch_margin_top"
+            android:background="@android:color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/pitch_margin_top"
+            android:background="@android:color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/pitch_margin_top"
+            android:background="@android:color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/pitch_margin_top"
+            android:background="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/ll_hand"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/pitch_margin_top_2"
+            android:layout_height="@dimen/pitch_margin_top_2"
+            android:background="@drawable/musical_note_do"
+            android:gravity="center"
+            android:text="do"
+            android:textColor="#ff0000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/pitch_margin_top_2"
+            android:layout_height="@dimen/pitch_margin_top_2"
+            android:background="@drawable/musical_note_re"
+            android:gravity="center"
+            android:text="re"
+            android:textColor="#B36B4C"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/pitch_margin_top_2"
+            android:layout_height="@dimen/pitch_margin_top_2"
+            android:background="@drawable/musical_note_mi"
+            android:gravity="center"
+            android:text="mi"
+            android:textColor="#FFFF35"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/pitch_margin_top_2"
+            android:layout_height="@dimen/pitch_margin_top_2"
+            android:background="@drawable/musical_note_fa"
+            android:gravity="center"
+            android:text="fa"
+            android:textColor="#00B370"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/pitch_margin_top_2"
+            android:layout_height="@dimen/pitch_margin_top_2"
+            android:background="@drawable/musical_note_sol"
+            android:gravity="center"
+            android:text="sol"
+            android:textColor="#006BDB"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/pitch_margin_top_2"
+            android:layout_height="@dimen/pitch_margin_top_2"
+            android:background="@drawable/musical_note_la"
+            android:gravity="center"
+            android:text="la"
+            android:textColor="#4824B7"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/pitch_margin_top_2"
+            android:layout_height="@dimen/pitch_margin_top_2"
+            android:background="@drawable/musical_note_ti"
+            android:gravity="center"
+            android:text="ti"
+            android:textColor="#B300FF"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="@dimen/pitch_margin_top_2"
+            android:layout_height="@dimen/pitch_margin_top_2"
+            android:background="@drawable/musical_note_ti"
+            android:gravity="center"
+            android:text="do'"
+            android:textColor="#B300FF"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/piano_height"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+
+    </LinearLayout>
+</RelativeLayout>
