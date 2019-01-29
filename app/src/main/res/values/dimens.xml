@@ -7,5 +7,6 @@
 
     <dimen name="keyboard_margin">125dp</dimen>
     <dimen name="piano_height">240dp</dimen>
-    <dimen name="keyboard_black_width">50dp</dimen>
+    <dimen name="keyboard_black_width">46dp</dimen>
+    <dimen name="keyboard_black_height">150dp</dimen>
 </resources>
