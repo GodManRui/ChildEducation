@@ -60,7 +60,7 @@
         <TextView
             android:layout_width="@dimen/pitch_margin_top_2"
             android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/musical_note_do"
+            android:background="@drawable/yy0128ds_2"
             android:gravity="center"
             android:text="do"
             android:textColor="#ff0000"
@@ -69,7 +69,7 @@
         <TextView
             android:layout_width="@dimen/pitch_margin_top_2"
             android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/musical_note_re"
+            android:background="@drawable/yy0128ds_7"
             android:gravity="center"
             android:text="re"
             android:textColor="#B36B4C"
@@ -78,7 +78,7 @@
         <TextView
             android:layout_width="@dimen/pitch_margin_top_2"
             android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/musical_note_mi"
+            android:background="@drawable/yy0128ds_5"
             android:gravity="center"
             android:text="mi"
             android:textColor="#FFFF35"
@@ -87,7 +87,7 @@
         <TextView
             android:layout_width="@dimen/pitch_margin_top_2"
             android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/musical_note_fa"
+            android:background="@drawable/yy0128ds_6"
             android:gravity="center"
             android:text="fa"
             android:textColor="#00B370"
@@ -96,7 +96,7 @@
         <TextView
             android:layout_width="@dimen/pitch_margin_top_2"
             android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/musical_note_sol"
+            android:background="@drawable/yy0128ds_3"
             android:gravity="center"
             android:text="sol"
             android:textColor="#006BDB"
@@ -105,7 +105,7 @@
         <TextView
             android:layout_width="@dimen/pitch_margin_top_2"
             android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/musical_note_la"
+            android:background="@drawable/yy0128ds_4"
             android:gravity="center"
             android:text="la"
             android:textColor="#4824B7"
@@ -114,7 +114,7 @@
         <TextView
             android:layout_width="@dimen/pitch_margin_top_2"
             android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/musical_note_ti"
+            android:background="@drawable/yy0128ds_2"
             android:gravity="center"
             android:text="ti"
             android:textColor="#B300FF"
@@ -133,6 +133,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/piano_height"
+        android:layout_below="@id/ll_pitch"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
@@ -143,7 +144,28 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard_right"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@drawable/bg_piano_keyboard"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard_left"
+            android:text="1" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_piano_keyboard_right"
             android:text="1" />
 
         <Button
@@ -164,50 +186,29 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard"
+            android:background="@drawable/bg_piano_keyboard_left"
             android:text="1" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard"
-            android:text="1" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard"
-            android:text="1" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard"
-            android:text="1" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard"
+            android:background="@drawable/bg_piano_keyboard_left"
             android:text="1" />
 
 
     </LinearLayout>
     <!--android:layout_width="@dimen/keyboard_black_width"
     android:layout_height="@dimen/keyboard_black_height"-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/piano_height"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp">
+    <!--  <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="@dimen/piano_height"
+          android:layout_alignParentBottom="true"
+          android:layout_marginBottom="10dp"
+          android:orientation="horizontal"
+          android:paddingLeft="50dp"
+          android:paddingRight="50dp">
 
 
-    </RelativeLayout>
+      </RelativeLayout>-->
 </RelativeLayout>

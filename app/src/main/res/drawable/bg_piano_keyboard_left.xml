@@ -27,17 +27,8 @@
 
     <item
         android:bottom="55dp"
-        android:left="40dp"
-        android:right="0dp">
-        <shape>
-            <solid android:color="@android:color/black" />
-
-        </shape>
-    </item>
-    <item
-        android:bottom="55dp"
-        android:right="40dp"
-        android:left="0dp">
+        android:left="0dp"
+        android:right="40dp">
         <shape>
             <solid android:color="@android:color/black" />
 
