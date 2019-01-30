@@ -2,213 +2,231 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/yyqijian9">
 
-    <LinearLayout
-        android:id="@+id/ll_hand"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/colorAccent"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/out_padding"
+        android:paddingRight="@dimen/out_padding">
 
-    <LinearLayout
-        android:id="@+id/ll_pitch"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pitch_height"
-        android:layout_below="@id/ll_hand"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical">
 
-        <View
+        <LinearLayout
+            android:id="@+id/ll_hand"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal">
 
-        <View
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/yyqijian26" />
+
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/yyqijian25" />
+
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/yyqijian24" />
+
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/yyqijian23" />
+
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/yyqijian22" />
+
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/yyqijian21" />
+
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/yyqijian20" />
+
+        </LinearLayout>
+
+        <!--<LinearLayout
+            android:id="@+id/ll_pitch"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/pitch_margin_top"
-            android:background="@android:color/black" />
+            android:layout_height="@dimen/pitch_height"
+            android:layout_below="@id/ll_hand"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
 
-        <View
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/pitch_margin_top"
+                android:background="@android:color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/pitch_margin_top"
+                android:background="@android:color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/pitch_margin_top"
+                android:background="@android:color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/pitch_margin_top"
+                android:background="@color/colorAccent" />
+
+        </LinearLayout>-->
+
+        <LinearLayout
+            android:id="@+id/ll_pitch"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/pitch_margin_top"
-            android:background="@android:color/black" />
+            android:layout_height="180dp"
+            android:layout_below="@id/ll_hand"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/yyqijian27"
+            android:orientation="horizontal">
 
-        <View
+            <ImageView
+                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/pitch_margin_top_2"
+                android:background="@drawable/yyqijian12"
+                android:gravity="center"
+                android:textColor="#ff0000"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/pitch_margin_top_2"
+                android:background="@drawable/yyqijian14"
+                android:gravity="center"
+                android:textColor="#B36B4C"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/pitch_margin_top_2"
+                android:background="@drawable/yyqijian19"
+                android:gravity="center"
+                android:textColor="#FFFF35"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/pitch_margin_top_2"
+                android:background="@drawable/yyqijian18"
+                android:gravity="center"
+                android:textColor="#00B370"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/pitch_margin_top_2"
+                android:background="@drawable/yyqijian17"
+                android:gravity="center"
+                android:textColor="#006BDB"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/pitch_margin_top_2"
+                android:background="@drawable/yyqijian16"
+                android:gravity="center"
+                android:textColor="#4824B7"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/pitch_margin_top_2"
+                android:background="@drawable/yyqijian13"
+                android:gravity="center"
+                android:textColor="#B300FF"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/pitch_margin_top_2"
+                android:background="@drawable/yyqijian15"
+                android:gravity="center"
+                android:textColor="#B300FF"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/pitch_margin_top"
-            android:background="@android:color/black" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/pitch_margin_top"
-            android:background="@color/colorAccent" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/ll_hand"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="@dimen/pitch_margin_top_2"
-            android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/yy0128ds_2"
-            android:gravity="center"
-            android:text="do"
-            android:textColor="#ff0000"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="@dimen/pitch_margin_top_2"
-            android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/yy0128ds_7"
-            android:gravity="center"
-            android:text="re"
-            android:textColor="#B36B4C"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="@dimen/pitch_margin_top_2"
-            android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/yy0128ds_5"
-            android:gravity="center"
-            android:text="mi"
-            android:textColor="#FFFF35"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="@dimen/pitch_margin_top_2"
-            android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/yy0128ds_6"
-            android:gravity="center"
-            android:text="fa"
-            android:textColor="#00B370"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="@dimen/pitch_margin_top_2"
-            android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/yy0128ds_3"
-            android:gravity="center"
-            android:text="sol"
-            android:textColor="#006BDB"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="@dimen/pitch_margin_top_2"
-            android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/yy0128ds_4"
-            android:gravity="center"
-            android:text="la"
-            android:textColor="#4824B7"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="@dimen/pitch_margin_top_2"
-            android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/yy0128ds_2"
-            android:gravity="center"
-            android:text="ti"
-            android:textColor="#B300FF"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="@dimen/pitch_margin_top_2"
-            android:layout_height="@dimen/pitch_margin_top_2"
-            android:background="@drawable/musical_note_ti"
-            android:gravity="center"
-            android:text="do'"
-            android:textColor="#B300FF"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/piano_height"
-        android:layout_below="@id/ll_pitch"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp">
-
-        <Button
-            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard_right"
-            android:text="1" />
+            android:layout_below="@id/ll_pitch"
+            android:orientation="horizontal"
+            android:paddingBottom="30dp"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingTop="30dp">
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard"
-            android:text="1" />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yyqijian1" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard_left"
-            android:text="1" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yyqijian2" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard_right"
-            android:text="1" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yyqijian3" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard"
-            android:text="1" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yyqijian4" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard"
-            android:text="1" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yyqijian5" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard_left"
-            android:text="1" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yyqijian6" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/bg_piano_keyboard_left"
-            android:text="1" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yyqijian7" />
 
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/yyqijian8" />
+        </LinearLayout>
 
-    </LinearLayout>
-    <!--android:layout_width="@dimen/keyboard_black_width"
-    android:layout_height="@dimen/keyboard_black_height"-->
-    <!--  <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="@dimen/piano_height"
-          android:layout_alignParentBottom="true"
-          android:layout_marginBottom="10dp"
-          android:orientation="horizontal"
-          android:paddingLeft="50dp"
-          android:paddingRight="50dp">
-
-
-      </RelativeLayout>-->
+    </RelativeLayout>
 </RelativeLayout>
