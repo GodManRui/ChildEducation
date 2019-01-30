@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/yyqijian9">
@@ -170,58 +171,67 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llKeys"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/ll_pitch"
             android:orientation="horizontal"
-            android:paddingBottom="30dp"
             android:paddingLeft="50dp"
+            android:paddingTop="30dp"
             android:paddingRight="50dp"
-            android:paddingTop="30dp">
+            android:paddingBottom="30dp">
 
-            <ImageView
+            <Button
+                android:id="@+id/duo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/yyqijian1" />
 
             <Button
+                android:id="@+id/re"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/yyqijian2" />
 
             <Button
+                android:id="@+id/mi"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/yyqijian3" />
 
             <Button
+                android:id="@+id/fa"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/yyqijian4" />
 
             <Button
+                android:id="@+id/sol"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/yyqijian5" />
 
             <Button
+                android:id="@+id/la"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/yyqijian6" />
 
             <Button
+                android:id="@+id/si"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/yyqijian7" />
 
             <Button
+                android:id="@+id/do1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
