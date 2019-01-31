@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/yyqijian9">
 
     <RelativeLayout
+        android:id="@+id/ll_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/out_padding"
@@ -22,51 +23,51 @@
 
             <ImageView
                 android:layout_width="0dp"
+                android:layout_height="85dp"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_height="85dp"
                 android:src="@drawable/yyqijian26" />
 
             <ImageView
                 android:layout_width="0dp"
+                android:layout_height="85dp"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_height="85dp"
                 android:src="@drawable/yyqijian25" />
 
             <ImageView
                 android:layout_width="0dp"
+                android:layout_height="85dp"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_height="85dp"
                 android:src="@drawable/yyqijian24" />
 
             <ImageView
                 android:layout_width="0dp"
+                android:layout_height="85dp"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_height="85dp"
                 android:src="@drawable/yyqijian23" />
 
             <ImageView
                 android:layout_width="0dp"
+                android:layout_height="85dp"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_height="85dp"
                 android:src="@drawable/yyqijian22" />
 
             <ImageView
                 android:layout_width="0dp"
+                android:layout_height="85dp"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_height="85dp"
                 android:src="@drawable/yyqijian21" />
 
             <ImageView
                 android:layout_width="0dp"
+                android:layout_height="85dp"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:layout_height="85dp"
                 android:src="@drawable/yyqijian20" />
 
         </LinearLayout>
@@ -151,10 +152,10 @@
             android:layout_height="match_parent"
             android:layout_below="@id/ll_pitch"
             android:orientation="horizontal"
-            android:paddingBottom="30dp"
             android:paddingLeft="50dp"
+            android:paddingTop="30dp"
             android:paddingRight="50dp"
-            android:paddingTop="30dp">
+            android:paddingBottom="30dp">
 
             <Button
                 android:id="@+id/duo"
