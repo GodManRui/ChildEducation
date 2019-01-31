@@ -21,80 +21,55 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="85dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
                 android:layout_height="85dp"
                 android:src="@drawable/yyqijian26" />
 
             <ImageView
-                android:layout_width="85dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
                 android:layout_height="85dp"
                 android:src="@drawable/yyqijian25" />
 
             <ImageView
-                android:layout_width="85dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
                 android:layout_height="85dp"
                 android:src="@drawable/yyqijian24" />
 
             <ImageView
-                android:layout_width="85dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
                 android:layout_height="85dp"
                 android:src="@drawable/yyqijian23" />
 
             <ImageView
-                android:layout_width="85dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
                 android:layout_height="85dp"
                 android:src="@drawable/yyqijian22" />
 
             <ImageView
-                android:layout_width="85dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
                 android:layout_height="85dp"
                 android:src="@drawable/yyqijian21" />
 
             <ImageView
-                android:layout_width="85dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
                 android:layout_height="85dp"
                 android:src="@drawable/yyqijian20" />
 
         </LinearLayout>
-
-        <!--<LinearLayout
-            android:id="@+id/ll_pitch"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/pitch_height"
-            android:layout_below="@id/ll_hand"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/black" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/pitch_margin_top"
-                android:background="@android:color/black" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/pitch_margin_top"
-                android:background="@android:color/black" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/pitch_margin_top"
-                android:background="@android:color/black" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/pitch_margin_top"
-                android:background="@color/colorAccent" />
-
-        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/ll_pitch"
@@ -176,10 +151,10 @@
             android:layout_height="match_parent"
             android:layout_below="@id/ll_pitch"
             android:orientation="horizontal"
+            android:paddingBottom="30dp"
             android:paddingLeft="50dp"
-            android:paddingTop="30dp"
             android:paddingRight="50dp"
-            android:paddingBottom="30dp">
+            android:paddingTop="30dp">
 
             <Button
                 android:id="@+id/duo"

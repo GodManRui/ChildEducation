@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    //height/5
-    <dimen name="pitch_margin_top_2">61dp</dimen>
-    //pitch_margin_top+2
+    <dimen name="pitch_margin_top">60dp</dimen>  //height/5
+    <dimen name="pitch_margin_top_2">61dp</dimen>  //pitch_margin_top+2
+    <dimen name="pitch_height">300dp</dimen>
 
 
-    <dimen name="out_padding">55dp</dimen>
+    <dimen name="keyboard_margin">125dp</dimen>
+    <dimen name="piano_height">10dp</dimen>
+    <dimen name="keyboard_black_width">46dp</dimen>
+    <dimen name="keyboard_black_height">150dp</dimen>
+
+    <dimen name="out_padding">95dp</dimen>
 </resources>

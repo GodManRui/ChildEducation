@@ -34,6 +34,7 @@ public class LearnPitch extends AppCompatActivity {
         initView();
         parent.setClickable(true);
 
+
         parent.setOnTouchListener((v, event) -> {
             int temp;
             int tempIndex;
@@ -41,7 +42,8 @@ public class LearnPitch extends AppCompatActivity {
             pointercount = event.getPointerCount();
             for (int count = 0; count < pointercount; count++) {
                 boolean moveflag = false;// 标记是否是在按键上移动
-                temp = isInAnyScale(event.getX(count), event.getY(count), button);
+                temp = isInAnyScale(event.getX(count), event.getY(count),
+                        button);
                 if (temp != -1) {// 事件对应的是当前点
                     switch (event.getActionMasked()) {
                         case MotionEvent.ACTION_DOWN:
@@ -51,8 +53,8 @@ public class LearnPitch extends AppCompatActivity {
                             Log.i("--", "count" + count);
                             pressedkey[count] = temp;
                             if (!havePlayed[temp]) {// 在某个按键范围内
-                               /* button[temp]
-                                        .setBackgroundResource(R.drawable.button_pressed);*/
+                                button[temp]
+                                        .setBackgroundResource(getBackgroundPressed(temp, true));
                                 // 播放音阶
                                 utils.soundPlay(temp);
                                 Log.i("--", "sound" + temp);
@@ -85,8 +87,8 @@ public class LearnPitch extends AppCompatActivity {
 
                                         if (!nextstill) {// 移入的按键没有按下
                                             // 设置当前按键
-                                          /*  button[i]
-                                                    .setBackgroundResource(R.drawable.button_pressed);*/
+                                            button[i]
+                                                    .setBackgroundResource(getBackgroundPressed(i, true));
                                             // 发音
                                             utils.soundPlay(i);
                                             havePlayed[i] = true;
@@ -96,8 +98,8 @@ public class LearnPitch extends AppCompatActivity {
 
                                         if (!laststill) {// 没有手指按在上面
                                             // 设置上一个按键
-                                           /* button[temp]
-                                                    .setBackgroundResource(R.drawable.button);*/
+                                            button[temp]
+                                                    .setBackgroundResource(getBackgroundPressed(temp, false));
                                             havePlayed[temp] = false;
                                         }
 
@@ -133,8 +135,8 @@ public class LearnPitch extends AppCompatActivity {
                                     }
                                 }
                                 if (!still) {// 已经没有手指按在该键上
-                                 /*   button[temp]
-                                            .setBackgroundResource(R.drawable.button);*/
+                                    button[temp]
+                                            .setBackgroundResource(getBackgroundPressed(temp, false));
                                     havePlayed[temp] = false;
                                     Log.i("--", "button" + temp + "up");
                                 }
@@ -146,8 +148,8 @@ public class LearnPitch extends AppCompatActivity {
                 if (event.getActionMasked() == MotionEvent.ACTION_MOVE
                         && !moveflag) {
                     if (pressedkey[count] != -1) {
-                       /* button[pressedkey[count]]
-                                .setBackgroundResource(R.drawable.button);*/
+                        button[pressedkey[count]]
+                                .setBackgroundResource(getBackgroundPressed(pressedkey[count], false));
                         havePlayed[pressedkey[count]] = false;
                     }
                 }
@@ -155,6 +157,49 @@ public class LearnPitch extends AppCompatActivity {
             return false;
         });
 
+
+    }
+
+    private int getBackgroundPressed(int temp, boolean isPress) {
+        if (isPress)
+            switch (temp) {
+                case 0:
+                    return R.drawable.yyqijian30;
+                case 1:
+                    return R.drawable.yyqijian31;
+                case 2:
+                    return R.drawable.yyqijian32;
+                case 3:
+                    return R.drawable.yyqijian33;
+                case 4:
+                    return R.drawable.yyqijian34;
+                case 5:
+                    return R.drawable.yyqijian35;
+                case 6:
+                    return R.drawable.yyqijian36;
+                case 7:
+                    return R.drawable.yyqijian37;
+            }
+        else
+            switch (temp) {
+                case 0:
+                    return R.drawable.yyqijian1;
+                case 1:
+                    return R.drawable.yyqijian2;
+                case 2:
+                    return R.drawable.yyqijian3;
+                case 3:
+                    return R.drawable.yyqijian4;
+                case 4:
+                    return R.drawable.yyqijian5;
+                case 5:
+                    return R.drawable.yyqijian6;
+                case 6:
+                    return R.drawable.yyqijian7;
+                case 7:
+                    return R.drawable.yyqijian8;
+            }
+        return 0;
     }
 
     private void initView() {
@@ -166,8 +211,8 @@ public class LearnPitch extends AppCompatActivity {
         findViewById(R.id.la).setOnClickListener(v -> clickLa());
         findViewById(R.id.si).setOnClickListener(v -> clickSi());
         findViewById(R.id.do1).setOnClickListener(v -> clickDol());*/
-        parent = findViewById(R.id.ll_parent);
         keys = findViewById(R.id.llKeys);
+        parent = findViewById(R.id.ll_parent);
 
         // 新建工具类
         utils = new PanioMusic(getApplicationContext());
@@ -211,10 +256,16 @@ public class LearnPitch extends AppCompatActivity {
      */
     private int isInAnyScale(float x, float y, Button[] button) {
         // keys.getTop()是获取按钮所在父视图相对其父视图的右上角纵坐标
+        Log.e("jerry", "isInAnyScale: " + x + "  y: " + y);
         for (int i = 0; i < button.length; i++) {
-
-            if (x > button[i].getLeft() && x < button[i].getRight() && y > button[i].getTop() + keys.getTop()
+            int left = button[i].getLeft();
+            int paddingLeft = keys.getPaddingLeft();
+            int right = button[i].getRight();
+            if (left > paddingLeft && x > left + paddingLeft && x < right
+                    && y > button[i].getTop() + keys.getTop()
                     && y < button[i].getBottom() + keys.getTop()) {
+                Log.w("jerry", "isInAnyScale: " + x + " Left: " + left + "  padding: " + paddingLeft
+                        + " Right: " + right + " padding: " + right);
                 return i;
             }
         }
@@ -233,7 +284,7 @@ public class LearnPitch extends AppCompatActivity {
     private boolean isInScale(float x, float y, Button button) {
         // keys.getTop()是获取按钮所在父视图相对其父视图的右上角纵坐标
 
-        if (x > button.getLeft() && x < button.getRight()
+        if (x > button.getLeft() + keys.getPaddingLeft() && x < button.getRight() + keys.getPaddingLeft()
                 && y > button.getTop() + keys.getTop()
                 && y < button.getBottom() + keys.getTop()) {
             return true;
@@ -242,42 +293,5 @@ public class LearnPitch extends AppCompatActivity {
         }
     }
 
-    private void clickDuo() {
 
-    }
-
-    private void clickRe() {
-
-    }
-
-    private void clickMe() {
-
-    }
-
-    private void clickFa() {
-
-    }
-
-    private void clickSol() {
-
-    }
-
-    private void clickLa() {
-
-    }
-
-    private void clickSi() {
-
-    }
-
-    private void clickDol() {
-
-    }
-
-    private void CreateView() {
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayout.addView(new PianoPitch(this));
-        setContentView(linearLayout);
-    }
 }
