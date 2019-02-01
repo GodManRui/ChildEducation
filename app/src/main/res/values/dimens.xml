@@ -2,8 +2,10 @@
 <resources>
     <dimen name="pitch_margin_top">60dp</dimen>  //height/5
     <dimen name="pitch_margin_top_2">61dp</dimen>  //pitch_margin_top+2
-    <dimen name="pitch_height">300dp</dimen>
-
+    <dimen name="pitch_height">160dp</dimen>    //五线谱的高度
+    <dimen name="symbol_height">200dp</dimen>    //乐符圈圈父容器的高度  pitch_height + hand_tb_margin_top
+    <dimen name="hand_tb_margin_top">40dp</dimen>  //五线谱的图片和下面琴键的marginTop
+    <dimen name="hand_height">85dp</dimen>
 
     <dimen name="keyboard_margin">125dp</dimen>
     <dimen name="piano_height">10dp</dimen>
@@ -11,4 +13,10 @@
     <dimen name="keyboard_black_height">150dp</dimen>
 
     <dimen name="out_padding">95dp</dimen>
+
+    <dimen name="do_re_margin_bottom">1dp</dimen>
+    <dimen name="mi_fa_margin_top">57dp</dimen>
+    <dimen name="sol_la_margin_top">15dp</dimen>
+
+
 </resources>

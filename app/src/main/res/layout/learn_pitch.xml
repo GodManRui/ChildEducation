@@ -6,7 +6,6 @@
     android:background="@drawable/yyqijian9">
 
     <RelativeLayout
-        android:id="@+id/ll_parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/out_padding"
@@ -16,8 +15,8 @@
         <LinearLayout
             android:id="@+id/ll_hand"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_height="@dimen/hand_height"
+            android:layout_marginTop="@dimen/hand_tb_margin_top"
             android:background="@color/colorAccent"
             android:orientation="horizontal">
 
@@ -72,90 +71,101 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pitch_height"
+            android:layout_below="@id/ll_hand"
+            android:layout_marginTop="@dimen/hand_tb_margin_top"
+            android:background="@drawable/yyqijian27" />
+
         <LinearLayout
             android:id="@+id/ll_pitch"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="@dimen/symbol_height"
             android:layout_below="@id/ll_hand"
-            android:layout_marginTop="35dp"
-            android:background="@drawable/yyqijian27"
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pitch_margin_top_2"
-                android:background="@drawable/yyqijian12"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/do_re_margin_bottom"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#ff0000"
-                android:textStyle="bold" />
+                android:scaleType="centerInside"
+                android:src="@drawable/yyqijian15" />
 
             <ImageView
-                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pitch_margin_top_2"
-                android:background="@drawable/yyqijian14"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/do_re_margin_bottom"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#B36B4C"
-                android:textStyle="bold" />
+                android:scaleType="centerInside"
+                android:src="@drawable/yyqijian14" />
 
             <ImageView
-                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pitch_margin_top_2"
-                android:background="@drawable/yyqijian19"
+                android:layout_marginTop="@dimen/mi_fa_margin_top"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#FFFF35"
-                android:textStyle="bold" />
+                android:scaleType="centerInside"
+                android:src="@drawable/yyqijian19" />
 
             <ImageView
-                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pitch_margin_top_2"
-                android:background="@drawable/yyqijian18"
+                android:layout_marginTop="@dimen/mi_fa_margin_top"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#00B370"
-                android:textStyle="bold" />
+                android:scaleType="centerInside"
+                android:src="@drawable/yyqijian18" />
 
             <ImageView
-                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pitch_margin_top_2"
-                android:background="@drawable/yyqijian17"
+                android:layout_marginTop="@dimen/sol_la_margin_top"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#006BDB"
-                android:textStyle="bold" />
+                android:scaleType="centerInside"
+                android:src="@drawable/yyqijian17" />
 
             <ImageView
-                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pitch_margin_top_2"
-                android:background="@drawable/yyqijian16"
+                android:layout_marginTop="@dimen/sol_la_margin_top"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#4824B7"
-                android:textStyle="bold" />
+                android:scaleType="centerInside"
+                android:src="@drawable/yyqijian16" />
 
             <ImageView
-                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pitch_margin_top_2"
-                android:background="@drawable/yyqijian13"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#B300FF"
-                android:textStyle="bold" />
+                android:scaleType="centerInside"
+                android:src="@drawable/yyqijian13" />
 
             <ImageView
-                android:layout_width="@dimen/pitch_margin_top_2"
+                android:layout_width="0dp"
                 android:layout_height="@dimen/pitch_margin_top_2"
-                android:background="@drawable/yyqijian15"
+                android:layout_marginTop="-20dp"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:textColor="#B300FF"
-                android:textStyle="bold" />
+                android:scaleType="centerInside"
+                android:src="@drawable/yyqijian12" />
         </LinearLayout>
-
+        <!--//android:layout_marginTop="@dimen/hand_tb_margin_top"-->
         <LinearLayout
             android:id="@+id/llKeys"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/ll_pitch"
             android:orientation="horizontal"
-            android:paddingLeft="50dp"
-            android:paddingTop="30dp"
-            android:paddingRight="50dp"
-            android:paddingBottom="30dp">
+            android:padding="20dp">
 
             <Button
                 android:id="@+id/duo"
