@@ -1,70 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/yyqijian9">
 
+    <ImageView
+        android:id="@+id/im_go_home"
+        android:layout_width="@dimen/dp_78"
+        android:layout_height="@dimen/dp_71"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_4"
+        android:src="@drawable/home" />
+
+    <ImageView
+        android:layout_width="@dimen/dp_78"
+        android:layout_height="@dimen/dp_116"
+        android:layout_marginStart="@dimen/dp_18"
+        android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginTop="@dimen/dp_116"
+        android:src="@drawable/pitch" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/out_padding"
-        android:paddingRight="@dimen/out_padding">
+        android:paddingStart="@dimen/dp_94"
+        android:paddingLeft="@dimen/dp_94"
+        android:paddingEnd="@dimen/dp_82"
+        android:paddingRight="@dimen/dp_82">
 
 
         <LinearLayout
             android:id="@+id/ll_hand"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/hand_height"
-            android:layout_marginTop="@dimen/hand_tb_margin_top"
+            android:layout_height="@dimen/dp_55"
+            android:layout_marginTop="@dimen/dp_26"
             android:background="@color/colorAccent"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="85dp"
+                android:layout_height="@dimen/dp_55"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:src="@drawable/yyqijian26" />
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="85dp"
+                android:layout_height="@dimen/dp_55"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:src="@drawable/yyqijian25" />
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="85dp"
+                android:layout_height="@dimen/dp_55"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:src="@drawable/yyqijian24" />
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="85dp"
+                android:layout_height="@dimen/dp_55"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:src="@drawable/yyqijian23" />
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="85dp"
+                android:layout_height="@dimen/dp_55"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:src="@drawable/yyqijian22" />
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="85dp"
+                android:layout_height="@dimen/dp_55"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:src="@drawable/yyqijian21" />
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="85dp"
+                android:layout_height="@dimen/dp_55"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
                 android:src="@drawable/yyqijian20" />
@@ -73,23 +91,23 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/pitch_height"
+            android:layout_height="@dimen/dp_124"
             android:layout_below="@id/ll_hand"
-            android:layout_marginTop="@dimen/hand_tb_margin_top"
+            android:layout_marginTop="@dimen/dp_26"
             android:background="@drawable/yyqijian27" />
 
         <LinearLayout
             android:id="@+id/ll_pitch"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/symbol_height"
+            android:layout_height="@dimen/dp_140"
             android:layout_below="@id/ll_hand"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/dp_50"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/do_re_margin_bottom"
+                android:layout_marginBottom="@dimen/dp_1"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:scaleType="centerInside"
@@ -97,9 +115,9 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/dp_50"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/do_re_margin_bottom"
+                android:layout_marginBottom="@dimen/dp_1"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:scaleType="centerInside"
@@ -107,8 +125,9 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/pitch_margin_top_2"
-                android:layout_marginTop="@dimen/mi_fa_margin_top"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_28"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:scaleType="centerInside"
@@ -116,8 +135,9 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/pitch_margin_top_2"
-                android:layout_marginTop="@dimen/mi_fa_margin_top"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_28"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:scaleType="centerInside"
@@ -125,8 +145,9 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/pitch_margin_top_2"
-                android:layout_marginTop="@dimen/sol_la_margin_top"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_60"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:scaleType="centerInside"
@@ -134,8 +155,9 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/pitch_margin_top_2"
-                android:layout_marginTop="@dimen/sol_la_margin_top"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_60"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:scaleType="centerInside"
@@ -143,7 +165,9 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/pitch_margin_top_2"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_88"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:scaleType="centerInside"
@@ -151,8 +175,9 @@
 
             <ImageView
                 android:layout_width="0dp"
-                android:layout_height="@dimen/pitch_margin_top_2"
-                android:layout_marginTop="-20dp"
+                android:layout_height="@dimen/dp_50"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="@dimen/dp_88"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:scaleType="centerInside"
@@ -165,7 +190,10 @@
             android:layout_height="match_parent"
             android:layout_below="@id/ll_pitch"
             android:orientation="horizontal"
-            android:padding="20dp">
+            android:paddingLeft="@dimen/dp_4"
+            android:paddingTop="@dimen/dp_26"
+            android:paddingRight="@dimen/dp_2"
+            android:paddingBottom="@dimen/dp_20">
 
             <Button
                 android:id="@+id/duo"

@@ -8,13 +8,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.gerryrun.childeducation.util.PanioMusic;
+import com.gerryrun.childeducation.util.PianoMusic;
 import com.gerryrun.childeducation.util.StatusBarColor;
 
 public class LearnPitch extends AppCompatActivity {
 
     private Button button[];// 按钮数组
-    private PanioMusic utils;// 工具类
+    private PianoMusic player;// 工具类
     private View parent;// 父视图
     private int buttonId[];// 按钮id
     private boolean havePlayed[];// 是否已经播放了声音，当手指在同一个按钮内滑动，且已经发声，就为true
@@ -30,26 +30,14 @@ public class LearnPitch extends AppCompatActivity {
 //        CreateView();
 //        setTitle("学音高");
         initView();
-        parent.setClickable(true);
-
-        parent.setOnTouchListener(this::onTouchListener);
-
     }
 
     private void initView() {
-        /*findViewById(R.id.duo).setOnClickListener(v -> clickDuo());
-        findViewById(R.id.re).setOnClickListener(v -> clickRe());
-        findViewById(R.id.mi).setOnClickListener(v -> clickMe());
-        findViewById(R.id.fa).setOnClickListener(v -> clickFa());
-        findViewById(R.id.sol).setOnClickListener(v -> clickSol());
-        findViewById(R.id.la).setOnClickListener(v -> clickLa());
-        findViewById(R.id.si).setOnClickListener(v -> clickSi());
-        findViewById(R.id.do1).setOnClickListener(v -> clickDol());*/
         keys = findViewById(R.id.llKeys);
 //        parent = findViewById(R.id.ll_parent);
         parent = keys;
         // 新建工具类
-        utils = new PanioMusic(getApplicationContext());
+        player = new PianoMusic(getApplicationContext());
 
         // 按钮资源Id
         buttonId = new int[8];
@@ -77,6 +65,9 @@ public class LearnPitch extends AppCompatActivity {
             pressedkey[j] = -1;
         }
 
+        findViewById(R.id.im_go_home).setOnClickListener((v) -> finish());
+        parent.setClickable(true);
+        parent.setOnTouchListener(this::onTouchListener);
 
     }
 
@@ -97,10 +88,9 @@ public class LearnPitch extends AppCompatActivity {
                     case MotionEvent.ACTION_POINTER_DOWN:
                         pressedkey[count] = temp;
                         if (!havePlayed[temp]) {// 在某个按键范围内
-                            button[temp]
-                                    .setBackgroundResource(getBackgroundPressed(temp, true));
+                            button[temp].setBackgroundResource(getBackgroundPressed(temp, true));
                             // 播放音阶
-                            utils.soundPlay(temp);
+                            player.soundPlay(temp);
                             havePlayed[temp] = true;
                         }
                         break;
@@ -133,7 +123,7 @@ public class LearnPitch extends AppCompatActivity {
                                         button[i]
                                                 .setBackgroundResource(getBackgroundPressed(i, true));
                                         // 发音
-                                        utils.soundPlay(i);
+                                        player.soundPlay(i);
                                         havePlayed[i] = true;
                                     }
 
