@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_bg"
     android:padding="15dp"
     tools:context=".MainActivity">
 
@@ -10,25 +11,22 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@null"
-        android:onClick="learnPitch"
-        android:text="学音高" />
+        android:background="@drawable/bt_learn_pitch"
+        android:onClick="learnPitch" />
 
     <Button
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@null"
-        android:onClick="rhythm"
-        android:text="节奏" />
+        android:background="@drawable/bt_rhythm"
+        android:onClick="rhythm" />
 
     <Button
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@null"
-        android:onClick="Guess"
-        android:text="竞猜" />
+        android:background="@drawable/bt_guess"
+        android:onClick="Guess" />
 
 
 </LinearLayout>
