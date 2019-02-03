@@ -35,12 +35,19 @@ public class PianoMusic {
     }
 
     public int soundOver() {
-        return soundPool.play(soundPoolMap.get(1), 100, 100, 1, 0, 1.0f);
+        return soundPool.play(soundPoolMap.get(1), 1, 1, 1, 0, 1.0f);
+    }
+
+    public void shutdown() {
+        if (soundPool != null)
+            soundPool.release();
     }
 
     @Override
     protected void finalize() throws Throwable {
-        soundPool.release();
+        if (soundPool != null)
+            soundPool.release();
+        soundPool = null;
         super.finalize();
     }
 }

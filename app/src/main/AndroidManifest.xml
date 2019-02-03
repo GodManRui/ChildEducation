@@ -23,16 +23,24 @@
         </activity>
         <activity
             android:name=".Rhythm"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".LearnPitch"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Guess"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".LearnChildSong"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
+        <activity android:name=".StartLearnSong" />
     </application>
 
 </manifest>

@@ -1,11 +1,20 @@
 package com.gerryrun.childeducation;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 
 import com.gerryrun.childeducation.util.PianoMusic;
@@ -15,11 +24,17 @@ public class LearnPitch extends AppCompatActivity {
 
     private Button button[];// 按钮数组
     private PianoMusic player;// 工具类
-    private View parent;// 父视图
-    private int buttonId[];// 按钮id
     private boolean havePlayed[];// 是否已经播放了声音，当手指在同一个按钮内滑动，且已经发声，就为true
     private View keys;// 按钮们所在的视图
     private int pressedkey[];
+    private View imDo;
+    private View imRe;
+    private View imMi;
+    private View imFa;
+    private View imSol;
+    private View imLa;
+    private View imSi;
+    private View imDol;
 
 
     @Override
@@ -34,13 +49,25 @@ public class LearnPitch extends AppCompatActivity {
 
     private void initView() {
         keys = findViewById(R.id.llKeys);
+        imDo = findViewById(R.id.im_do);
+        imRe = findViewById(R.id.im_re);
+        imMi = findViewById(R.id.im_mi);
+        imFa = findViewById(R.id.im_fa);
+        imSol = findViewById(R.id.im_sol);
+        imLa = findViewById(R.id.im_la);
+        imSi = findViewById(R.id.im_si);
+        imDol = findViewById(R.id.im_dol);
+
+        findViewById(R.id.im_go_home).setOnClickListener((v) -> finish());
+        keys.setClickable(true);
+        keys.setOnTouchListener(this::onTouchListener);
 //        parent = findViewById(R.id.ll_parent);
-        parent = keys;
         // 新建工具类
         player = new PianoMusic(getApplicationContext());
 
         // 按钮资源Id
-        buttonId = new int[8];
+        // 按钮id
+        int[] buttonId = new int[8];
         buttonId[0] = R.id.duo;
         buttonId[1] = R.id.re;
         buttonId[2] = R.id.mi;
@@ -65,9 +92,6 @@ public class LearnPitch extends AppCompatActivity {
             pressedkey[j] = -1;
         }
 
-        findViewById(R.id.im_go_home).setOnClickListener((v) -> finish());
-        parent.setClickable(true);
-        parent.setOnTouchListener(this::onTouchListener);
 
     }
 
@@ -161,8 +185,8 @@ public class LearnPitch extends AppCompatActivity {
                                 }
 
                             }
-                            for (int i = 0; i < pressedkey.length; i++) {// 是否还有其他点
-                                if (pressedkey[i] == temp) {
+                            for (int aPressedkey : pressedkey) {// 是否还有其他点
+                                if (aPressedkey == temp) {
                                     still = true;
                                     break;
                                 }
@@ -196,7 +220,7 @@ public class LearnPitch extends AppCompatActivity {
      * @param x      横坐标
      * @param y      纵坐标
      * @param button 按钮数组
-     * @return
+     * @return 按钮索引
      */
     private int isInAnyScale(float x, float y, Button[] button) {
         // keys.getTop()是获取按钮所在父视图相对其父视图的右上角纵坐标
@@ -217,27 +241,38 @@ public class LearnPitch extends AppCompatActivity {
         return -1;
     }
 
+    /**
+     * @param isPress 是否是被按下
+     */
     private int getBackgroundPressed(int temp, boolean isPress) {
-        if (isPress)
+        if (isPress) {
             switch (temp) {
                 case 0:
+                    setImageView(imDo);
                     return R.drawable.yyqijian30;
                 case 1:
+                    setImageView(imRe);
                     return R.drawable.yyqijian31;
                 case 2:
+                    setImageView(imMi);
                     return R.drawable.yyqijian32;
                 case 3:
+                    setImageView(imFa);
                     return R.drawable.yyqijian33;
                 case 4:
+                    setImageView(imSol);
                     return R.drawable.yyqijian34;
                 case 5:
+                    setImageView(imLa);
                     return R.drawable.yyqijian35;
                 case 6:
+                    setImageView(imSi);
                     return R.drawable.yyqijian36;
                 case 7:
+                    setImageView(imDol);
                     return R.drawable.yyqijian37;
             }
-        else
+        } else
             switch (temp) {
                 case 0:
                     return R.drawable.yyqijian1;
@@ -259,6 +294,44 @@ public class LearnPitch extends AppCompatActivity {
         return 0;
     }
 
+    private void setImageView(View imageView) {
+        if (imageView != null && imageView.getVisibility() != View.VISIBLE)
+            imageView.setVisibility(View.VISIBLE);
+        showMenu(imageView);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player != null) {
+            player.shutdown();
+            player = null;
+        }
+    }
+
+    public void showMenu(View view) {
+        AnimationSet swellAnimationSet = new AnimationSet(true);
+        swellAnimationSet.addAnimation(new ScaleAnimation(0.5f, 1.0f, 0.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f));
+        swellAnimationSet.addAnimation(new AlphaAnimation(0.8f, 1.0f));
+
+        swellAnimationSet.setDuration(250);
+        swellAnimationSet.setInterpolator(new AccelerateInterpolator());
+        swellAnimationSet.setFillAfter(true);
+        view.startAnimation(swellAnimationSet);
+     /*   //三个平移动画 平移出来  
+        ObjectAnimator firstAnimator = ObjectAnimator.ofFloat(view, "rotation", 0, 135, 0);
+
+        //组合动画  
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(800);//动画时长  
+        animatorSet.setInterpolator(new OvershootInterpolator());
+        //设置动画一起播放  
+        animatorSet.play(firstAnimator);
+
+        animatorSet.start();*/
+    }
+
     /**
      * 判断某个点是否在某个按钮的范围内
      *
@@ -276,4 +349,8 @@ public class LearnPitch extends AppCompatActivity {
     }
 
 
+    public void learnChildSong(View view) {
+        startActivity(new Intent(this, LearnChildSong.class));
+        finish();
+    }
 }
