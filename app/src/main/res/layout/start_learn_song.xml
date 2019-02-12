@@ -9,21 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-
+    <!--yy0128ds_8-->
     <ImageView
         android:id="@+id/bg_wuxianpu"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_178"
         android:layout_marginTop="@dimen/dp_28"
-        android:src="@drawable/yy0128ds_8" />
+        android:src="@drawable/wuxianpu" />
 
-    <ImageView
-        android:layout_width="@dimen/dp_69"
-        android:layout_height="@dimen/dp_200"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_28"
-        android:src="@drawable/yy0128ds_1" />
+    <!--  <ImageView
+          android:layout_width="@dimen/dp_69"
+          android:layout_height="@dimen/dp_200"
+          android:layout_marginStart="@dimen/dp_16"
+          android:layout_marginLeft="@dimen/dp_16"
+          android:layout_marginTop="@dimen/dp_28"
+          android:src="@drawable/yy0128ds_1" />-->
     <!--<ImageView
         android:id="@+id/im_moon"
         android:layout_width="@dimen/dp_200"
