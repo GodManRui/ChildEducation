@@ -20,7 +20,7 @@ import android.widget.Button;
 import com.gerryrun.childeducation.util.PianoMusic;
 import com.gerryrun.childeducation.util.StatusBarColor;
 
-public class LearnPitch extends AppCompatActivity {
+public class LearnPitch extends BaseActivity  {
 
     private Button button[];// 按钮数组
     private PianoMusic player;// 工具类
@@ -40,7 +40,6 @@ public class LearnPitch extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarColor.setWindowsTranslucent(this);
         setContentView(R.layout.learn_pitch);
 //        CreateView();
 //        setTitle("学音高");

@@ -7,12 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.gerryrun.childeducation.util.StatusBarColor;
 
-public class Rhythm extends AppCompatActivity {
+public class Rhythm extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("节奏");
-        StatusBarColor.setWindowsTranslucent(this);
 
     }
 }

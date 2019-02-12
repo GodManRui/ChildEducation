@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_1"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_2"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_3"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_4"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_5"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_6"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_7"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_8"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_9"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_10"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_11"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_12"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_13"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_14"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_15"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_16"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_17"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_18"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_19"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_20"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_21"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_22"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_23"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_24"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_25"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_26"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_27"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_28"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_29"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_30"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_31"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_32"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_33"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_34"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_35"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_36"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_37"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_38"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_39"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_40"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_41"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_42"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_43"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_44"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_45"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_46"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_47"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_48"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_49"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_50"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_51"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_52"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_53"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_54"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_55"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_56"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_57"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_58"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_59"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_60"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_61"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_62"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_63"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_64"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_65"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_66"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_67"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_68"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_69"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_70"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_71"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_72"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_73"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_74"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_75"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_76"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_77"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_78"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_79"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_80"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_81"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_82"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_83"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_84"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_85"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_86"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_87"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_88"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_89"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_90"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_91"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_92"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_93"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_94"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_95"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_96"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_97"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_98"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_99"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_100"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_101"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_102"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_103"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_104"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_105"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_106"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_107"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_108"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_109"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_110"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_111"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_112"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_113"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_114"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_115"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_116"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_117"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_118"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_119"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_120"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_121"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_122"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_123"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_124"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_125"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_126"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_127"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_128"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_129"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_130"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_131"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_132"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_133"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_134"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_135"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_136"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_137"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_138"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_139"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_140"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_141"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_142"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_143"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_144"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_145"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_146"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_147"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_148"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_149"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_150"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_151"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_152"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_153"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_154"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_155"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_156"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_157"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_158"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_159"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_160"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_161"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_162"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_163"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/learn_the_background_of_nursery_rhy1_164"
+        android:duration="50" />
+
+</animation-list>

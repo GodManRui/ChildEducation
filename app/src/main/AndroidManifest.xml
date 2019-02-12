@@ -40,7 +40,10 @@
             android:name=".LearnChildSong"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
-        <activity android:name=".StartLearnSong" />
+        <activity
+            android:name=".StartLearnSong"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_start_learn_bg"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/bg_im"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <ImageView
+        android:id="@+id/bg_wuxianpu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_178"
+        android:layout_marginTop="@dimen/dp_28"
+        android:src="@drawable/yy0128ds_8" />
+
+    <ImageView
+        android:layout_width="@dimen/dp_69"
+        android:layout_height="@dimen/dp_200"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_28"
+        android:src="@drawable/yy0128ds_1" />
+    <!--<ImageView
+        android:id="@+id/im_moon"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_200"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dp_150"
+        android:layout_marginRight="@dimen/dp_150"
+        android:src="@drawable/yuel" />-->
+</RelativeLayout>

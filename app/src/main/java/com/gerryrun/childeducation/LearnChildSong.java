@@ -7,11 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.gerryrun.childeducation.util.StatusBarColor;
 
-public class LearnChildSong extends AppCompatActivity {
+public class LearnChildSong extends BaseActivity  {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarColor.setWindowsTranslucent(this);
         setContentView(R.layout.learn_child_song);
         findViewById(R.id.im_go_home).setOnClickListener(v -> {
             startActivity(new Intent(LearnChildSong.this, LearnChildSong.class));

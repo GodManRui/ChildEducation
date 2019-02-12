@@ -6,11 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.gerryrun.childeducation.util.StatusBarColor;
 
-public class Guess extends AppCompatActivity {
+public class Guess extends BaseActivity  {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("竞猜");
-        StatusBarColor.setWindowsTranslucent(this);
     }
 }
