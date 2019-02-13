@@ -13,7 +13,7 @@
     <ImageView
         android:id="@+id/bg_wuxianpu"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_178"
+        android:layout_height="@dimen/dp_200"
         android:layout_marginTop="@dimen/dp_28"
         android:src="@drawable/wuxianpu" />
 

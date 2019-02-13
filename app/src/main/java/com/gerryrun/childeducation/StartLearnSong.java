@@ -58,15 +58,17 @@ public class StartLearnSong extends BaseActivity {
                 Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
                 return;
             }
-            handler.sendEmptyMessage(mediaPlayer.getCurrentPosition());
             mediaPlayer.start();
+            handler.sendEmptyMessage(mediaPlayer.getCurrentPosition());
+            mediaPlayer.isPlaying();
+//            Log.w("jerry", "start: " + mediaPlayer.isPlaying());
             while (mediaPlayer != null && mediaPlayer.isPlaying()) {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 double currentTime = new BigDecimal((float) currentPosition / 1000).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
                 if (resultSequences.size() > 0) {
                     ResultSequence resultSequence = resultSequences.get(0);
                     if (currentTime > resultSequence.getCurrentTime()) {
-                        Log.w("jerry", "特殊节点: " + currentTime + "  :  " + resultSequence.getCurrentTime() + "  状态: " + (resultSequence.isOpen() ? "打开" : "关闭"));
+                        Log.w("jerry", "node: " + currentTime + "  :  " + resultSequence.getCurrentTime() + "  Status: " + (resultSequence.isOpen() ? " Open " : "Close"));
                         handler.sendEmptyMessage(currentPosition);
                         resultSequences.remove(resultSequence);
                     }
@@ -77,7 +79,7 @@ public class StartLearnSong extends BaseActivity {
                     e.printStackTrace();
                 }
             }
-            Log.w("jerry", "run: 线程结束");
+            Log.w("jerry", "run: Thread END" + mediaPlayer.isPlaying());
         }
     }
 
