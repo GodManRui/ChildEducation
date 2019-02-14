@@ -8,10 +8,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.widget.ImageView;
-
+import android.widget.ImageView.ScaleType;
 
 import com.gerryrun.childeducation.MyApplication;
-import com.gerryrun.childeducation.R;
 
 import java.lang.ref.SoftReference;
 
@@ -21,11 +20,11 @@ import java.lang.ref.SoftReference;
  */
 
 public class AnimationsContainer {
+    // 单例
+    private static AnimationsContainer mInstance;
     public int FPS = 58;  // 每秒播放帧数，fps = 1/t，t-动画两帧时间间隔
     private int resId; //图片资源
     private Context mContext = MyApplication.getAppContext();
-    // 单例
-    private static AnimationsContainer mInstance;
 
 
     public AnimationsContainer() {
@@ -54,6 +53,31 @@ public class AnimationsContainer {
         return new FramesSequenceAnimation(imageView, getData(resId), FPS);
     }
 
+    /**
+     * 从xml中读取帧数组
+     *
+     * @param resId
+     * @return
+     */
+    private int[] getData(int resId) {
+        TypedArray array = mContext.getResources().obtainTypedArray(resId);
+
+        int len = array.length();
+        int[] intArray = new int[array.length()];
+
+        for (int i = 0; i < len; i++) {
+            intArray[i] = array.getResourceId(i, 0);
+        }
+        array.recycle();
+        return intArray;
+    }
+
+    /**
+     * 停止播放监听
+     */
+    public interface OnAnimationStoppedListener {
+        void AnimationStopped();
+    }
 
     /**
      * 循环读取帧---循环播放帧
@@ -80,6 +104,7 @@ public class AnimationsContainer {
             mIsRunning = false;
             mDelayMillis = 1000 / fps;//帧动画时间间隔，毫秒
 
+            imageView.setScaleType(ScaleType.CENTER_CROP);
             imageView.setImageResource(mFrames[0]);
 
             // 当图片大小类型相同时进行复用，避免频繁GC
@@ -95,14 +120,6 @@ public class AnimationsContainer {
                 mBitmapOptions.inMutable = true;//解码时返回可变Bitmap
                 mBitmapOptions.inSampleSize = 1;//缩放比例
             }
-        }
-
-        //循环读取下一帧
-        private int getNext() {
-            mIndex++;
-            if (mIndex >= mFrames.length)
-                mIndex = 0;
-            return mFrames[mIndex];
         }
 
         /**
@@ -156,6 +173,14 @@ public class AnimationsContainer {
             mHandler.post(runnable);
         }
 
+        //循环读取下一帧
+        private int getNext() {
+            mIndex++;
+            if (mIndex >= mFrames.length)
+                mIndex = 0;
+            return mFrames[mIndex];
+        }
+
         /**
          * 停止播放
          */
@@ -171,31 +196,5 @@ public class AnimationsContainer {
         public void setOnAnimStopListener(OnAnimationStoppedListener listener) {
             this.mOnAnimationStoppedListener = listener;
         }
-    }
-
-    /**
-     * 从xml中读取帧数组
-     *
-     * @param resId
-     * @return
-     */
-    private int[] getData(int resId) {
-        TypedArray array = mContext.getResources().obtainTypedArray(resId);
-
-        int len = array.length();
-        int[] intArray = new int[array.length()];
-
-        for (int i = 0; i < len; i++) {
-            intArray[i] = array.getResourceId(i, 0);
-        }
-        array.recycle();
-        return intArray;
-    }
-
-    /**
-     * 停止播放监听
-     */
-    public interface OnAnimationStoppedListener {
-        void AnimationStopped();
     }
 }

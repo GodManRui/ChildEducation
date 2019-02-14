@@ -1,15 +1,17 @@
 package com.gerryrun.childeducation;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,10 +25,6 @@ import java.util.ArrayList;
 
 public class StartLearnSong extends BaseActivity {
 
-    private View llStartLearn;
-    private AnimationDrawable frameAnim;
-    //    private ImageView imMoon;
-//    private AnimationDrawable frameAnimMoon;
     //运用Handler中的handleMessage方法接收子线程传递的信息
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -41,15 +39,112 @@ public class StartLearnSong extends BaseActivity {
     private MediaPlayer mediaPlayer;
     private AnimationsContainer.FramesSequenceAnimation mBgAnimation;
     private FrameLayout flAddPitch;
+    private Thread playerThread;
+    private boolean isPlaying;
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onBackPressed() {
+        super.onBackPressed();
+        onMyDestroy();
+    }
+
+    private void onMyDestroy() {
+        Log.w("JerryZhu", "onDestroy: 开始执行");
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        isPlaying = false;
+        if (playerThread != null) {
+            playerThread.interrupt();
+        }
+        Log.w("JerryZhu", "onDestroy: 执行完毕");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        onMyDestroy();
+    }
+
+    private synchronized void addPitch(ResultSequence resultSequence) {
+        String pitch = resultSequence.getPitch();
+        ImageView imageView = new ImageView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        imageView.setLayoutParams(params);
+        imageView.setImageResource(getImagePitch(pitch));
+
+        Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1f, Animation.RELATIVE_TO_PARENT, 0.2f,
+                Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
+//        TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(1000);
+        animation.setAnimationListener(new AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+//                imageView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+//                imageView.clearAnimation();
+                flAddPitch.removeView(imageView);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        animation.setInterpolator(new LinearInterpolator());
+//        imageView.setVisibility(View.GONE);
+        flAddPitch.addView(imageView);
+        imageView.startAnimation(animation);
+    }
+
+    private int getImagePitch(String pitch) {
+        pitch = pitch.substring(0, 1);
+        switch (pitch) {
+            case "C":
+                return R.drawable.yyqijian12;
+            case "D":
+                return R.drawable.yyqijian14;
+            case "E":
+                return R.drawable.yyqijian19;
+            case "F":
+                return R.drawable.yyqijian18;
+            case "G":
+                return R.drawable.yyqijian17;
+            case "A":
+                return R.drawable.yyqijian16;
+            case "B":
+                return R.drawable.yyqijian13;
+        }
+        return R.drawable.yyqijian12;
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.start_learn_song);
+        initBackgroundAnim();
+        initPlayer();
+    }
+
+    private void initBackgroundAnim() {
+        flAddPitch = findViewById(R.id.fl_add_pitch);
+        ImageView imBg = findViewById(R.id.bg_im);
+        mBgAnimation = AnimationsContainer.getInstance(R.array.bg_res, 120).createProgressDialogAnim(imBg);
+        mBgAnimation.start();
+    }
+
+    private void initPlayer() {
+        //将声音资源文件设置给MediaPlayer对象
+        mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
+        duration = mediaPlayer.getDuration();
+        Log.w("Jerry", "initPlayer: " + duration);
+        playerThread = new Thread(new MusicThread());
+        playerThread.start();
     }
 
     class MusicThread implements Runnable {
@@ -62,11 +157,13 @@ public class StartLearnSong extends BaseActivity {
                 Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
                 return;
             }
+            mediaPlayer.setOnCompletionListener(mp -> isPlaying = false);
             mediaPlayer.start();
+            isPlaying = true;
             handler.sendEmptyMessage(mediaPlayer.getCurrentPosition());
             mediaPlayer.isPlaying();
 //            Log.w("jerry", "start: " + mediaPlayer.isPlaying());
-            while (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            while (mediaPlayer != null && isPlaying) {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 double currentTime = new BigDecimal((float) currentPosition / 1000).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
                 if (resultSequences.size() > 0) {
@@ -86,73 +183,7 @@ public class StartLearnSong extends BaseActivity {
                     e.printStackTrace();
                 }
             }
-            Log.w("jerry", "run: Thread END" + mediaPlayer.isPlaying());
+            Log.w("JerryZhu", "run: 循环终止");
         }
-    }
-
-    private synchronized void addPitch(ResultSequence resultSequence) {
-        String pitch = resultSequence.getPitch();
-        ImageView imageView = new ImageView(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        imageView.setLayoutParams(params);
-        imageView.setImageResource(getImagePitch(pitch));
-        flAddPitch.addView(imageView);
-//        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-    }
-
-    private int getImagePitch(String pitch) {
-        pitch = pitch.substring(0,1);
-        switch (pitch) {
-            case "C":
-                return R.drawable.yyqijian12;
-            case "D":
-                return R.drawable.yyqijian14;
-            case "E":
-                return R.drawable.yyqijian19;
-            case "F":
-                return R.drawable.yyqijian18;
-            case "G":
-                return R.drawable.yyqijian17;
-            case "A":
-                return R.drawable.yyqijian16;
-            case "B":
-                return R.drawable.yyqijian13;
-        }
-        Log.w("jerry", "getImagePitch: " + pitch);
-        return R.drawable.yyqijian12;
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.start_learn_song);
-        initAnim();
-        initPlayer();
-    }
-
-    private void initPlayer() {
-        //将声音资源文件设置给MediaPlayer对象
-        mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
-        duration = mediaPlayer.getDuration();
-        Log.w("Jerry", "initPlayer: " + duration);
-        new Thread(new MusicThread()).start();
-    }
-
-    private void initAnim() {
-        llStartLearn = findViewById(R.id.ll_start_learn_bg);
-        flAddPitch = findViewById(R.id.fl_add_pitch);
-        ImageView imBg = findViewById(R.id.bg_im);
-        mBgAnimation = AnimationsContainer.getInstance(R.array.bg_res, 120).createProgressDialogAnim(imBg);
-        mBgAnimation.start();
-//        imMoon = findViewById(R.id.im_moon);
-        // 通过逐帧动画的资源文件获得AnimationDrawable示例
-       /* frameAnim = (AnimationDrawable) getResources().getDrawable(R.drawable.bg_start_learn_song);
-//        frameAnimMoon = (AnimationDrawable) getResources().getDrawable(R.drawable.bg_moon);
-        // 把AnimationDrawable设置为ImageView的背景
-        llStartLearn.setBackground(frameAnim);
-//        imMoon.setImageDrawable(frameAnimMoon);
-        frameAnim.start();*/
-//        frameAnimMoon.start();
     }
 }
