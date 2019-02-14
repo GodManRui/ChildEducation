@@ -9,7 +9,10 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.gerryrun.childeducation.parse.ReadMIDI;
 import com.gerryrun.childeducation.parse.entity.ResultSequence;
@@ -30,13 +33,14 @@ public class StartLearnSong extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.w("Jerry", "当前进度: " + msg.what);
+            Log.w("jerry", "Handler: " + msg.what);
         }
     };
 
     private int duration;
     private MediaPlayer mediaPlayer;
     private AnimationsContainer.FramesSequenceAnimation mBgAnimation;
+    private FrameLayout flAddPitch;
 
     @Override
     protected void onDestroy() {
@@ -69,8 +73,11 @@ public class StartLearnSong extends BaseActivity {
                     ResultSequence resultSequence = resultSequences.get(0);
                     if (currentTime > resultSequence.getCurrentTime()) {
                         Log.w("jerry", "node: " + currentTime + "  :  " + resultSequence.getCurrentTime() + "  Status: " + (resultSequence.isOpen() ? " Open " : "Close"));
-                        handler.sendEmptyMessage(currentPosition);
-                        resultSequences.remove(resultSequence);
+//                        handler.sendEmptyMessage(currentPosition);
+                        flAddPitch.post(() -> {
+                            addPitch(resultSequence);
+                            resultSequences.remove(resultSequence);
+                        });
                     }
                 }
                 try {
@@ -81,6 +88,39 @@ public class StartLearnSong extends BaseActivity {
             }
             Log.w("jerry", "run: Thread END" + mediaPlayer.isPlaying());
         }
+    }
+
+    private synchronized void addPitch(ResultSequence resultSequence) {
+        String pitch = resultSequence.getPitch();
+        ImageView imageView = new ImageView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        imageView.setLayoutParams(params);
+        imageView.setImageResource(getImagePitch(pitch));
+        flAddPitch.addView(imageView);
+//        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+    }
+
+    private int getImagePitch(String pitch) {
+        pitch = pitch.substring(0,1);
+        switch (pitch) {
+            case "C":
+                return R.drawable.yyqijian12;
+            case "D":
+                return R.drawable.yyqijian14;
+            case "E":
+                return R.drawable.yyqijian19;
+            case "F":
+                return R.drawable.yyqijian18;
+            case "G":
+                return R.drawable.yyqijian17;
+            case "A":
+                return R.drawable.yyqijian16;
+            case "B":
+                return R.drawable.yyqijian13;
+        }
+        Log.w("jerry", "getImagePitch: " + pitch);
+        return R.drawable.yyqijian12;
     }
 
     @Override
@@ -101,6 +141,7 @@ public class StartLearnSong extends BaseActivity {
 
     private void initAnim() {
         llStartLearn = findViewById(R.id.ll_start_learn_bg);
+        flAddPitch = findViewById(R.id.fl_add_pitch);
         ImageView imBg = findViewById(R.id.bg_im);
         mBgAnimation = AnimationsContainer.getInstance(R.array.bg_res, 120).createProgressDialogAnim(imBg);
         mBgAnimation.start();
