@@ -35,7 +35,6 @@ public class StartLearnSong extends BaseActivity {
         }
     };
 
-    private int duration;
     private MediaPlayer mediaPlayer;
     private AnimationsContainer.FramesSequenceAnimation mBgAnimation;
     private FrameLayout flAddPitch;
@@ -49,7 +48,6 @@ public class StartLearnSong extends BaseActivity {
     }
 
     private void onMyDestroy() {
-        Log.w("JerryZhu", "onDestroy: 开始执行");
         if (mediaPlayer != null) {
             mediaPlayer.stop();
             mediaPlayer.release();
@@ -59,7 +57,6 @@ public class StartLearnSong extends BaseActivity {
         if (playerThread != null) {
             playerThread.interrupt();
         }
-        Log.w("JerryZhu", "onDestroy: 执行完毕");
     }
 
     @Override
@@ -141,8 +138,6 @@ public class StartLearnSong extends BaseActivity {
     private void initPlayer() {
         //将声音资源文件设置给MediaPlayer对象
         mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
-        duration = mediaPlayer.getDuration();
-        Log.w("Jerry", "initPlayer: " + duration);
         playerThread = new Thread(new MusicThread());
         playerThread.start();
     }
@@ -162,7 +157,7 @@ public class StartLearnSong extends BaseActivity {
             isPlaying = true;
             handler.sendEmptyMessage(mediaPlayer.getCurrentPosition());
             mediaPlayer.isPlaying();
-//            Log.w("jerry", "start: " + mediaPlayer.isPlaying());
+
             while (mediaPlayer != null && isPlaying) {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 double currentTime = new BigDecimal((float) currentPosition / 1000).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
@@ -183,7 +178,6 @@ public class StartLearnSong extends BaseActivity {
                     e.printStackTrace();
                 }
             }
-            Log.w("JerryZhu", "run: 循环终止");
         }
     }
 }
