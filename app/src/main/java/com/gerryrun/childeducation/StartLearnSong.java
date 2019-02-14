@@ -20,11 +20,11 @@ import com.gerryrun.childeducation.parse.ReadMIDI;
 import com.gerryrun.childeducation.parse.entity.ResultSequence;
 import com.gerryrun.childeducation.util.AnimationsContainer;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class StartLearnSong extends BaseActivity {
 
+    public int screenSecond = 5000;
     //运用Handler中的handleMessage方法接收子线程传递的信息
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
@@ -34,12 +34,18 @@ public class StartLearnSong extends BaseActivity {
             Log.w("jerry", "Handler: " + msg.what);
         }
     };
-
     private MediaPlayer mediaPlayer;
     private AnimationsContainer.FramesSequenceAnimation mBgAnimation;
     private FrameLayout flAddPitch;
     private Thread playerThread;
     private boolean isPlaying;
+    private float pitchSpace = 5.3f;               //音符间距 占rightSpacePx宽度的比例 也就是说，基线右边屏准备最多放几个音符
+    private float baselineScaling = 0.23f;         //绿色线位置在屏幕宽度的比例
+
+    private float pitchMarginPx;      //标准一个音符的间距
+    private float leftSpacePx;      //基线左边的像素个数
+    private float rightSpacePx;     //基线右边的像素个数
+
 
     @Override
     public void onBackPressed() {
@@ -76,7 +82,7 @@ public class StartLearnSong extends BaseActivity {
         Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1f, Animation.RELATIVE_TO_PARENT, 0.2f,
                 Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);
 //        TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setDuration(1000);
+        animation.setDuration(2000);
         animation.setAnimationListener(new AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -130,6 +136,13 @@ public class StartLearnSong extends BaseActivity {
 
     private void initBackgroundAnim() {
         flAddPitch = findViewById(R.id.fl_add_pitch);
+        flAddPitch.post(() -> {
+            leftSpacePx = flAddPitch.getWidth() * baselineScaling;
+            rightSpacePx = flAddPitch.getWidth() * (1 - baselineScaling);
+            pitchMarginPx = rightSpacePx / pitchSpace;
+            Log.w("JerryZhu", "左边: " + leftSpacePx + "  右边: " + rightSpacePx + "  最终比例:" + pitchMarginPx);
+        });
+
         ImageView imBg = findViewById(R.id.bg_im);
         mBgAnimation = AnimationsContainer.getInstance(R.array.bg_res, 120).createProgressDialogAnim(imBg);
         mBgAnimation.start();
@@ -140,6 +153,27 @@ public class StartLearnSong extends BaseActivity {
         mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
         playerThread = new Thread(new MusicThread());
         playerThread.start();
+    }
+
+    private void addPitch2(ArrayList<ResultSequence> resultSequences, ArrayList<ImageView> images) {
+        Log.w("JerryZhu", "宽度: " + flAddPitch.getWidth());
+        //不管关，只管按一下的情况，开的时间基本上就是关的时间
+
+        for (int i = 0; i < resultSequences.size(); i += 2) {
+            ResultSequence resultSequence = resultSequences.get(i);
+            ImageView imageView = new ImageView(this);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            int left = (int) (resultSequence.getCurrentTime() * pitchMarginPx + leftSpacePx);
+//            Log.w("JerryZhu", "addPitch2 margin left : " + left);
+            params.setMargins(left, 200, 0, 0);
+            imageView.setLayoutParams(params);
+            imageView.setImageResource(getImagePitch(resultSequence.getPitch()));
+            flAddPitch.addView(imageView);
+            images.add(imageView);
+        }
+
     }
 
     class MusicThread implements Runnable {
@@ -155,10 +189,34 @@ public class StartLearnSong extends BaseActivity {
             mediaPlayer.setOnCompletionListener(mp -> isPlaying = false);
             mediaPlayer.start();
             isPlaying = true;
-            handler.sendEmptyMessage(mediaPlayer.getCurrentPosition());
-            mediaPlayer.isPlaying();
-
+//            handler.sendEmptyMessage(mediaPlayer.getCurrentPosition());
+            ArrayList<ImageView> images = new ArrayList();
+            runOnUiThread(() -> {
+                addPitch2(resultSequences, images);
+            });
             while (mediaPlayer != null && isPlaying) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(() -> {
+                    for (int i = 0; i < images.size(); i++) {
+                        ImageView image = images.get(i);
+                        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) image.getLayoutParams();
+//                        int left = layoutParams.leftMargin - 50;
+                        int left = (int) (layoutParams.leftMargin - pitchMarginPx / (1000 / 50));
+                        layoutParams.setMargins(left, 200, 0, 0);
+                        image.setLayoutParams(layoutParams);
+                        if (left < flAddPitch.getWidth() * baselineScaling) {
+                            images.remove(i);
+                            i--;
+                            flAddPitch.removeView(image);
+                        }
+                    }
+                });
+            }
+          /*  while (mediaPlayer != null && isPlaying) {
                 int currentPosition = mediaPlayer.getCurrentPosition();
                 double currentTime = new BigDecimal((float) currentPosition / 1000).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
                 if (resultSequences.size() > 0) {
@@ -177,7 +235,7 @@ public class StartLearnSong extends BaseActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
         }
     }
 }
