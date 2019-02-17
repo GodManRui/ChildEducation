@@ -17,7 +17,7 @@ public class LearnChildSong extends BaseActivity {
             finish();
         });
         findViewById(R.id.xiaoxingxing).setOnClickListener(v -> {
-            startActivity(new Intent(LearnChildSong.this, StartLearnSong.class));
+            startActivity(new Intent(LearnChildSong.this, StartLearnSong2.class));
             finish();
         });
     }

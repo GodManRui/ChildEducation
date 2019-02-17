@@ -21,6 +21,8 @@ import com.gerryrun.childeducation.util.AnimationsContainer;
 
 import java.util.ArrayList;
 
+import static com.gerryrun.childeducation.StartLearnSong.getImagePitch;
+
 /**
  * 系统动画
  */
@@ -54,7 +56,7 @@ public class StartLearnSong2 extends BaseActivity {
     private float si;
     private int pitchWH;
     private ImageView imageAnimationView;
-    private final int FPS = 50;
+    private int mBlastWH;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,42 +67,47 @@ public class StartLearnSong2 extends BaseActivity {
     }
 
     private synchronized void addPitch(ResultSequence resultSequence) {
-        runOnUiThread(() -> {
-            String pitch = resultSequence.getPitchNote();
-            ImageView imageView = new ImageView(StartLearnSong2.this);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(pitchWH, pitchWH);
-//            params.topMargin = (int) getMarginTop(pitch);
-            imageView.setLayoutParams(params);
-            imageView.setImageResource(getImagePitch(pitch));
+
+        String pitch = resultSequence.getPitchNote();
+//        float marginTop = getMarginTop(pitch) / flAddPitch.getHeight();
+
+        ImageView imageView = new ImageView(StartLearnSong2.this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(pitchWH, pitchWH);
+        params.topMargin = (int) getMarginTop(pitch);
+        imageView.setTag(params.topMargin);
+        imageView.setLayoutParams(params);
+        imageView.setImageResource(getImagePitch(pitch));
 
             /*Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1f, Animation.RELATIVE_TO_PARENT, 0.2f,
                     Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);*/
-            Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1f, Animation.RELATIVE_TO_PARENT, 0.2f,
-                    Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
+        float fromXValue = (float) (0.2f + resultSequence.getCurrentTime() * 0.1f);
+        Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, fromXValue, Animation.RELATIVE_TO_PARENT, 0.2f,
+                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
 //        TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f);
-            animation.setDuration(2000);
-            animation.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
+        long round = Math.round(resultSequence.getCurrentTime() * 1000);
+        animation.setDuration(round);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 //                imageView.setVisibility(View.VISIBLE);
-                }
+            }
 
-                @Override
-                public void onAnimationEnd(Animation animation) {
+            @Override
+            public void onAnimationEnd(Animation animation) {
 //                imageView.clearAnimation();
-                    removeAnimation(imageView);
+                removeAnimation(imageView);
 //                    flAddPitch.removeView(imageView);
-                }
+            }
 
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-                }
-            });
-            animation.setInterpolator(new LinearInterpolator());
-//        imageView.setVisibility(View.GONE);
-            flAddPitch.addView(imageView);
-            imageView.startAnimation(animation);
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
         });
+        animation.setInterpolator(new LinearInterpolator());
+//        imageView.setVisibility(View.GONE);
+        flAddPitch.addView(imageView);
+        imageView.startAnimation(animation);
+
     }
 
     private void initBackgroundAnim() {
@@ -121,9 +128,9 @@ public class StartLearnSong2 extends BaseActivity {
             la = height * 0.35f; //*
             si = height * 0.25f;
 
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(pitchWH,
-                    pitchWH);
-            params.leftMargin = (int) leftSpacePx;
+            mBlastWH = pitchWH * 3;
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(mBlastWH, mBlastWH);
+            params.leftMargin = (int) leftSpacePx - mBlastWH / 2;
             Log.w("jerry", "initBackgroundAnim: " + params.leftMargin);
             imageAnimationView = new ImageView(this);
             imageAnimationView.setLayoutParams(params);
@@ -143,28 +150,6 @@ public class StartLearnSong2 extends BaseActivity {
         mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
         playerThread = new Thread(new MusicThread());
         playerThread.start();
-    }
-
-    private void addPitch2(ArrayList<ResultSequence> resultSequences, ArrayList<ImageView> images) {
-        //创建音符
-        Log.w("JerryZhu", "宽度: " + flAddPitch.getWidth());
-        //不管关，只管按一下的情况，开的时间基本上就是关的时间
-        for (int i = 0; i < resultSequences.size(); i += 2) {
-            ResultSequence resultSequence = resultSequences.get(i);
-            ImageView imageView = new ImageView(this);
-
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(pitchWH, pitchWH);
-            int left = (int) (resultSequence.getCurrentTime() * pitchMarginPx + leftSpacePx);
-//            Log.w("JerryZhu", "addPitch2 margin left : " + left);
-            float marginTop = getMarginTop(resultSequence.getPitchNote());
-            params.setMargins(left, (int) marginTop, 0, 0);
-            imageView.setLayoutParams(params);
-            int imageResource = getImagePitch(resultSequence.getPitchNote());
-            imageView.setImageResource(imageResource);
-            imageView.setTag(marginTop);
-            flAddPitch.addView(imageView);
-            images.add(imageView);
-        }
     }
 
 
@@ -212,26 +197,6 @@ public class StartLearnSong2 extends BaseActivity {
         return 0;
     }
 
-    private int getImagePitch(String pitch) {
-        switch (pitch) {
-            case "C":
-                return R.drawable.yyqijian12;
-            case "D":
-                return R.drawable.yyqijian14;
-            case "E":
-                return R.drawable.yyqijian19;
-            case "F":
-                return R.drawable.yyqijian18;
-            case "G":
-                return R.drawable.yyqijian17;
-            case "A":
-                return R.drawable.yyqijian16;
-            case "B":
-                return R.drawable.yyqijian13;
-        }
-        return R.drawable.yyqijian12;
-    }
-
 
     class MusicThread implements Runnable {
         @Override
@@ -247,46 +212,13 @@ public class StartLearnSong2 extends BaseActivity {
             mediaPlayer.setOnCompletionListener(mp -> isPlaying = false);
             mediaPlayer.start();
             isPlaying = true;
-//            handler.sendEmptyMessage(mediaPlayer.getCurrentPosition());
-            ArrayList<ImageView> images = new ArrayList();
-            for (int i = 0; i < resultSequences.size(); i++) {
-                addPitch(resultSequences.get(i));
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            runOnUiThread(() -> {
+                for (int i = 0; i < resultSequences.size(); i += 2) {
+                    addPitch(resultSequences.get(i));
                 }
-            }
-         /*   runOnUiThread(() -> {
-                //创建音符
-                addPitch2(resultSequences, images);
             });
 
-           //移动音符
-            while (mediaPlayer != null && isPlaying) {
-                runOnUiThread(() -> {
-                    //移动
-                    for (int i = 0; i < images.size(); i++) {
-                        ImageView image = images.get(i);
-                        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) image.getLayoutParams();
-//                        int left = layoutParams.leftMargin - 50;
-                        int left = (int) (layoutParams.leftMargin - pitchMarginPx / (1000 / FPS));
-                        layoutParams.setMargins(left, (int) (float) image.getTag(), 0, 0);
-                        image.setLayoutParams(layoutParams);
-                        if (left < flAddPitch.getWidth() * baselineScaling) {
-//                            removeAnimation(image);
-                            images.remove(i);
-                            i--;
-                            flAddPitch.removeView(image);
-                        }
-                    }
-                });
-                try {
-                    Thread.sleep(FPS);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }*/
+            ////////////////
         }
     }
 
@@ -294,68 +226,17 @@ public class StartLearnSong2 extends BaseActivity {
         imageAnimationView.clearAnimation();
         if (imageAnimationView.getVisibility() != View.VISIBLE)
             imageAnimationView.setVisibility(View.VISIBLE);
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) image.getLayoutParams();
+        if (imageAnimationView.getTag() != null) {
+            AnimationsContainer progressDialogAnim = (AnimationsContainer) imageAnimationView.getTag();
+            progressDialogAnim.stop();
+            progressDialogAnim = null;
+        }
         FrameLayout.LayoutParams animationParams = (FrameLayout.LayoutParams) imageAnimationView.getLayoutParams();
-        animationParams.leftMargin = layoutParams.leftMargin;
-        animationParams.topMargin = layoutParams.topMargin;
+        animationParams.topMargin = (int) image.getTag() - (mBlastWH / 2 - pitchWH / 2);
         imageAnimationView.setLayoutParams(animationParams);
         flAddPitch.removeView(image);
         AnimationsContainer progressDialogAnim = new AnimationsContainer(R.array.music_orange, 60).createProgressDialogAnim(imageAnimationView, false);
         progressDialogAnim.start();
-       /*  AnimationDrawable animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.animalist);
-        imageAnimationView.setImageDrawable(animationDrawable);
-        animationDrawable.start();*/
 
-//        AnimationDrawable animationDrawable = (AnimationDrawable) image.getDrawable();
-
-  /*      int duration = 0;
-        for (int i = 0; i < animationDrawable.getNumberOfFrames(); i++) {
-            duration += animationDrawable.getDuration(i);
-        }
-        handler.postDelayed(() -> {
-
-            //此处调用 第二个动画播放方法
-            flAddPitch.removeView(image);
-        }, duration);
-        animationDrawable.start();*/
-
-//        flAddPitch.removeView(image);
-
-//        image.setImageResource(0);
-
-
-//        image.setImageResource(R.drawable.animalist);
-      /*  FrameAnimation frameAnimation = new FrameAnimation(image, getRes(), 50, false);
-        frameAnimation.setAnimationListener(new FrameAnimation.AnimationListener() {
-            @Override
-            public void onAnimationStart() {
-                Log.w("jerry", "onAnimationStart: " );
-            }
-
-            @Override
-            public void onAnimationEnd() {
-                image.setImageResource(0);
-                image.setBackgroundResource(0);
-                flAddPitch.removeView(image);
-                Log.w("jerry", "onAnimationEnd: " );
-
-            }
-
-            @Override
-            public void onAnimationRepeat() {
-                Log.w("jerry", "onAnimationRepeat: " );
-
-            }
-        });*/
-
-
-       /* AnimationsContainer.FramesSequenceAnimation progressDialogAnim = new AnimationsContainer(R.array.music_orange, 60).createProgressDialogAnim(image, false);
-//        AnimationsContainer.getInstance(R.array.music_orange, 60).createProgressDialogAnim(image,false);
-        progressDialogAnim.setOnAnimStopListener(() -> {
-            flAddPitch.removeView(image);
-            Log.w("jerry", "动画停止: ");
-//            progressDialogAnim.stop();
-        });
-        progressDialogAnim.start();*/
     }
 }

@@ -171,7 +171,7 @@ public class StartLearnSong extends BaseActivity {
         return 0;
     }
 
-    private int getImagePitch(String pitch) {
+    public static int getImagePitch(String pitch) {
         switch (pitch) {
             case "C":
                 return R.drawable.yyqijian12;
