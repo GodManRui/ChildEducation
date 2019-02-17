@@ -13,13 +13,13 @@
     <FrameLayout
         android:id="@+id/fl_add_pitch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/dp_235"
+        android:layout_marginTop="@dimen/dp_10">
 
         <ImageView
             android:id="@+id/bg_wuxianpu"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_200"
-            android:layout_marginTop="@dimen/dp_28"
+            android:layout_height="@dimen/dp_198"
             android:src="@drawable/wuxianpu" />
     </FrameLayout>
     <!--  <ImageView

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_bg"
+    android:background="@drawable/music_zhuyebeijing"
     android:padding="15dp"
     tools:context=".MainActivity">
 
@@ -11,21 +11,21 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/bt_learn_pitch"
+        android:background="@drawable/music_gechangjia"
         android:onClick="learnPitch" />
 
     <Button
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/bt_rhythm"
+        android:background="@drawable/music_lcdong"
         android:onClick="rhythm" />
 
     <Button
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/bt_guess"
+        android:background="@drawable/music_tingyinwang"
         android:onClick="Guess" />
 
 

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/music_orange_1"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_2"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_3"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_4"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_5"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_6"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_7"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_8"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_9"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_10"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_11"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_12"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_13"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_14"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_15"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_16"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_17"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_18"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_19"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/music_orange_20"
+        android:duration="50" />
+</animation-list>

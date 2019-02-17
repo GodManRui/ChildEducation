@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.gerryrun.childeducation.util.StatusBarColor;
 
-public class LearnChildSong extends BaseActivity  {
+public class LearnChildSong extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

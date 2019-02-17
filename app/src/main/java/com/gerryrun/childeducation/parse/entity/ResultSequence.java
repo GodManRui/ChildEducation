@@ -10,6 +10,12 @@ public class ResultSequence {
     public ResultSequence() {
     }
 
+    public ResultSequence(double currentTime, boolean isOpen, String pitch) {
+        this.currentTime = currentTime;
+        this.isOpen = isOpen;
+        this.pitch = pitch;
+    }
+
     public ResultSequence(double currentTime, String message) {
         this.currentTime = currentTime;
         this.message = message;
@@ -33,6 +39,10 @@ public class ResultSequence {
 
     public String getPitch() {
         return pitch;
+    }
+
+    public String getPitchNote() {
+        return pitch.substring(0, 1);
     }
 
     public void setMessage(String message) {

@@ -168,4 +168,29 @@
 
     </array>
 
+
+    <array name="music_orange">
+        <item>@drawable/music_orange_1</item>
+        <item>@drawable/music_orange_2</item>
+        <item>@drawable/music_orange_3</item>
+        <item>@drawable/music_orange_4</item>
+        <item>@drawable/music_orange_5</item>
+        <item>@drawable/music_orange_6</item>
+        <item>@drawable/music_orange_7</item>
+        <item>@drawable/music_orange_8</item>
+        <item>@drawable/music_orange_9</item>
+        <item>@drawable/music_orange_10</item>
+        <item>@drawable/music_orange_11</item>
+        <item>@drawable/music_orange_12</item>
+        <item>@drawable/music_orange_13</item>
+        <item>@drawable/music_orange_14</item>
+        <item>@drawable/music_orange_15</item>
+        <item>@drawable/music_orange_16</item>
+        <item>@drawable/music_orange_17</item>
+        <item>@drawable/music_orange_18</item>
+        <item>@drawable/music_orange_19</item>
+        <item>@drawable/music_orange_20</item>
+
+    </array>
+
 </resources>
