@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
@@ -26,14 +25,12 @@ public class AnimationsContainer {
     private int FPS = 58;  // 每秒播放帧数，fps = 1/t，t-动画两帧时间间隔
     private int resId; //图片资源
     private Context mContext = MyApplication.getAppContext();
-
-
-    public AnimationsContainer() {
-    }
-
-    public AnimationsContainer(int resId, int fps) {
-        setResId(resId, fps);
-    }
+    /**
+     * 循环读取帧---循环播放帧
+     */
+//    public class FramesSequenceAnimation {
+    private boolean loop;
+    private int[] mFrames; // 帧数组
     //获取单例
   /*  public static AnimationsContainer getInstance(int resId, int fps) {
         if (mInstance == null)
@@ -41,13 +38,31 @@ public class AnimationsContainer {
         mInstance.setResId(resId, fps);
         return mInstance;
     }*/
+    private int mIndex; // 当前帧
+//    // 从xml中读取资源ID数组
+//    private int[] mProgressAnimFrames = getData(resId);
+    private boolean mShouldRun; // 开始/停止播放用
+    private boolean mIsRunning; // 动画是否正在播放，防止重复播放
+    private SoftReference<ImageView> mSoftReferenceImageView; // 软引用ImageView，以便及时释放掉
+    private Handler mHandler;
+    private int mDelayMillis;
+    private OnAnimationStoppedListener mOnAnimationStoppedListener; //播放停止监听
+    private Bitmap mBitmap = null;
+    private BitmapFactory.Options mBitmapOptions;//Bitmap管理类，可有效减少Bitmap的OOM问题
+    public AnimationsContainer() {
+    }
+    public AnimationsContainer(int resId, int fps) {
+        setResId(resId, fps);
+    }
 
     public void setResId(int resId, int fps) {
         this.resId = resId;
         this.FPS = fps;
     }
-//    // 从xml中读取资源ID数组
-//    private int[] mProgressAnimFrames = getData(resId);
+
+    public void createProgressDialogAnim(ImageView imageView) {
+        createProgressDialogAnim(imageView, true);
+    }
 
     /**
      * @param imageView
@@ -83,10 +98,6 @@ public class AnimationsContainer {
         return this;
     }
 
-    public void createProgressDialogAnim(ImageView imageView) {
-        createProgressDialogAnim(imageView, true);
-    }
-
     /**
      * 从xml中读取帧数组
      *
@@ -105,57 +116,6 @@ public class AnimationsContainer {
         array.recycle();
         return intArray;
     }
-
-    /**
-     * 停止播放监听
-     */
-    public interface OnAnimationStoppedListener {
-        void AnimationStopped();
-    }
-
-    /**
-     * 循环读取帧---循环播放帧
-     */
-//    public class FramesSequenceAnimation {
-    private boolean loop;
-    private int[] mFrames; // 帧数组
-    private int mIndex; // 当前帧
-    private boolean mShouldRun; // 开始/停止播放用
-    private boolean mIsRunning; // 动画是否正在播放，防止重复播放
-    private SoftReference<ImageView> mSoftReferenceImageView; // 软引用ImageView，以便及时释放掉
-    private Handler mHandler;
-    private int mDelayMillis;
-    private OnAnimationStoppedListener mOnAnimationStoppedListener; //播放停止监听
-
-    private Bitmap mBitmap = null;
-    private BitmapFactory.Options mBitmapOptions;//Bitmap管理类，可有效减少Bitmap的OOM问题
-
-       /* public FramesSequenceAnimation(ImageView imageView, int[] frames, int fps, boolean loop) {
-            mHandler = new Handler();
-            mFrames = frames;
-            mIndex = -1;
-            mSoftReferenceImageView = new SoftReference<ImageView>(imageView);
-            mShouldRun = false;
-            mIsRunning = false;
-            mDelayMillis = 1000 / fps;//帧动画时间间隔，毫秒
-            this.loop = loop;
-            imageView.setScaleType(ScaleType.CENTER_CROP);
-            imageView.setImageResource(mFrames[0]);
-
-            // 当图片大小类型相同时进行复用，避免频繁GC
-            if (Build.VERSION.SDK_INT >= 11) {
-                Bitmap bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-                int width = bmp.getWidth();
-                int height = bmp.getHeight();
-                Bitmap.Config config = bmp.getConfig();
-                mBitmap = Bitmap.createBitmap(width, height, config);
-                mBitmapOptions = new BitmapFactory.Options();
-                //设置Bitmap内存复用
-                mBitmapOptions.inBitmap = mBitmap;//Bitmap复用内存块，类似对象池，避免不必要的内存分配和回收
-                mBitmapOptions.inMutable = true;//解码时返回可变Bitmap
-                mBitmapOptions.inSampleSize = 1;//缩放比例
-            }
-        }*/
 
     /**
      * 播放动画，同步锁防止多线程读帧时，数据安全问题
@@ -208,6 +168,33 @@ public class AnimationsContainer {
         mHandler.post(runnable);
     }
 
+       /* public FramesSequenceAnimation(ImageView imageView, int[] frames, int fps, boolean loop) {
+            mHandler = new Handler();
+            mFrames = frames;
+            mIndex = -1;
+            mSoftReferenceImageView = new SoftReference<ImageView>(imageView);
+            mShouldRun = false;
+            mIsRunning = false;
+            mDelayMillis = 1000 / fps;//帧动画时间间隔，毫秒
+            this.loop = loop;
+            imageView.setScaleType(ScaleType.CENTER_CROP);
+            imageView.setImageResource(mFrames[0]);
+
+            // 当图片大小类型相同时进行复用，避免频繁GC
+            if (Build.VERSION.SDK_INT >= 11) {
+                Bitmap bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                int width = bmp.getWidth();
+                int height = bmp.getHeight();
+                Bitmap.Config config = bmp.getConfig();
+                mBitmap = Bitmap.createBitmap(width, height, config);
+                mBitmapOptions = new BitmapFactory.Options();
+                //设置Bitmap内存复用
+                mBitmapOptions.inBitmap = mBitmap;//Bitmap复用内存块，类似对象池，避免不必要的内存分配和回收
+                mBitmapOptions.inMutable = true;//解码时返回可变Bitmap
+                mBitmapOptions.inSampleSize = 1;//缩放比例
+            }
+        }*/
+
     //循环读取下一帧
     private int getNext() {
         mIndex++;
@@ -234,6 +221,13 @@ public class AnimationsContainer {
      */
     public void setOnAnimStopListener(OnAnimationStoppedListener listener) {
         this.mOnAnimationStoppedListener = listener;
+    }
+
+    /**
+     * 停止播放监听
+     */
+    public interface OnAnimationStoppedListener {
+        void AnimationStopped();
     }
 //    }
 }

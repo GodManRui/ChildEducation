@@ -22,21 +22,12 @@
             android:layout_height="@dimen/dp_198"
             android:src="@drawable/wuxianpu" />
     </FrameLayout>
-    <!--  <ImageView
-          android:layout_width="@dimen/dp_69"
-          android:layout_height="@dimen/dp_200"
-          android:layout_marginStart="@dimen/dp_16"
-          android:layout_marginLeft="@dimen/dp_16"
-          android:layout_marginTop="@dimen/dp_28"
-          android:src="@drawable/yy0128ds_1" />-->
-    <!--<ImageView
-        android:id="@+id/im_moon"
-        android:layout_width="@dimen/dp_200"
-        android:layout_height="@dimen/dp_200"
-        android:layout_alignParentEnd="true"
+
+    <ImageView
+        android:id="@+id/im_play_pause"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/dp_150"
-        android:layout_marginRight="@dimen/dp_150"
-        android:src="@drawable/yuel" />-->
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/yyqijian29" />
 </RelativeLayout>
