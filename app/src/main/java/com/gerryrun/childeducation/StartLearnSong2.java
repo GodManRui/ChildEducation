@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
@@ -13,6 +14,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.gerryrun.childeducation.parse.ReadMIDI;
 import com.gerryrun.childeducation.parse.entity.ResultSequence;
@@ -52,6 +54,7 @@ public class StartLearnSong2 extends BaseActivity {
     private ArrayList<ResultSequence> resultSequences;
     private ArrayList<ImageView> imagePitchViews;
     private boolean resetPlay = true;
+    private VideoView videoView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +68,7 @@ public class StartLearnSong2 extends BaseActivity {
         flAddPitch = findViewById(R.id.fl_add_pitch);
         imPlayPause = findViewById(R.id.im_play_pause);
         imPlayPause.setOnClickListener((v) -> clickPlayPause());
+        findViewById(R.id.im_home).setOnClickListener(v -> finish());
         flAddPitch.post(() -> {
             leftSpacePx = flAddPitch.getWidth() * baselineScaling;
             rightSpacePx = flAddPitch.getWidth() * (1 - baselineScaling);
@@ -91,11 +95,14 @@ public class StartLearnSong2 extends BaseActivity {
             flAddPitch.addView(imageAnimationView);
         });
 
-        ImageView imBg = findViewById(R.id.bg_im);
+      /*  ImageView imBg = findViewById(R.id.bg_im);
 //        mBgAnimation = AnimationsContainer.getInstance(R.array.bg_res, 120).createProgressDialogAnim(imBg, false);
         AnimationsContainer mBgAnimation
                 = new AnimationsContainer(R.array.bg_res, 30).createProgressDialogAnim(imBg, true);
-        mBgAnimation.start();
+        mBgAnimation.start();*/
+        videoView = findViewById(R.id.bg_video);
+        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.music_woniu));
+        videoView.start();
     }
 
     private void initPlayer() {
@@ -154,6 +161,10 @@ public class StartLearnSong2 extends BaseActivity {
         isPlaying = false;
         if (playerThread != null) {
             playerThread.interrupt();
+        }
+        if (videoView != null) {
+            videoView.stopPlayback();
+            videoView = null;
         }
     }
 

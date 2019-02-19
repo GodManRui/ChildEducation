@@ -90,7 +90,7 @@ public class StartLearnSong extends BaseActivity {
             flAddPitch.addView(imageAnimationView);
         });
 
-        ImageView imBg = findViewById(R.id.bg_im);
+//        ImageView imBg = findViewById(R.id.bg_im);
 //        mBgAnimation = AnimationsContainer.getInstance(R.array.bg_res, 120).createProgressDialogAnim(imBg, false);
        /* AnimationsContainer mBgAnimation
                 = new AnimationsContainer(R.array.bg_res, 20).createProgressDialogAnim(imBg, true);
