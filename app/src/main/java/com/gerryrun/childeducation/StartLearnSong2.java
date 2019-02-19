@@ -1,5 +1,6 @@
 package com.gerryrun.childeducation;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -72,7 +73,7 @@ public class StartLearnSong2 extends BaseActivity {
 //        float marginTop = getMarginTop(pitch) / flAddPitch.getHeight();
 
         ImageView imageView = new ImageView(StartLearnSong2.this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(pitchWH, pitchWH);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(pitchWH, pitchWH);
         params.topMargin = (int) getMarginTop(pitch);
         imageView.setTag(params.topMargin);
         imageView.setLayoutParams(params);
@@ -80,13 +81,14 @@ public class StartLearnSong2 extends BaseActivity {
 
             /*Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, 1f, Animation.RELATIVE_TO_PARENT, 0.2f,
                     Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_PARENT, 0.5f);*/
-        float fromXValue = (float) (0.2f + resultSequence.getCurrentTime() * 0.1f);
-        Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, fromXValue, Animation.RELATIVE_TO_PARENT, 0.2f,
-                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);
-//        TranslateAnimation animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0f, Animation.RELATIVE_TO_SELF, 0.5f);
+        float fromXValue = (float) (baselineScaling + resultSequence.getCurrentTime() * 0.1f);
+    /*    Animation animation = new TranslateAnimation(Animation.RELATIVE_TO_PARENT, fromXValue, Animation.RELATIVE_TO_PARENT, 0.2f,
+                Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0);*/
+        ObjectAnimator translationX = ObjectAnimator.ofFloat(imageView, "translationX", flAddPitch.getWidth() * fromXValue, flAddPitch.getWidth() * baselineScaling);
         long round = Math.round(resultSequence.getCurrentTime() * 1000);
-        animation.setDuration(round);
-        animation.setAnimationListener(new Animation.AnimationListener() {
+        translationX.setInterpolator(new LinearInterpolator());
+        translationX.setDuration(round);
+       /* translationX.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 //                imageView.setVisibility(View.VISIBLE);
@@ -103,11 +105,11 @@ public class StartLearnSong2 extends BaseActivity {
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        animation.setInterpolator(new LinearInterpolator());
+        animation.setInterpolator(new LinearInterpolator());*/
 //        imageView.setVisibility(View.GONE);
         flAddPitch.addView(imageView);
-        imageView.startAnimation(animation);
-
+//        imageView.startAnimation(animation);
+        translationX.start();
     }
 
     private void initBackgroundAnim() {
