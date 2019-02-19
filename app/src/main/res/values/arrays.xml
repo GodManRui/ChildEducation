@@ -165,7 +165,6 @@
         <item>@drawable/learn_the_background_of_nursery_rhy1_162</item>
         <item>@drawable/learn_the_background_of_nursery_rhy1_163</item>
         <item>@drawable/learn_the_background_of_nursery_rhy1_164</item>
-
     </array>
 
 
@@ -190,7 +189,93 @@
         <item>@drawable/music_orange_18</item>
         <item>@drawable/music_orange_19</item>
         <item>@drawable/music_orange_20</item>
-
     </array>
-
+    <array name="music_blue">
+        <item>@drawable/music_bule_1</item>
+        <item>@drawable/music_bule_2</item>
+        <item>@drawable/music_bule_3</item>
+        <item>@drawable/music_bule_4</item>
+        <item>@drawable/music_bule_5</item>
+        <item>@drawable/music_bule_6</item>
+        <item>@drawable/music_bule_7</item>
+        <item>@drawable/music_bule_8</item>
+        <item>@drawable/music_bule_9</item>
+        <item>@drawable/music_bule_10</item>
+        <item>@drawable/music_bule_11</item>
+        <item>@drawable/music_bule_12</item>
+        <item>@drawable/music_bule_13</item>
+        <item>@drawable/music_bule_14</item>
+        <item>@drawable/music_bule_15</item>
+        <item>@drawable/music_bule_16</item>
+        <item>@drawable/music_bule_17</item>
+        <item>@drawable/music_bule_18</item>
+        <item>@drawable/music_bule_19</item>
+        <item>@drawable/music_bule_20</item>
+    </array>
+    <array name="music_green">
+        <item>@drawable/music_green_1</item>
+        <item>@drawable/music_green_2</item>
+        <item>@drawable/music_green_3</item>
+        <item>@drawable/music_green_4</item>
+        <item>@drawable/music_green_5</item>
+        <item>@drawable/music_green_6</item>
+        <item>@drawable/music_green_7</item>
+        <item>@drawable/music_green_8</item>
+        <item>@drawable/music_green_9</item>
+        <item>@drawable/music_green_10</item>
+        <item>@drawable/music_green_11</item>
+        <item>@drawable/music_green_12</item>
+        <item>@drawable/music_green_13</item>
+        <item>@drawable/music_green_14</item>
+        <item>@drawable/music_green_15</item>
+        <item>@drawable/music_green_16</item>
+        <item>@drawable/music_green_17</item>
+        <item>@drawable/music_green_18</item>
+        <item>@drawable/music_green_19</item>
+        <item>@drawable/music_green_20</item>
+    </array>
+    <array name="music_red">
+        <item>@drawable/music_red_1</item>
+        <item>@drawable/music_red_2</item>
+        <item>@drawable/music_red_3</item>
+        <item>@drawable/music_red_4</item>
+        <item>@drawable/music_red_5</item>
+        <item>@drawable/music_red_6</item>
+        <item>@drawable/music_red_7</item>
+        <item>@drawable/music_red_8</item>
+        <item>@drawable/music_red_9</item>
+        <item>@drawable/music_red_10</item>
+        <item>@drawable/music_red_11</item>
+        <item>@drawable/music_red_12</item>
+        <item>@drawable/music_red_13</item>
+        <item>@drawable/music_red_14</item>
+        <item>@drawable/music_red_15</item>
+        <item>@drawable/music_red_16</item>
+        <item>@drawable/music_red_17</item>
+        <item>@drawable/music_red_18</item>
+        <item>@drawable/music_red_19</item>
+        <item>@drawable/music_red_20</item>
+    </array>
+    <array name="music_yellow">
+        <item>@drawable/music_yellow_1</item>
+        <item>@drawable/music_yellow_2</item>
+        <item>@drawable/music_yellow_3</item>
+        <item>@drawable/music_yellow_4</item>
+        <item>@drawable/music_yellow_5</item>
+        <item>@drawable/music_yellow_6</item>
+        <item>@drawable/music_yellow_7</item>
+        <item>@drawable/music_yellow_8</item>
+        <item>@drawable/music_yellow_9</item>
+        <item>@drawable/music_yellow_10</item>
+        <item>@drawable/music_yellow_11</item>
+        <item>@drawable/music_yellow_12</item>
+        <item>@drawable/music_yellow_13</item>
+        <item>@drawable/music_yellow_14</item>
+        <item>@drawable/music_yellow_15</item>
+        <item>@drawable/music_yellow_16</item>
+        <item>@drawable/music_yellow_17</item>
+        <item>@drawable/music_yellow_18</item>
+        <item>@drawable/music_yellow_19</item>
+        <item>@drawable/music_yellow_20</item>
+    </array>
 </resources>

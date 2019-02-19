@@ -3,11 +3,8 @@ package com.gerryrun.childeducation;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.util.Log;
@@ -30,15 +27,7 @@ import static com.gerryrun.childeducation.StartLearnSong.getImagePitch;
  */
 public class StartLearnSong2 extends BaseActivity {
 
-    //运用Handler中的handleMessage方法接收子线程传递的信息
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            Log.w("jerry", "Handler: " + msg.what);
-        }
-    };
+
     private MediaPlayer mediaPlayer;
     private FrameLayout flAddPitch;
     private Thread playerThread;
@@ -75,9 +64,7 @@ public class StartLearnSong2 extends BaseActivity {
     private void initBackgroundAnim() {
         flAddPitch = findViewById(R.id.fl_add_pitch);
         imPlayPause = findViewById(R.id.im_play_pause);
-        imPlayPause.setOnClickListener((v) -> {
-            clickPlayPause();
-        });
+        imPlayPause.setOnClickListener((v) -> clickPlayPause());
         flAddPitch.post(() -> {
             leftSpacePx = flAddPitch.getWidth() * baselineScaling;
             rightSpacePx = flAddPitch.getWidth() * (1 - baselineScaling);
@@ -117,6 +104,7 @@ public class StartLearnSong2 extends BaseActivity {
         playerThread = new Thread(new MusicThread());
         playerThread.start();
     }
+
 
     private void clickPlayPause() {
         if (imagePitchViews == null || imagePitchViews.size() <= 0) {
@@ -263,19 +251,20 @@ public class StartLearnSong2 extends BaseActivity {
     private int getFrameArrays(int resourceId) {
         switch (resourceId) {
             case R.drawable.yyqijian12:
-                return R.array.music_orange;
+                return R.array.music_red;
             case R.drawable.yyqijian14:
-                break;
+                return R.array.music_orange;
             case R.drawable.yyqijian19:
-                break;
+                return R.array.music_yellow;
             case R.drawable.yyqijian18:
-                break;
+                return R.array.music_green;
             case R.drawable.yyqijian17:
-                break;
+                return R.array.music_blue;
+
+            //la si 没给爆炸图
             case R.drawable.yyqijian16:
-                break;
             case R.drawable.yyqijian13:
-                break;
+                return R.array.music_orange;
         }
         return 0;
     }
