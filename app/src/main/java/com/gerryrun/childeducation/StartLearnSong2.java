@@ -3,19 +3,22 @@ package com.gerryrun.childeducation;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
+import com.gerryrun.childeducation.customview.FullVideoView;
 import com.gerryrun.childeducation.parse.ReadMIDI;
 import com.gerryrun.childeducation.parse.entity.ResultSequence;
 import com.gerryrun.childeducation.util.AnimationsContainer;
@@ -35,7 +38,7 @@ public class StartLearnSong2 extends BaseActivity {
     private Thread playerThread;
     private boolean isPlaying;
     private float pitchSpace = 6.3f;               //音符间距 占rightSpacePx宽度的比例 也就是说，基线右边屏准备最多放几个音符
-    private float baselineScaling = 0.23f;         //绿色线位置在屏幕宽度的比例
+    private float baselineScaling = 0.218f;         //绿色线位置在屏幕宽度的比例
 
     private float pitchMarginPx;      //标准一个音符的间距
     private float leftSpacePx;      //基线左边的像素个数
@@ -54,7 +57,8 @@ public class StartLearnSong2 extends BaseActivity {
     private ArrayList<ResultSequence> resultSequences;
     private ArrayList<ImageView> imagePitchViews;
     private boolean resetPlay = true;
-    private VideoView videoView;
+
+    private FullVideoView videoView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +69,16 @@ public class StartLearnSong2 extends BaseActivity {
     }
 
     private void initBackgroundAnim() {
+        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        int widthPx = dm.widthPixels;         // 屏幕宽度（像素）
+        int heightPx = dm.heightPixels;
+        if (heightPx != 0) {
+            if ((widthPx / heightPx) - 16 / 9 > 0.2f) {
+                baselineScaling = 0.27f;
+            }
+        }
         flAddPitch = findViewById(R.id.fl_add_pitch);
         imPlayPause = findViewById(R.id.im_play_pause);
         imPlayPause.setOnClickListener((v) -> clickPlayPause());
@@ -101,6 +115,7 @@ public class StartLearnSong2 extends BaseActivity {
                 = new AnimationsContainer(R.array.bg_res, 30).createProgressDialogAnim(imBg, true);
         mBgAnimation.start();*/
         videoView = findViewById(R.id.bg_video);
+
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.music_woniu));
         videoView.start();
     }
@@ -111,7 +126,6 @@ public class StartLearnSong2 extends BaseActivity {
         playerThread = new Thread(new MusicThread());
         playerThread.start();
     }
-
 
     private void clickPlayPause() {
         if (imagePitchViews == null || imagePitchViews.size() <= 0) {
@@ -152,6 +166,14 @@ public class StartLearnSong2 extends BaseActivity {
         onMyDestroy();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (videoView != null && !videoView.isPlaying()) {
+            videoView.start();
+        }
+    }
+
     private void onMyDestroy() {
         if (mediaPlayer != null) {
             mediaPlayer.stop();
@@ -180,6 +202,7 @@ public class StartLearnSong2 extends BaseActivity {
         mediaPlayer.setOnCompletionListener(mp -> {
             isPlaying = false;
             resetPlay = true;
+            imPlayPause.setImageResource(R.drawable.yyqijian29);
         });
         imagePitchViews = new ArrayList<>();
         for (int i = 0; i < resultSequences.size(); i += 2) {
