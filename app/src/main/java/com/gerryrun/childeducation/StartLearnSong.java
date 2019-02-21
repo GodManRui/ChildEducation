@@ -312,4 +312,45 @@ public class StartLearnSong extends BaseActivity {
         });
         progressDialogAnim.start();*/
     }
+
+    public static int getBearArrays(int resourceId) {
+        switch (resourceId) {
+            case R.drawable.yyqijian12:
+                return R.array.music_bear_do;
+            case R.drawable.yyqijian14:
+                return R.array.music_bear_re;
+            case R.drawable.yyqijian19:
+                return R.array.music_bear_mi;
+            case R.drawable.yyqijian18:
+                return R.array.music_bear_fa;
+            case R.drawable.yyqijian17:
+                return R.array.music_bear_sol;
+            case R.drawable.yyqijian16:
+                return R.array.music_bear_la;
+            case R.drawable.yyqijian13:
+                return R.array.music_bear_si;
+        }
+        return R.array.music_bear_nomal;
+    }
+
+    public static int getFrameArrays(int resourceId) {
+        switch (resourceId) {
+            case R.drawable.yyqijian12:
+                return R.array.music_red;
+            case R.drawable.yyqijian14:
+                return R.array.music_orange;
+            case R.drawable.yyqijian19:
+                return R.array.music_yellow;
+            case R.drawable.yyqijian18:
+                return R.array.music_green;
+            case R.drawable.yyqijian17:
+                return R.array.music_blue;
+
+            //la si 没给爆炸图
+            case R.drawable.yyqijian16:
+            case R.drawable.yyqijian13:
+                return R.array.music_orange;
+        }
+        return 0;
+    }
 }

@@ -25,6 +25,8 @@ import com.gerryrun.childeducation.util.AnimationsContainer;
 
 import java.util.ArrayList;
 
+import static com.gerryrun.childeducation.StartLearnSong.getBearArrays;
+import static com.gerryrun.childeducation.StartLearnSong.getFrameArrays;
 import static com.gerryrun.childeducation.StartLearnSong.getImagePitch;
 
 /**
@@ -51,7 +53,7 @@ public class StartLearnSong2 extends BaseActivity {
     private float la;
     private float si;
     private int pitchWH;
-    private ImageView imageAnimationView;
+    private ImageView imageBoomAnimationView;
     private int mBlastWH;
     private ImageView imPlayPause;
     private ArrayList<ResultSequence> resultSequences;
@@ -59,6 +61,7 @@ public class StartLearnSong2 extends BaseActivity {
     private boolean resetPlay = true;
 
     private FullVideoView videoView;
+    private ImageView imMusicBear;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +74,8 @@ public class StartLearnSong2 extends BaseActivity {
     private void initBackgroundAnim() {
         WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(dm);
+        if (wm != null)
+            wm.getDefaultDisplay().getMetrics(dm);
         int widthPx = dm.widthPixels;         // 屏幕宽度（像素）
         int heightPx = dm.heightPixels;
         if (heightPx != 0) {
@@ -80,6 +84,7 @@ public class StartLearnSong2 extends BaseActivity {
             }
         }
         flAddPitch = findViewById(R.id.fl_add_pitch);
+        imMusicBear = findViewById(R.id.im_music_bear);
         imPlayPause = findViewById(R.id.im_play_pause);
         imPlayPause.setOnClickListener((v) -> clickPlayPause());
         findViewById(R.id.im_home).setOnClickListener(v -> finish());
@@ -103,21 +108,24 @@ public class StartLearnSong2 extends BaseActivity {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(mBlastWH, mBlastWH);
             params.leftMargin = (int) leftSpacePx - mBlastWH / 2;
             Log.w("jerry", "initBackgroundAnim: " + params.leftMargin);
-            imageAnimationView = new ImageView(this);
-            imageAnimationView.setLayoutParams(params);
-            imageAnimationView.setVisibility(View.INVISIBLE);
-            flAddPitch.addView(imageAnimationView);
+            imageBoomAnimationView = new ImageView(this);
+            imageBoomAnimationView.setLayoutParams(params);
+            imageBoomAnimationView.setVisibility(View.INVISIBLE);
+            flAddPitch.addView(imageBoomAnimationView);
         });
 
       /*  ImageView imBg = findViewById(R.id.bg_im);
-//        mBgAnimation = AnimationsContainer.getInstance(R.array.bg_res, 120).createProgressDialogAnim(imBg, false);
         AnimationsContainer mBgAnimation
                 = new AnimationsContainer(R.array.bg_res, 30).createProgressDialogAnim(imBg, true);
         mBgAnimation.start();*/
         videoView = findViewById(R.id.bg_video);
-
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.music_woniu));
         videoView.start();
+
+        AnimationsContainer mBgAnimation
+                = new AnimationsContainer(R.array.music_bear_nomal, 20).createProgressDialogAnim(imMusicBear, true);
+        imMusicBear.setTag(mBgAnimation);
+        mBgAnimation.start();
     }
 
     private void initPlayer() {
@@ -134,7 +142,7 @@ public class StartLearnSong2 extends BaseActivity {
         }
 
         if (isPlaying) {  //播放状态 ，暂停播放
-            imPlayPause.setImageResource(R.drawable.yyqijian29);
+            imPlayPause.setImageResource(R.drawable.music_bofang_dainjiqian);
             for (ImageView imagePitchView : imagePitchViews) {
                 ObjectAnimator translationX = (ObjectAnimator) imagePitchView.getTag();
                 translationX.pause();
@@ -142,7 +150,7 @@ public class StartLearnSong2 extends BaseActivity {
             isPlaying = false;
             mediaPlayer.pause();
         } else { //暂停状态， 开始播放
-            imPlayPause.setImageResource(R.drawable.yyqijian28);
+            imPlayPause.setImageResource(R.drawable.music_zhanting_dianjiqian);
             for (ImageView imagePitchView : imagePitchViews) {
                 ObjectAnimator translationX = (ObjectAnimator) imagePitchView.getTag();
                 if (resetPlay) {             //如果是从头播放的
@@ -202,7 +210,15 @@ public class StartLearnSong2 extends BaseActivity {
         mediaPlayer.setOnCompletionListener(mp -> {
             isPlaying = false;
             resetPlay = true;
-            imPlayPause.setImageResource(R.drawable.yyqijian29);
+            imPlayPause.setImageResource(R.drawable.music_bofang_dainjiqian);
+            AnimationsContainer old = (AnimationsContainer) imMusicBear.getTag();
+            if (old != null) {
+                old.stop();
+                old = null;
+            }
+            AnimationsContainer newAnimationsContainer = new AnimationsContainer(getBearArrays(0), 30).createProgressDialogAnim(imMusicBear, false);
+            imMusicBear.setTag(newAnimationsContainer);
+            newAnimationsContainer.start();
         });
         imagePitchViews = new ArrayList<>();
         for (int i = 0; i < resultSequences.size(); i += 2) {
@@ -265,43 +281,31 @@ public class StartLearnSong2 extends BaseActivity {
     }
 
     private void removeAnimation(ImageView image) {
-        imageAnimationView.clearAnimation();
-        if (imageAnimationView.getVisibility() != View.VISIBLE)
-            imageAnimationView.setVisibility(View.VISIBLE);
-        if (imageAnimationView.getTag() != null) {
-            AnimationsContainer progressDialogAnim = (AnimationsContainer) imageAnimationView.getTag();
+        int resourceId = (int) image.getTag(R.id.tag_resource_id);
+        AnimationsContainer old = (AnimationsContainer) imMusicBear.getTag();
+        if (old != null) {
+            old.stop();
+            old = null;
+        }
+        AnimationsContainer newAnimationsContainer = new AnimationsContainer(getBearArrays(resourceId), 30).createProgressDialogAnim(imMusicBear, false);
+        imMusicBear.setTag(newAnimationsContainer);
+        newAnimationsContainer.start();
+        imageBoomAnimationView.clearAnimation();
+        if (imageBoomAnimationView.getVisibility() != View.VISIBLE)
+            imageBoomAnimationView.setVisibility(View.VISIBLE);
+        if (imageBoomAnimationView.getTag() != null) {
+            AnimationsContainer progressDialogAnim = (AnimationsContainer) imageBoomAnimationView.getTag();
             progressDialogAnim.stop();
             progressDialogAnim = null;
         }
-        FrameLayout.LayoutParams animationParams = (FrameLayout.LayoutParams) imageAnimationView.getLayoutParams();
+        FrameLayout.LayoutParams animationParams = (FrameLayout.LayoutParams) imageBoomAnimationView.getLayoutParams();
         animationParams.topMargin = ((FrameLayout.LayoutParams) image.getLayoutParams()).topMargin - (mBlastWH / 2 - pitchWH / 2);
-        imageAnimationView.setLayoutParams(animationParams);
-        AnimationsContainer progressDialogAnim = new AnimationsContainer(getFrameArrays((int) image.getTag(R.id.tag_resource_id)), 60).createProgressDialogAnim(imageAnimationView, false);
+        imageBoomAnimationView.setLayoutParams(animationParams);
+        AnimationsContainer progressDialogAnim = new AnimationsContainer(getFrameArrays(resourceId), 60).createProgressDialogAnim(imageBoomAnimationView, false);
         flAddPitch.removeView(image);
         progressDialogAnim.start();
-
     }
 
-    private int getFrameArrays(int resourceId) {
-        switch (resourceId) {
-            case R.drawable.yyqijian12:
-                return R.array.music_red;
-            case R.drawable.yyqijian14:
-                return R.array.music_orange;
-            case R.drawable.yyqijian19:
-                return R.array.music_yellow;
-            case R.drawable.yyqijian18:
-                return R.array.music_green;
-            case R.drawable.yyqijian17:
-                return R.array.music_blue;
-
-            //la si 没给爆炸图
-            case R.drawable.yyqijian16:
-            case R.drawable.yyqijian13:
-                return R.array.music_orange;
-        }
-        return 0;
-    }
 
     class MusicThread implements Runnable {
         @Override

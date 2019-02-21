@@ -248,47 +248,47 @@ public class LearnPitch extends BaseActivity  {
             switch (temp) {
                 case 0:
                     setImageView(imDo);
-                    return R.drawable.yyqijian30;
+                    return R.drawable.music_keysdianjihou_1;
                 case 1:
                     setImageView(imRe);
-                    return R.drawable.yyqijian31;
+                    return R.drawable.music_keysdianjihou_2;
                 case 2:
                     setImageView(imMi);
-                    return R.drawable.yyqijian32;
+                    return R.drawable.music_keysdianjihou_3;
                 case 3:
                     setImageView(imFa);
-                    return R.drawable.yyqijian33;
+                    return R.drawable.music_keysdianjihou_4;
                 case 4:
                     setImageView(imSol);
-                    return R.drawable.yyqijian34;
+                    return R.drawable.music_keysdianjihou_5;
                 case 5:
                     setImageView(imLa);
-                    return R.drawable.yyqijian35;
+                    return R.drawable.music_keysdianjihou_6;
                 case 6:
                     setImageView(imSi);
-                    return R.drawable.yyqijian36;
+                    return R.drawable.music_keysdianjihou_7;
                 case 7:
                     setImageView(imDol);
-                    return R.drawable.yyqijian37;
+                    return R.drawable.music_keysdianjihou_8;
             }
         } else
             switch (temp) {
                 case 0:
-                    return R.drawable.yyqijian1;
+                    return R.drawable.music_keysdianjiqian_1;
                 case 1:
-                    return R.drawable.yyqijian2;
+                    return R.drawable.music_keysdianjiqian_2;
                 case 2:
-                    return R.drawable.yyqijian3;
+                    return R.drawable.music_keysdianjiqian_3;
                 case 3:
-                    return R.drawable.yyqijian4;
+                    return R.drawable.music_keysdianjiqian_4;
                 case 4:
-                    return R.drawable.yyqijian5;
+                    return R.drawable.music_keysdianjiqian_5;
                 case 5:
-                    return R.drawable.yyqijian6;
+                    return R.drawable.music_keysdianjiqian_6;
                 case 6:
-                    return R.drawable.yyqijian7;
+                    return R.drawable.music_keysdianjiqian_7;
                 case 7:
-                    return R.drawable.yyqijian8;
+                    return R.drawable.music_keysdianjiqian_8;
             }
         return 0;
     }

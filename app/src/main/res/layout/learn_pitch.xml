@@ -8,33 +8,33 @@
         android:id="@+id/im_go_home"
         android:layout_width="@dimen/dp_78"
         android:layout_height="@dimen/dp_71"
-        android:layout_marginStart="@dimen/dp_16"
         android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_4"
         android:src="@drawable/home" />
 
     <ImageView
         android:layout_width="@dimen/dp_78"
         android:layout_height="@dimen/dp_116"
-        android:layout_marginStart="@dimen/dp_18"
         android:layout_marginLeft="@dimen/dp_18"
+        android:layout_marginStart="@dimen/dp_18"
         android:layout_marginTop="@dimen/dp_116"
         android:src="@drawable/pitch" />
 
     <Button
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_60"
         android:layout_alignParentRight="true"
-        android:onClick="learnChildSong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="学儿歌" />
+        android:background="@drawable/music_xueerge"
+        android:onClick="learnChildSong" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/dp_94"
-        android:paddingLeft="@dimen/dp_94"
         android:paddingEnd="@dimen/dp_82"
-        android:paddingRight="@dimen/dp_82">
+        android:paddingLeft="@dimen/dp_94"
+        android:paddingRight="@dimen/dp_82"
+        android:paddingStart="@dimen/dp_94">
 
 
         <LinearLayout
@@ -212,66 +212,66 @@
             android:layout_height="match_parent"
             android:layout_below="@id/ll_pitch"
             android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp_20"
             android:paddingLeft="@dimen/dp_4"
-            android:paddingTop="@dimen/dp_26"
             android:paddingRight="@dimen/dp_2"
-            android:paddingBottom="@dimen/dp_20">
+            android:paddingTop="@dimen/dp_26">
 
             <Button
                 android:id="@+id/duo"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/yyqijian1" />
+                android:background="@drawable/music_keysdianjiqian_1" />
 
             <Button
                 android:id="@+id/re"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/yyqijian2" />
+                android:background="@drawable/music_keysdianjiqian_2" />
 
             <Button
                 android:id="@+id/mi"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/yyqijian3" />
+                android:background="@drawable/music_keysdianjiqian_3" />
 
             <Button
                 android:id="@+id/fa"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/yyqijian4" />
+                android:background="@drawable/music_keysdianjiqian_4" />
 
             <Button
                 android:id="@+id/sol"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/yyqijian5" />
+                android:background="@drawable/music_keysdianjiqian_5" />
 
             <Button
                 android:id="@+id/la"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/yyqijian6" />
+                android:background="@drawable/music_keysdianjiqian_6" />
 
             <Button
                 android:id="@+id/si"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/yyqijian7" />
+                android:background="@drawable/music_keysdianjiqian_7" />
 
             <Button
                 android:id="@+id/do1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/yyqijian8" />
+                android:background="@drawable/music_keysdianjiqian_8" />
         </LinearLayout>
 
     </RelativeLayout>

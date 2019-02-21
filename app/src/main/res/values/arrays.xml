@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--月亮星星背景-->
     <array name="bg_res">
         <item>@drawable/learn_the_background_of_nursery_rhy1_1</item>
         <item>@drawable/learn_the_background_of_nursery_rhy1_2</item>
@@ -277,5 +278,119 @@
         <item>@drawable/music_yellow_18</item>
         <item>@drawable/music_yellow_19</item>
         <item>@drawable/music_yellow_20</item>
+    </array>
+
+
+    <array name="music_bear_nomal">
+        <item>@drawable/music_bear_1</item>
+        <item>@drawable/music_bear_2</item>
+        <item>@drawable/music_bear_3</item>
+        <item>@drawable/music_bear_4</item>
+        <item>@drawable/music_bear_5</item>
+        <item>@drawable/music_bear_6</item>
+        <item>@drawable/music_bear_7</item>
+        <item>@drawable/music_bear_8</item>
+        <item>@drawable/music_bear_9</item>
+        <item>@drawable/music_bear_10</item>
+        <item>@drawable/music_bear_11</item>
+        <item>@drawable/music_bear_12</item>
+        <item>@drawable/music_bear_13</item>
+        <item>@drawable/music_bear_14</item>
+        <item>@drawable/music_bear_15</item>
+        <item>@drawable/music_bear_16</item>
+        <item>@drawable/music_bear_17</item>
+    </array>
+
+    <array name="music_bear_do">
+        <item>@drawable/music_bear_18</item>
+        <item>@drawable/music_bear_20</item>
+        <item>@drawable/music_bear_21</item>
+        <item>@drawable/music_bear_22</item>
+        <item>@drawable/music_bear_23</item>
+        <item>@drawable/music_bear_24</item>
+        <item>@drawable/music_bear_25</item>
+        <item>@drawable/music_bear_26</item>
+        <item>@drawable/music_bear_27</item>
+        <item>@drawable/music_bear_28</item>
+        <item>@drawable/music_bear_28</item>
+    </array>
+    <array name="music_bear_re">
+        <item>@drawable/music_bear_29</item>
+        <item>@drawable/music_bear_30</item>
+        <item>@drawable/music_bear_31</item>
+        <item>@drawable/music_bear_32</item>
+        <item>@drawable/music_bear_33</item>
+        <item>@drawable/music_bear_34</item>
+        <item>@drawable/music_bear_35</item>
+        <item>@drawable/music_bear_36</item>
+        <item>@drawable/music_bear_37</item>
+        <item>@drawable/music_bear_38</item>
+        <item>@drawable/music_bear_39</item>
+    </array>
+    <array name="music_bear_mi">
+        <item>@drawable/music_bear_40</item>
+        <item>@drawable/music_bear_41</item>
+        <item>@drawable/music_bear_42</item>
+        <item>@drawable/music_bear_43</item>
+        <item>@drawable/music_bear_44</item>
+        <item>@drawable/music_bear_45</item>
+        <item>@drawable/music_bear_46</item>
+        <item>@drawable/music_bear_47</item>
+        <item>@drawable/music_bear_48</item>
+        <item>@drawable/music_bear_49</item>
+        <item>@drawable/music_bear_50</item>
+    </array>
+    <array name="music_bear_fa">
+        <item>@drawable/music_bear_51</item>
+        <item>@drawable/music_bear_52</item>
+        <item>@drawable/music_bear_53</item>
+        <item>@drawable/music_bear_54</item>
+        <item>@drawable/music_bear_55</item>
+        <item>@drawable/music_bear_56</item>
+        <item>@drawable/music_bear_57</item>
+        <item>@drawable/music_bear_58</item>
+        <item>@drawable/music_bear_59</item>
+        <item>@drawable/music_bear_60</item>
+        <item>@drawable/music_bear_61</item>
+    </array>
+    <array name="music_bear_sol">
+        <item>@drawable/music_bear_62</item>
+        <item>@drawable/music_bear_63</item>
+        <item>@drawable/music_bear_64</item>
+        <item>@drawable/music_bear_65</item>
+        <item>@drawable/music_bear_66</item>
+        <item>@drawable/music_bear_67</item>
+        <item>@drawable/music_bear_68</item>
+        <item>@drawable/music_bear_69</item>
+        <item>@drawable/music_bear_70</item>
+        <item>@drawable/music_bear_71</item>
+        <item>@drawable/music_bear_72</item>
+    </array>
+    <array name="music_bear_la">
+        <item>@drawable/music_bear_73</item>
+        <item>@drawable/music_bear_74</item>
+        <item>@drawable/music_bear_75</item>
+        <item>@drawable/music_bear_76</item>
+        <item>@drawable/music_bear_77</item>
+        <item>@drawable/music_bear_78</item>
+        <item>@drawable/music_bear_79</item>
+        <item>@drawable/music_bear_80</item>
+        <item>@drawable/music_bear_81</item>
+        <item>@drawable/music_bear_82</item>
+        <item>@drawable/music_bear_83</item>
+    </array>
+    <array name="music_bear_si">
+        <item>@drawable/music_bear_84</item>
+        <item>@drawable/music_bear_85</item>
+        <item>@drawable/music_bear_86</item>
+        <item>@drawable/music_bear_87</item>
+        <item>@drawable/music_bear_88</item>
+        <item>@drawable/music_bear_89</item>
+        <item>@drawable/music_bear_90</item>
+        <item>@drawable/music_bear_91</item>
+        <item>@drawable/music_bear_92</item>
+        <item>@drawable/music_bear_93</item>
+        <item>@drawable/music_bear_94</item>
+        <item>@drawable/music_bear_95</item>
     </array>
 </resources>
