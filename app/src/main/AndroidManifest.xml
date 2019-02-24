@@ -48,6 +48,10 @@
             android:name=".StartLearnSong2"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".GuessDifferentiate"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

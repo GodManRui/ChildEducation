@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/music_beijing_1">
+
+    <!--灯光 正确答案-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingBottom="8dp"
+            android:src="@drawable/music_jingcai_dengguang" />
+
+        <ImageView
+            android:id="@+id/im_right_answer"
+            android:layout_width="@dimen/dp_122"
+            android:layout_height="@dimen/dp_122"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:src="@drawable/music_woshitingyinwang_sakesi" />
+    </RelativeLayout>
+    <!--幕布-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/im_mubu_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/music_mubu_zuo" />
+
+        <ImageView
+            android:id="@+id/im_mubu_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/music_mubu_you" />
+    </LinearLayout>
+
+    <!--帘布-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/music_beijing_2" />
+    <!--选择题-->
+    <RelativeLayout
+        android:id="@+id/rl_answer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_83"
+        android:layout_centerVertical="true"
+        android:animateLayoutChanges="true">
+
+        <!--题目-->
+        <ImageView
+            android:id="@+id/im_questions_1"
+            android:layout_width="@dimen/dp_93"
+            android:layout_height="@dimen/dp_83"
+            android:layout_marginStart="@dimen/dp_134"
+            android:src="@drawable/music_woshitingyinwang_xiaohao" />
+
+        <ImageView
+            android:id="@+id/im_questions_2"
+            android:layout_width="@dimen/dp_93"
+            android:layout_height="@dimen/dp_83"
+            android:layout_marginStart="@dimen/dp_274"
+            android:src="@drawable/music_woshitingyinwang_sakesi1" />
+
+        <ImageView
+            android:id="@+id/im_questions_3"
+            android:layout_width="@dimen/dp_93"
+            android:layout_height="@dimen/dp_83"
+            android:layout_marginStart="@dimen/dp_415"
+            android:src="@drawable/music_woshitingyinwang_xiaotiqin" />
+
+        <!--对错号-->
+        <ImageView
+            android:id="@+id/im_judge_1"
+            android:layout_width="@dimen/dp_57"
+            android:layout_height="@dimen/dp_49"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_198"
+            android:maxHeight="@dimen/dp_49"
+            android:maxWidth="@dimen/dp_57"
+            android:src="@drawable/music_duihao"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/im_judge_2"
+            android:layout_width="@dimen/dp_57"
+            android:layout_height="@dimen/dp_49"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_343"
+            android:src="@drawable/music_cuohao"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/im_judge_3"
+            android:layout_width="@dimen/dp_57"
+            android:layout_height="@dimen/dp_49"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_485"
+            android:src="@drawable/music_cuohao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/im_guess_return"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_46"
+        android:layout_marginStart="@dimen/dp_28"
+        android:layout_marginTop="@dimen/dp_20"
+        android:src="@drawable/music_return" />
+</RelativeLayout>
