@@ -23,8 +23,10 @@ public class GuessDifferentiate extends BaseActivity {
     private ImageView imMuLeft;
     private ImageView imMuRight;
     private ImageView imRightAnswer;
+    private boolean isChecked;
 
     @Override
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.music_guess_answer);
@@ -59,6 +61,8 @@ public class GuessDifferentiate extends BaseActivity {
     }
 
     private void answer(int answer) {
+        if (isChecked) return;
+        isChecked = true;
         imJudge1.setVisibility(View.VISIBLE);
         imJudge2.setVisibility(View.VISIBLE);
         imJudge3.setVisibility(View.VISIBLE);

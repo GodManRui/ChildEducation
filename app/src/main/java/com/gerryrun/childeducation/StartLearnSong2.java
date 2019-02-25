@@ -130,7 +130,7 @@ public class StartLearnSong2 extends BaseActivity {
 
     private void initPlayer() {
         //将声音资源文件设置给MediaPlayer对象
-        mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
+        mediaPlayer = MediaPlayer.create(this, R.raw.elise);
         playerThread = new Thread(new MusicThread());
         playerThread.start();
     }
@@ -312,7 +312,7 @@ public class StartLearnSong2 extends BaseActivity {
         public void run() {
             //todo 解析文件
             ReadMIDI readMIDI = new ReadMIDI();
-            resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.small_start));
+            resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.elise));
             if (resultSequences == null) {
                 Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
                 return;

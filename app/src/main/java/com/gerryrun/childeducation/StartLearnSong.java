@@ -1,9 +1,6 @@
 package com.gerryrun.childeducation;
 
 import android.annotation.SuppressLint;
-import android.content.res.TypedArray;
-import android.graphics.drawable.AnimationDrawable;
-import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,14 +8,12 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.gerryrun.childeducation.parse.ReadMIDI;
 import com.gerryrun.childeducation.parse.entity.ResultSequence;
 import com.gerryrun.childeducation.util.AnimationsContainer;
-import com.gerryrun.childeducation.util.FrameAnimation;
 
 import java.util.ArrayList;
 
@@ -99,7 +94,7 @@ public class StartLearnSong extends BaseActivity {
 
     private void initPlayer() {
         //将声音资源文件设置给MediaPlayer对象
-        mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
+        mediaPlayer = MediaPlayer.create(this, R.raw.elise);
         playerThread = new Thread(new MusicThread());
         playerThread.start();
     }
@@ -197,7 +192,7 @@ public class StartLearnSong extends BaseActivity {
         public void run() {
             //todo 解析文件
             ReadMIDI readMIDI = new ReadMIDI();
-            ArrayList<ResultSequence> resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.small_start));
+            ArrayList<ResultSequence> resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.elise));
             if (resultSequences == null) {
                 Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
                 return;

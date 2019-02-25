@@ -69,14 +69,14 @@
             android:layout_width="@dimen/dp_93"
             android:layout_height="@dimen/dp_83"
             android:layout_marginStart="@dimen/dp_134"
-            android:src="@drawable/music_woshitingyinwang_xiaohao" />
+            android:src="@drawable/music_woshitingyinwang_sakesi1" />
 
         <ImageView
             android:id="@+id/im_questions_2"
             android:layout_width="@dimen/dp_93"
             android:layout_height="@dimen/dp_83"
             android:layout_marginStart="@dimen/dp_274"
-            android:src="@drawable/music_woshitingyinwang_sakesi1" />
+            android:src="@drawable/music_woshitingyinwang_xiaohao" />
 
         <ImageView
             android:id="@+id/im_questions_3"
