@@ -1,11 +1,8 @@
 package com.gerryrun.childeducation;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,14 +10,14 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.gerryrun.childeducation.util.AnimationsContainer;
 import com.gerryrun.childeducation.util.PianoMusic;
-import com.gerryrun.childeducation.util.StatusBarColor;
 
-public class LearnPitch extends BaseActivity  {
+public class LearnPitch extends BaseActivity {
 
     private Button button[];// 按钮数组
     private PianoMusic player;// 工具类
@@ -35,6 +32,7 @@ public class LearnPitch extends BaseActivity  {
     private View imLa;
     private View imSi;
     private View imDol;
+    private ImageView imTvAnimation;
 
 
     @Override
@@ -56,6 +54,8 @@ public class LearnPitch extends BaseActivity  {
         imLa = findViewById(R.id.im_la);
         imSi = findViewById(R.id.im_si);
         imDol = findViewById(R.id.im_dol);
+
+        imTvAnimation = findViewById(R.id.im_animation);
 
         findViewById(R.id.im_go_home).setOnClickListener((v) -> finish());
         keys.setClickable(true);
@@ -247,27 +247,35 @@ public class LearnPitch extends BaseActivity  {
         if (isPress) {
             switch (temp) {
                 case 0:
+                    showTvAnimation(R.array.music_tv_do);
                     setImageView(imDo);
                     return R.drawable.music_keysdianjihou_1;
                 case 1:
+                    showTvAnimation(R.array.music_tv_re);
                     setImageView(imRe);
                     return R.drawable.music_keysdianjihou_2;
                 case 2:
+                    showTvAnimation(R.array.music_tv_mi);
                     setImageView(imMi);
                     return R.drawable.music_keysdianjihou_3;
                 case 3:
+                    showTvAnimation(R.array.music_tv_fa);
                     setImageView(imFa);
                     return R.drawable.music_keysdianjihou_4;
                 case 4:
+                    showTvAnimation(R.array.music_tv_sol);
                     setImageView(imSol);
                     return R.drawable.music_keysdianjihou_5;
                 case 5:
+                    showTvAnimation(R.array.music_tv_la);
                     setImageView(imLa);
                     return R.drawable.music_keysdianjihou_6;
                 case 6:
+                    showTvAnimation(R.array.music_tv_si);
                     setImageView(imSi);
                     return R.drawable.music_keysdianjihou_7;
                 case 7:
+                    showTvAnimation(R.array.music_tv_dol);
                     setImageView(imDol);
                     return R.drawable.music_keysdianjihou_8;
             }
@@ -293,6 +301,20 @@ public class LearnPitch extends BaseActivity  {
         return 0;
     }
 
+    private void showTvAnimation(int arrays) {
+        Object tag = imTvAnimation.getTag();
+        if (tag != null) {
+            AnimationsContainer old = (AnimationsContainer) tag;
+            old.stop();
+            old = null;
+            tag = null;
+        }
+        AnimationsContainer mBgAnimation
+                = new AnimationsContainer(arrays, 34).createProgressDialogAnim(imTvAnimation, false);
+        imTvAnimation.setTag(mBgAnimation);
+        mBgAnimation.start();
+    }
+
     private void setImageView(View imageView) {
         if (imageView != null && imageView.getVisibility() != View.VISIBLE)
             imageView.setVisibility(View.VISIBLE);
@@ -309,6 +331,12 @@ public class LearnPitch extends BaseActivity  {
     }
 
     public void showMenu(View view) {
+        Animation animation = view.getAnimation();
+        if (animation != null) {
+            animation.reset();
+            view.startAnimation(animation);
+            return;
+        }
         AnimationSet swellAnimationSet = new AnimationSet(true);
         swellAnimationSet.addAnimation(new ScaleAnimation(0.5f, 1.0f, 0.5f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f));
