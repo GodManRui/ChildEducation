@@ -15,7 +15,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/music_xueyingaobeijng1" />
+        android:scaleType="fitXY"
+        android:src="@drawable/music_xueyingaobeijng_1920" />
 
     <ImageView
         android:id="@+id/im_go_home"
@@ -26,35 +27,28 @@
         android:src="@drawable/music_homepage" />
 
 
-    <ImageView
-        android:layout_width="@dimen/dp_78"
-        android:layout_height="@dimen/dp_116"
-        android:layout_marginStart="@dimen/dp_18"
-        android:layout_marginLeft="@dimen/dp_18"
-        android:layout_marginTop="@dimen/dp_116"
-        android:src="@drawable/pitch" />
-
     <ImageButton
         android:layout_width="@dimen/dp_90"
         android:layout_height="@dimen/dp_58"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/dp_7"
         android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_7"
         android:background="@drawable/music_xueerge"
         android:onClick="learnChildSong"
         android:scaleType="centerInside" />
 
     <RelativeLayout
         android:id="@+id/ll_pitch"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_422"
         android:layout_height="@dimen/dp_121"
-        android:layout_marginTop="@dimen/dp_132">
+        android:layout_marginStart="@dimen/dp_109"
+        android:layout_marginTop="@dimen/dp_130">
 
-        <ImageView
-            android:id="@+id/yuekuang"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_121"
-            android:background="@drawable/music_yinyuekaung" />
+        <!--   <ImageView
+               android:id="@+id/yuekuang"
+               android:layout_width="match_parent"
+               android:layout_height="@dimen/dp_121"
+               android:background="@drawable/music_yinyuekaung" />-->
 
 
         <ImageView
@@ -62,7 +56,6 @@
             android:layout_width="@dimen/dp_37"
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_109"
             android:layout_marginBottom="@dimen/dp_4_5"
             android:gravity="center"
             android:scaleType="centerInside"
@@ -75,8 +68,8 @@
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/dp_164"
             android:layout_marginBottom="@dimen/dp_12"
+            android:layout_marginStart="@dimen/dp_55"
             android:gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/yyqijian14"
@@ -88,8 +81,8 @@
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/dp_218"
             android:layout_marginBottom="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_218"
             android:gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/yyqijian19"
@@ -101,8 +94,8 @@
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:layout_marginStart="@dimen/dp_273"
             android:layout_marginBottom="@dimen/dp_35"
+            android:layout_marginStart="@dimen/dp_273"
             android:gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/yyqijian18"
@@ -125,8 +118,8 @@
             android:layout_width="@dimen/dp_37"
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/dp_27"
             android:layout_marginEnd="@dimen/dp_221"
+            android:layout_marginTop="@dimen/dp_27"
             android:gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/yyqijian16"
@@ -137,8 +130,8 @@
             android:layout_width="@dimen/dp_37"
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/dp_15"
             android:layout_marginEnd="@dimen/dp_167"
+            android:layout_marginTop="@dimen/dp_15"
             android:gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/yyqijian13"
@@ -150,8 +143,8 @@
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentEnd="true"
             android:layout_gravity="bottom"
-            android:layout_marginTop="@dimen/dp_3_5"
             android:layout_marginEnd="@dimen/dp_112"
+            android:layout_marginTop="@dimen/dp_3_5"
             android:gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/yyqijian12"
@@ -160,12 +153,16 @@
     <!--//android:layout_marginTop="@dimen/hand_tb_margin_top"-->
     <LinearLayout
         android:id="@+id/llKeys"
-        android:layout_width="@dimen/dp_470"
-        android:layout_height="@dimen/dp_97"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_106"
         android:layout_below="@id/ll_pitch"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/dp_80"
-        android:layout_marginTop="@dimen/dp_12"
-        android:orientation="horizontal">
+        android:background="@drawable/music_yinyuekaung_gangqinkuang"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_42"
+        android:paddingRight="@dimen/dp_42"
+        android:paddingTop="@dimen/dp_8">
 
         <Button
             android:id="@+id/duo"

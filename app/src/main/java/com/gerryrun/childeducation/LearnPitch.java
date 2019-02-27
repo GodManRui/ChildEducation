@@ -1,6 +1,7 @@
 package com.gerryrun.childeducation;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -95,6 +96,10 @@ public class LearnPitch extends BaseActivity {
     }
 
     private boolean onTouchListener(View v, MotionEvent event) {
+
+        Configuration config = getResources().getConfiguration();
+        int  smallestScreenWidth = config.smallestScreenWidthDp;
+        Log.e("jerry", "onTouchListener: "+smallestScreenWidth);
         int temp;
         int tempIndex;
         int pointercount;
