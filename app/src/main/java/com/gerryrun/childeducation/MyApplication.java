@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import tech.linjiang.pandora.Pandora;
+
 public class MyApplication extends Application {
     private static Context context;
 
@@ -17,11 +19,11 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-//        Pandora.init(this).open();
+        Pandora.get().open();
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                Log.e("jerry", "onActivityCreated: "+activity.getClass().getName());
+                Log.e("jerry", "onActivityCreated: " + activity.getClass().getName());
             }
 
             @Override

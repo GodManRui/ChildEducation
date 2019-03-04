@@ -54,4 +54,9 @@ public class ResultSequence {
         }
         pitch = message.substring(6, 8);
     }
+
+    @Override
+    public String toString() {
+        return currentTime + "  事件: " + message;
+    }
 }
