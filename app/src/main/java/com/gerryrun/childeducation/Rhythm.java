@@ -75,9 +75,15 @@ public class Rhythm extends BaseActivity {
 
     private void startPlay() {
         float startPx = imYuePu.getWidth() * 0.24f;
-        float width =  imYuePu.getWidth() * 0.94f;
+        float width = imYuePu.getWidth() * 0.6046f;
         Log.e("jerry", "startPlay: " + px2dip(width));
         mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
+
+
+
+
+
+
         int duration = mediaPlayer.getDuration();
         Log.e("jerry", "startPlay: " + " 开始偏移量: " + px2dip(startPx) + " 宽度：" + px2dip(width) + "  时间:" + duration);
         new Thread(() -> {
@@ -86,7 +92,7 @@ public class Rhythm extends BaseActivity {
                 if (currentPlay > duration) continue;
                 double currentNoteTime = resultSequences.get(0).getCurrentTime() * 1000;
                 if (currentPlay > currentNoteTime) {
-                    double marginLeft = startPx + width * (currentNoteTime / 7000);
+                    double marginLeft = startPx + width * (currentNoteTime / 5420);
                     Log.e("jerry", "大于了: 节点 " + currentNoteTime + " 当前：" + ((double) currentPlay) + "ms  marleft: " + px2dip((int) marginLeft) + "   int：" + (int) marginLeft);
                     runOnUiThread(() -> {
                         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) vIndicator.getLayoutParams();
