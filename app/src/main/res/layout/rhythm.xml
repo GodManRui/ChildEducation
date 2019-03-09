@@ -10,11 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
-        <View
-            android:id="@+id/v_indicator"
-            android:layout_width="@dimen/dp_1"
-            android:layout_height="@dimen/dp_20"
-            android:background="@android:color/black" />
 
         <ImageView
             android:id="@+id/im_yue_pu"
@@ -22,6 +17,13 @@
             android:layout_height="wrap_content"
             android:src="@drawable/music_yinlv_xiaoxingxing"
             android:visibility="invisible" />
+
+        <View
+            android:id="@+id/v_indicator"
+            android:layout_width="@dimen/dp_1"
+            android:layout_height="@dimen/dp_21"
+            android:background="@android:color/black" />
+
     </RelativeLayout>
 
     <RelativeLayout

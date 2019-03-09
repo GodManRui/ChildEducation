@@ -74,15 +74,10 @@ public class Rhythm extends BaseActivity {
     }
 
     private void startPlay() {
-        float startPx = imYuePu.getWidth() * 0.24f;
+        float startPx = imYuePu.getWidth() * 0.26f;
         float width = imYuePu.getWidth() * 0.6046f;
         Log.e("jerry", "startPlay: " + px2dip(width));
         mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
-
-
-
-
-
 
         int duration = mediaPlayer.getDuration();
         Log.e("jerry", "startPlay: " + " 开始偏移量: " + px2dip(startPx) + " 宽度：" + px2dip(width) + "  时间:" + duration);
