@@ -140,7 +140,7 @@ public class StartLearnSong2 extends BaseActivity {
             Toast.makeText(this, "正在初始化,请稍后", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        Log.e("jerry", "clickPlayPause: " + Thread.currentThread().getName());
         if (isPlaying) {  //播放状态 ，暂停播放
             imPlayPause.setImageResource(R.drawable.music_bofang_dainjiqian);
             for (ImageView imagePitchView : imagePitchViews) {
@@ -248,6 +248,7 @@ public class StartLearnSong2 extends BaseActivity {
         ObjectAnimator translationX = ObjectAnimator.ofFloat(imageView, "translationX", flAddPitch.getWidth() * fromXValue, flAddPitch.getWidth() * baselineScaling);
         long round = Math.round(resultSequence.getCurrentTime() * 1000);
         translationX.setInterpolator(new LinearInterpolator());
+        Log.e("jerry", "clickPlayPause: 创建 " + Thread.currentThread().getName()+"   round: "+round);
         translationX.setDuration(round);
         translationX.addListener(new AnimatorListenerAdapter() {
             @Override

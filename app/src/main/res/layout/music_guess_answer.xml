@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/music_beijing_1">
+    android:background="@drawable/music_beijing_1"
+    android:clipChildren="false">
 
     <!--灯光 正确答案-->
     <RelativeLayout
@@ -55,34 +56,35 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/music_beijing_2" />
+
     <!--选择题-->
     <RelativeLayout
         android:id="@+id/rl_answer"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/dp_415"
         android:layout_height="@dimen/dp_83"
-        android:layout_centerVertical="true"
-        android:animateLayoutChanges="true">
+        android:layout_centerInParent="true"
+        android:animateLayoutChanges="true"
+        android:clipChildren="false">
 
         <!--题目-->
         <ImageView
             android:id="@+id/im_questions_1"
             android:layout_width="@dimen/dp_93"
             android:layout_height="@dimen/dp_83"
-            android:layout_marginStart="@dimen/dp_134"
             android:src="@drawable/music_woshitingyinwang_sakesi1" />
 
         <ImageView
             android:id="@+id/im_questions_2"
             android:layout_width="@dimen/dp_93"
             android:layout_height="@dimen/dp_83"
-            android:layout_marginStart="@dimen/dp_274"
+            android:layout_centerInParent="true"
             android:src="@drawable/music_woshitingyinwang_xiaohao" />
 
         <ImageView
             android:id="@+id/im_questions_3"
             android:layout_width="@dimen/dp_93"
             android:layout_height="@dimen/dp_83"
-            android:layout_marginStart="@dimen/dp_415"
+            android:layout_alignParentEnd="true"
             android:src="@drawable/music_woshitingyinwang_xiaotiqin" />
 
         <!--对错号-->
@@ -91,7 +93,7 @@
             android:layout_width="@dimen/dp_57"
             android:layout_height="@dimen/dp_49"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_198"
+            android:layout_marginStart="@dimen/dp_66"
             android:maxHeight="@dimen/dp_49"
             android:maxWidth="@dimen/dp_57"
             android:src="@drawable/music_duihao"
@@ -102,8 +104,9 @@
             android:layout_width="@dimen/dp_57"
             android:layout_height="@dimen/dp_49"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_343"
+            android:layout_centerInParent="true"
             android:src="@drawable/music_cuohao"
+            android:translationX="@dimen/dp_47"
             android:visibility="invisible" />
 
         <ImageView
@@ -111,8 +114,9 @@
             android:layout_width="@dimen/dp_57"
             android:layout_height="@dimen/dp_49"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_485"
+            android:layout_alignParentEnd="true"
             android:src="@drawable/music_cuohao"
+            android:translationX="@dimen/dp_24"
             android:visibility="invisible" />
     </RelativeLayout>
 

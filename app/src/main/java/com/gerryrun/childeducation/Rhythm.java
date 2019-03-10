@@ -1,22 +1,17 @@
 package com.gerryrun.childeducation;
 
+import android.content.res.Resources;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.gerryrun.childeducation.parse.ReadMIDI;
 import com.gerryrun.childeducation.parse.entity.ResultSequence;
-import com.gerryrun.childeducation.util.DensityUtil;
 
 import java.util.ArrayList;
-
-import static tech.linjiang.pandora.util.ViewKnife.px2dip;
 
 public class Rhythm extends BaseActivity {
 
@@ -58,6 +53,7 @@ public class Rhythm extends BaseActivity {
         });
         findViewById(R.id.rl_select_song).setOnClickListener((v) -> {
             v.setVisibility(View.GONE);
+            vIndicator.setVisibility(View.VISIBLE);
             imYuePu.setVisibility(View.VISIBLE);
             startPlay();
         });
@@ -72,7 +68,10 @@ public class Rhythm extends BaseActivity {
         }
         resultSequences.clear();
     }
-
+    public static int px2dip(float pxValue) {
+        float scale = Resources.getSystem().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
     private void startPlay() {
         float startPx = imYuePu.getWidth() * 0.26f;
         float width = imYuePu.getWidth() * 0.6046f;
@@ -85,6 +84,11 @@ public class Rhythm extends BaseActivity {
             while (resultSequences.size() > 0) {
                 long currentPlay = System.currentTimeMillis() - startPlayTimeMillis;
                 if (currentPlay > duration) continue;
+                if (currentPlay > 6520) {
+                    resultSequences.clear();
+                    mediaPlayer.stop();
+                    return;
+                }
                 double currentNoteTime = resultSequences.get(0).getCurrentTime() * 1000;
                 if (currentPlay > currentNoteTime) {
                     double marginLeft = startPx + width * (currentNoteTime / 5420);

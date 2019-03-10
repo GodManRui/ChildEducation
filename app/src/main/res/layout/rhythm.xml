@@ -21,6 +21,7 @@
         <View
             android:id="@+id/v_indicator"
             android:layout_width="@dimen/dp_1"
+            android:visibility="gone"
             android:layout_height="@dimen/dp_21"
             android:background="@android:color/black" />
 
