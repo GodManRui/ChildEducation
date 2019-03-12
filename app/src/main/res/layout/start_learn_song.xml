@@ -44,7 +44,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="@dimen/dp_20"
         android:layout_marginEnd="@dimen/dp_45"
-        android:src="@drawable/home" />
+        android:src="@drawable/music_return" />
 
     <ImageView
         android:id="@+id/im_music_bear"
