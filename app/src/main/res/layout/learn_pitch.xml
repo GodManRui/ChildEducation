@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/im_go_home"
-        android:layout_width="@dimen/dp_34"
-        android:layout_height="@dimen/dp_32"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_46"
         android:layout_marginStart="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_17"
         android:src="@drawable/music_homepage" />
@@ -31,8 +31,8 @@
         android:layout_width="@dimen/dp_90"
         android:layout_height="@dimen/dp_58"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_7"
+        android:layout_marginEnd="@dimen/dp_16"
         android:background="@drawable/music_xueerge"
         android:onClick="learnChildSong"
         android:scaleType="centerInside" />
@@ -56,8 +56,8 @@
             android:layout_width="@dimen/dp_37"
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_4_5"
             android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginBottom="@dimen/dp_4_5"
             android:gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/yyqijian15"
@@ -69,8 +69,8 @@
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="@dimen/dp_12"
             android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_12"
             android:layout_toRightOf="@id/im_do"
             android:gravity="center"
             android:scaleType="centerInside"
@@ -82,8 +82,8 @@
             android:layout_width="@dimen/dp_37"
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_24"
             android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_24"
             android:layout_toRightOf="@id/im_re"
             android:gravity="center"
             android:scaleType="centerInside"
@@ -95,8 +95,8 @@
             android:layout_width="@dimen/dp_37"
             android:layout_height="@dimen/dp_37"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_35"
             android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginBottom="@dimen/dp_35"
             android:layout_toRightOf="@id/im_mi"
             android:gravity="center"
             android:scaleType="centerInside"
@@ -161,8 +161,8 @@
         android:background="@drawable/music_yinyuekaung_gangqinkuang"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dp_38"
-        android:paddingRight="@dimen/dp_38"
-        android:paddingTop="@dimen/dp_8">
+        android:paddingTop="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_38">
 
         <Button
             android:id="@+id/duo"

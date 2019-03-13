@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/music_zhuyebeijing"
     android:padding="15dp"
-    tools:context=".MainActivity">
+    tools:context=".piano.MainActivity">
 
     <Button
         android:layout_width="0dp"

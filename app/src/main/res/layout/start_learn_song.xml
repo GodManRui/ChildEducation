@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.gerryrun.childeducation.customview.FullVideoView
+    <com.gerryrun.childeducation.piano.customview.FullVideoView
         android:id="@+id/bg_video"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -30,27 +30,27 @@
         android:id="@+id/im_play_pause"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/dp_95"
-        android:src="@drawable/music_bofang_dainjiqian" />
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@drawable/play" />
 
     <ImageView
         android:id="@+id/im_home"
         android:layout_width="@dimen/dp_40"
         android:layout_height="@dimen/dp_40"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="@dimen/dp_20"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="@dimen/dp_45"
+        android:layout_marginBottom="@dimen/dp_20"
         android:src="@drawable/music_return" />
 
     <ImageView
         android:id="@+id/im_music_bear"
         android:layout_width="@dimen/dp_135"
         android:layout_height="@dimen/dp_164"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
         android:src="@drawable/music_bear_1" />
 </RelativeLayout>
