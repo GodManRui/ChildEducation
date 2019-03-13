@@ -9,12 +9,14 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.gerryrun.childeducation.piano.bean.QuestionLife;
+import com.gerryrun.childeducation.piano.bean.QuestionLife.DataBean;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -38,6 +40,9 @@ public class GuessDifferentiate extends BaseActivity {
     private boolean isChecked;
     private MediaPlayer mediaPlayer;
     private ProgressDialog progressDialog;
+    private int size;
+    private int currentIndex = 0;
+    private List<DataBean> data;
 
     @Override
     protected void onDestroy() {
@@ -59,6 +64,7 @@ public class GuessDifferentiate extends BaseActivity {
             Toast.makeText(this, "题目数据获取失败!", Toast.LENGTH_LONG).show();
             finish();
         }
+        data = guessQuestion.getData();
         initView();
     }
 
@@ -85,9 +91,22 @@ public class GuessDifferentiate extends BaseActivity {
         imJudge2 = findViewById(R.id.im_judge_2);
         imJudge3 = findViewById(R.id.im_judge_3);
 
-        List<QuestionLife.DataBean> data = guessQuestion.getData();
 
 //        for (int i = 0; i < data.size(); i++) {
+        nextQuestion(data.get(currentIndex++));
+        size = data.size();
+
+//        }
+   /*     if (guessType == 1) {
+            imRightAnswer.setImageResource(R.drawable.music_woshitingyinwang_qingwa);
+            mQuestion1.setImageResource(R.drawable.music_tingyinwang_qinfwa_1);
+            mQuestion2.setImageResource(R.drawable.music_tingyinwang_mao);
+            mQuestion3.setImageResource(R.drawable.music_tingyinwang_gou);
+        }*/
+    }
+
+    private void nextQuestion(DataBean dataBean) {
+        progressDialog.show();
         if (mediaPlayer != null) {
             try {
                 mediaPlayer.stop();
@@ -96,7 +115,6 @@ public class GuessDifferentiate extends BaseActivity {
             } catch (Exception e) {
             }
         }
-        QuestionLife.DataBean dataBean = data.get(0);
         HashMap<String, String> choose = dataBean.getChoose();
         int index = 1;
         for (String key : choose.keySet()) {
@@ -126,6 +144,8 @@ public class GuessDifferentiate extends BaseActivity {
                     break;
             }
         }
+        rlAnswer.setVisibility(View.VISIBLE);
+
 //        mediaPlayer = MediaPlayer.create(this, Uri.parse(dataBean.getVoice()));
         mediaPlayer = new MediaPlayer();
         try {
@@ -137,7 +157,10 @@ public class GuessDifferentiate extends BaseActivity {
                 });
             });
             mediaPlayer.setOnErrorListener((mp, what, extra) -> {
-                runOnUiThread(() -> Toast.makeText(GuessDifferentiate.this, "音频文件加载失败", Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> {
+                    Toast.makeText(GuessDifferentiate.this, "音频资源加载失败 :errorId: " + what + "  extra: " + extra, Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
+                });
                 return false;
             });
             mediaPlayer.prepareAsync();
@@ -146,13 +169,6 @@ public class GuessDifferentiate extends BaseActivity {
             finish();
         }
         Picasso.get().load(dataBean.getRight_pic()).into(imRightAnswer);
-//        }
-   /*     if (guessType == 1) {
-            imRightAnswer.setImageResource(R.drawable.music_woshitingyinwang_qingwa);
-            mQuestion1.setImageResource(R.drawable.music_tingyinwang_qinfwa_1);
-            mQuestion2.setImageResource(R.drawable.music_tingyinwang_mao);
-            mQuestion3.setImageResource(R.drawable.music_tingyinwang_gou);
-        }*/
     }
 
     private void answer(int answer) {
@@ -172,11 +188,37 @@ public class GuessDifferentiate extends BaseActivity {
                     Animation.RELATIVE_TO_SELF, 0f,
                     Animation.RELATIVE_TO_SELF, 0f);
             leftTranslateAnimation.setDuration(2000);
-            leftTranslateAnimation.setFillAfter(true);
+            leftTranslateAnimation.setFillAfter(false);
             rightTranslateAnimation.setDuration(2000);
-            rightTranslateAnimation.setFillAfter(true);
+            rightTranslateAnimation.setFillAfter(false);
             imMuLeft.startAnimation(leftTranslateAnimation);
+            leftTranslateAnimation.setAnimationListener(new AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    if (currentIndex > size) {
+                        Toast.makeText(GuessDifferentiate.this, "没有下一题了哦！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    new Handler().postDelayed(() -> {
+                        isChecked = false;
+                        imJudge1.setVisibility(View.INVISIBLE);
+                        imJudge2.setVisibility(View.INVISIBLE);
+                        imJudge3.setVisibility(View.INVISIBLE);
+                        nextQuestion(data.get(currentIndex++));
+                    }, 500);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
             imMuRight.startAnimation(rightTranslateAnimation);
-        }, 1500);
+        }, 1200);
     }
 }
