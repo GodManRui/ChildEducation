@@ -2,11 +2,10 @@ package com.gerryrun.childeducation.piano;
 
 import android.app.ProgressDialog;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnErrorListener;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -47,10 +46,18 @@ public class GuessDifferentiate extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
+        onDestroyPlayer();
+    }
+
+    private void onDestroyPlayer() {
+        try {
+            if (mediaPlayer != null) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -81,11 +88,11 @@ public class GuessDifferentiate extends BaseActivity {
         findViewById(R.id.im_guess_return).setOnClickListener(v -> finish());
 
         mQuestion1 = findViewById(R.id.im_questions_1);
-        mQuestion1.setOnClickListener(v -> answer(1));
+        mQuestion1.setOnClickListener(v -> clickAnswer(1));
         mQuestion2 = findViewById(R.id.im_questions_2);
-        mQuestion2.setOnClickListener(v -> answer(2));
+        mQuestion2.setOnClickListener(v -> clickAnswer(2));
         mQuestion3 = findViewById(R.id.im_questions_3);
-        mQuestion3.setOnClickListener(v -> answer(3));
+        mQuestion3.setOnClickListener(v -> clickAnswer(3));
 
         imJudge1 = findViewById(R.id.im_judge_1);
         imJudge2 = findViewById(R.id.im_judge_2);
@@ -107,14 +114,7 @@ public class GuessDifferentiate extends BaseActivity {
 
     private void nextQuestion(DataBean dataBean) {
         progressDialog.show();
-        if (mediaPlayer != null) {
-            try {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            } catch (Exception e) {
-            }
-        }
+        onDestroyPlayer();
         HashMap<String, String> choose = dataBean.getChoose();
         int index = 1;
         for (String key : choose.keySet()) {
@@ -145,8 +145,8 @@ public class GuessDifferentiate extends BaseActivity {
             }
         }
         rlAnswer.setVisibility(View.VISIBLE);
-
 //        mediaPlayer = MediaPlayer.create(this, Uri.parse(dataBean.getVoice()));
+
         mediaPlayer = new MediaPlayer();
         try {
             mediaPlayer.setDataSource(dataBean.getVoice());
@@ -171,7 +171,7 @@ public class GuessDifferentiate extends BaseActivity {
         Picasso.get().load(dataBean.getRight_pic()).into(imRightAnswer);
     }
 
-    private void answer(int answer) {
+    private void clickAnswer(int answer) {
         if (isChecked) return;
         isChecked = true;
         imJudge1.setVisibility(View.VISIBLE);
@@ -200,15 +200,16 @@ public class GuessDifferentiate extends BaseActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if (currentIndex > size) {
+                    if (currentIndex >= size) {
                         Toast.makeText(GuessDifferentiate.this, "没有下一题了哦！", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    imJudge1.setVisibility(View.INVISIBLE);
+                    imJudge2.setVisibility(View.INVISIBLE);
+                    imJudge3.setVisibility(View.INVISIBLE);
                     new Handler().postDelayed(() -> {
+                        Log.e("JerryZhu", "onAnimationEnd: " + imJudge1.getVisibility());
                         isChecked = false;
-                        imJudge1.setVisibility(View.INVISIBLE);
-                        imJudge2.setVisibility(View.INVISIBLE);
-                        imJudge3.setVisibility(View.INVISIBLE);
                         nextQuestion(data.get(currentIndex++));
                     }, 500);
                 }

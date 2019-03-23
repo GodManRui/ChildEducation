@@ -1,12 +1,15 @@
 package com.gerryrun.childeducation.piano;
 
 import android.content.res.Resources;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.gerryrun.childeducation.piano.R;
 
@@ -22,6 +25,8 @@ public class Rhythm extends BaseActivity {
     private ArrayList<ResultSequence> resultSequences;
     private long startPlayTimeMillis;
     private MediaPlayer mediaPlayer;
+    private SoundPool soundPool;
+    private int load;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +46,9 @@ public class Rhythm extends BaseActivity {
         for (ResultSequence resultSequence : resultSequences) {
             Log.e("jerry", "initPlayer: " + resultSequence.toString());
         }
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 100);
+        load = soundPool.load(this, R.raw.jiequ, 1);
+        Toast.makeText(this, " = " + load, Toast.LENGTH_SHORT).show();
     }
 
     private void initView() {
@@ -57,8 +65,14 @@ public class Rhythm extends BaseActivity {
             v.setVisibility(View.GONE);
             vIndicator.setVisibility(View.VISIBLE);
             imYuePu.setVisibility(View.VISIBLE);
-            startPlay();
+//            startPlay();
+            startPlay2();
         });
+    }
+
+    private void startPlay2() {
+
+        soundPool.play(load, 1, 1, 1, 0, 1.0f);
     }
 
     @Override
