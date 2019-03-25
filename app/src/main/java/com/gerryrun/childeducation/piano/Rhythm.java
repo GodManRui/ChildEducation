@@ -24,9 +24,11 @@ public class Rhythm extends BaseActivity {
     private View vIndicator;
     private ArrayList<ResultSequence> resultSequences;
     private long startPlayTimeMillis;
-    private MediaPlayer mediaPlayer;
+    //    private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private int load;
+    private float playRate = 1.0f;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,18 +73,24 @@ public class Rhythm extends BaseActivity {
     }
 
     private void startPlay2() {
-
-        soundPool.play(load, 1, 1, 1, 0, 1.0f);
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
+        int duration = mediaPlayer.getDuration();
+        startPlay(duration * playRate);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer = null;
-        }
+        soundDestroy();
         resultSequences.clear();
+    }
+
+    private void soundDestroy() {
+        if (soundPool != null) {
+            soundPool.stop(load);
+            soundPool.release();
+            soundPool = null;
+        }
     }
 
     public static int px2dip(float pxValue) {
@@ -90,13 +98,12 @@ public class Rhythm extends BaseActivity {
         return (int) (pxValue / scale + 0.5f);
     }
 
-    private void startPlay() {
+    private void startPlay(float duration) {
         float startPx = imYuePu.getWidth() * 0.26f;
         float width = imYuePu.getWidth() * 0.6046f;
         Log.e("jerry", "startPlay: " + px2dip(width));
-        mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
 
-        int duration = mediaPlayer.getDuration();
+
         Log.e("jerry", "startPlay: " + " 开始偏移量: " + px2dip(startPx) + " 宽度：" + px2dip(width) + "  时间:" + duration);
         new Thread(() -> {
             while (resultSequences.size() > 0) {
@@ -104,7 +111,7 @@ public class Rhythm extends BaseActivity {
                 if (currentPlay > duration) continue;
                 if (currentPlay > 6520) {
                     resultSequences.clear();
-                    mediaPlayer.stop();
+                    soundDestroy();
                     return;
                 }
                 double currentNoteTime = resultSequences.get(0).getCurrentTime() * 1000;
@@ -126,7 +133,8 @@ public class Rhythm extends BaseActivity {
                 }
             }
         }).start();
-        mediaPlayer.start();
+        soundPool.play(load, 1, 1, 1, 0, playRate);
+
         startPlayTimeMillis = System.currentTimeMillis();
     }
 }
