@@ -27,7 +27,7 @@ public class Rhythm extends BaseActivity {
     //    private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private int load;
-    private float playRate = 1.0f;
+    private float playRate = 1.5f;
 
 
     @Override
@@ -106,10 +106,13 @@ public class Rhythm extends BaseActivity {
 
         Log.e("jerry", "startPlay: " + " 开始偏移量: " + px2dip(startPx) + " 宽度：" + px2dip(width) + "  时间:" + duration);
         new Thread(() -> {
+            soundPool.play(load, 1, 1, 1, 0, playRate);
+
+            startPlayTimeMillis = System.currentTimeMillis();
             while (resultSequences.size() > 0) {
-                long currentPlay = System.currentTimeMillis() - startPlayTimeMillis;
-                if (currentPlay > duration) continue;
-                if (currentPlay > 6520) {
+                float currentPlay = (System.currentTimeMillis() - startPlayTimeMillis) * playRate;
+
+                if (currentPlay > 6520 || currentPlay > duration) {
                     resultSequences.clear();
                     soundDestroy();
                     return;
@@ -133,8 +136,6 @@ public class Rhythm extends BaseActivity {
                 }
             }
         }).start();
-        soundPool.play(load, 1, 1, 1, 0, playRate);
 
-        startPlayTimeMillis = System.currentTimeMillis();
     }
 }
