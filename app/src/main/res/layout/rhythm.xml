@@ -5,25 +5,33 @@
     android:background="@drawable/music_yinlv_bijingtu"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/im_return"
+        android:layout_width="@dimen/dp_34"
+        android:layout_height="@dimen/dp_33"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_17"
+        android:src="@drawable/music_return" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_70">
 
 
         <ImageView
             android:id="@+id/im_yue_pu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/music_yinlv_xiaoxingxing"
-            android:visibility="invisible" />
+            android:src="@drawable/music_yinlv_xiaoxingxing" />
 
         <View
             android:id="@+id/v_indicator"
             android:layout_width="@dimen/dp_1"
-            android:visibility="gone"
             android:layout_height="@dimen/dp_21"
-            android:background="@android:color/black" />
+            android:background="@android:color/black"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -49,5 +57,30 @@
             android:textSize="@dimen/sp_18" />
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/im_jiepaiqi"
+        android:layout_width="@dimen/dp_75"
+        android:layout_height="@dimen/dp_112"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/music_jiepaiqi" />
+
+    <ImageView
+        android:id="@+id/im_jie_pai_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp"
+        android:src="@drawable/music_jiepaiqi_kuaipa" />
+
+    <ImageView
+        android:id="@+id/im_paizi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="23dp"
+        android:src="@drawable/music_jiepaiqi_zhongpai_1" />
 
 </RelativeLayout>

@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.gerryrun.childeducation.piano.R;
 
 import com.gerryrun.childeducation.piano.parse.ReadMIDI;
 import com.gerryrun.childeducation.piano.parse.entity.ResultSequence;
@@ -27,7 +29,9 @@ public class Rhythm extends BaseActivity {
     //    private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
     private int load;
-    private float playRate = 1.5f;
+    private float playRate = 1f;
+    private ImageView imIndicator;
+    private ImageView imPaiZi;
 
 
     @Override
@@ -56,6 +60,11 @@ public class Rhythm extends BaseActivity {
     private void initView() {
         imYuePu = findViewById(R.id.im_yue_pu);
         vIndicator = findViewById(R.id.v_indicator);
+        imIndicator = findViewById(R.id.im_jie_pai_indicator);
+
+        findViewById(R.id.im_return).setOnClickListener(v -> {
+            finish();
+        });
         imYuePu.post(() -> {
             RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) vIndicator.getLayoutParams();
             layoutParams.leftMargin = imYuePu.getLeft();
@@ -70,12 +79,71 @@ public class Rhythm extends BaseActivity {
 //            startPlay();
             startPlay2();
         });
+        findViewById(R.id.im_jiepaiqi).setOnClickListener((v) -> {
+            //点击节拍器,切换快慢拍
+            int nextBeatRes = getNextBeatRes();
+            imPaiZi.setImageResource(nextBeatRes);
+            imPaiZi.setTag(nextBeatRes);
+        });
+        imPaiZi = findViewById(R.id.im_paizi);
+        imPaiZi.setTag(R.drawable.music_jiepaiqi_zhongpai_1);
     }
 
     private void startPlay2() {
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
         int duration = mediaPlayer.getDuration();
         startPlay(duration * playRate);
+        initAnimation();
+    }
+
+    private void initAnimation() {
+        RotateAnimation rotate = new RotateAnimation(-20f, 20f, Animation.RELATIVE_TO_SELF, 0.6f, Animation.RELATIVE_TO_SELF, 1f);
+        LinearInterpolator lin = new LinearInterpolator();
+        rotate.setInterpolator(lin);
+        rotate.setDuration(1000);  //设置动画持续周期
+        rotate.setFillAfter(true); //动画执行完后是否停留在执行完的状态
+        RotateAnimation rotateReturn = new RotateAnimation(20f, -20f, Animation.RELATIVE_TO_SELF, 0.6f, Animation.RELATIVE_TO_SELF, 1f);
+        LinearInterpolator lin2 = new LinearInterpolator();
+        rotateReturn.setInterpolator(lin2);
+        rotateReturn.setDuration(1000);  //设置动画持续周期
+        rotateReturn.setFillAfter(true); //动画执行完后是否停留在执行完的状态
+        rotateReturn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                imIndicator.clearAnimation();
+                rotate.start();
+                imIndicator.setAnimation(rotate);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        rotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                imIndicator.clearAnimation();
+                rotateReturn.start();
+                imIndicator.setAnimation(rotateReturn);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        imIndicator.setAnimation(rotate);
     }
 
     @Override
@@ -91,6 +159,12 @@ public class Rhythm extends BaseActivity {
             soundPool.release();
             soundPool = null;
         }
+        runOnUiThread(() -> {
+            Animation animation = imIndicator.getAnimation();
+            if (animation == null) return;
+            imIndicator.clearAnimation();
+            animation.setAnimationListener(null);
+        });
     }
 
     public static int px2dip(float pxValue) {
@@ -137,5 +211,22 @@ public class Rhythm extends BaseActivity {
             }
         }).start();
 
+    }
+
+    public int getNextBeatRes() {
+        if (imPaiZi == null) return R.drawable.music_jiepaiqi_zhongpai_1;
+        int currentID = (int) imPaiZi.getTag();
+        switch (currentID) {
+            case R.drawable.music_jiepaiqi_kuaipai_1:
+                playRate = 1.4f;
+                return R.drawable.music_jiepaiqi_zhongpai_1;
+            case R.drawable.music_jiepaiqi_zhongpai_1:
+                playRate = 1f;
+                return R.drawable.music_jiepaiqi_manpai_1;
+            case R.drawable.music_jiepaiqi_manpai_1:
+                playRate = 0.5f;
+                return R.drawable.music_jiepaiqi_kuaipai_1;
+        }
+        return R.drawable.music_jiepaiqi_zhongpai_1;
     }
 }
