@@ -13,6 +13,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
 
 import com.gerryrun.childeducation.piano.parse.ReadMIDI;
@@ -32,7 +33,16 @@ public class Rhythm extends BaseActivity {
     private float playRate = 1f;
     private ImageView imIndicator;
     private ImageView imPaiZi;
+    private View rlContorl;
+    private ArrayList<ResultSequence> saveResultSequences;
+    private int duration;
+    private Thread playThread;
+    private int shouldStop = 2;
 
+    public static int px2dip(float pxValue) {
+        float scale = Resources.getSystem().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,25 +52,11 @@ public class Rhythm extends BaseActivity {
         initPlayer();
     }
 
-    private void initPlayer() {
-        ReadMIDI readMIDI = new ReadMIDI();
-        resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.jiequ));
-        if (resultSequences == null) {
-            Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
-            return;
-        }
-        for (ResultSequence resultSequence : resultSequences) {
-            Log.e("jerry", "initPlayer: " + resultSequence.toString());
-        }
-        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 100);
-        load = soundPool.load(this, R.raw.jiequ, 1);
-        Toast.makeText(this, " = " + load, Toast.LENGTH_SHORT).show();
-    }
-
     private void initView() {
         imYuePu = findViewById(R.id.im_yue_pu);
         vIndicator = findViewById(R.id.v_indicator);
         imIndicator = findViewById(R.id.im_jie_pai_indicator);
+        rlContorl = findViewById(R.id.rl_crontor);
 
         findViewById(R.id.im_return).setOnClickListener(v -> {
             finish();
@@ -76,6 +72,7 @@ public class Rhythm extends BaseActivity {
             v.setVisibility(View.GONE);
             vIndicator.setVisibility(View.VISIBLE);
             imYuePu.setVisibility(View.VISIBLE);
+            rlContorl.setVisibility(View.VISIBLE);
 //            startPlay();
             startPlay2();
         });
@@ -84,16 +81,122 @@ public class Rhythm extends BaseActivity {
             int nextBeatRes = getNextBeatRes();
             imPaiZi.setImageResource(nextBeatRes);
             imPaiZi.setTag(nextBeatRes);
+            clickStopPlay();
         });
         imPaiZi = findViewById(R.id.im_paizi);
         imPaiZi.setTag(R.drawable.music_jiepaiqi_zhongpai_1);
     }
 
+    private void initPlayer() {
+        ReadMIDI readMIDI = new ReadMIDI();
+        resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.jiequ));
+        if (resultSequences == null) {
+            Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
+            return;
+        }
+        saveResultSequences = new ArrayList<>(resultSequences.size());
+        saveResultSequences.addAll(this.resultSequences);
+        for (ResultSequence resultSequence : this.resultSequences) {
+            Log.e("jerry", "initPlayer: " + resultSequence.toString());
+        }
+        soundPool = new SoundPool(8, AudioManager.STREAM_MUSIC, 100);
+        load = soundPool.load(this, R.raw.jiequ, 1);
+        Log.e("JerryZhu", "初始化播放Init " + load);
+
+        Toast.makeText(this, " = " + load, Toast.LENGTH_SHORT).show();
+    }
+
     private void startPlay2() {
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
-        int duration = mediaPlayer.getDuration();
+        duration = mediaPlayer.getDuration();
         startPlay(duration * playRate);
         initAnimation();
+    }
+
+    public int getNextBeatRes() {
+        if (imPaiZi == null) return R.drawable.music_jiepaiqi_zhongpai_1;
+        int currentID = (int) imPaiZi.getTag();
+        switch (currentID) {
+            case R.drawable.music_jiepaiqi_kuaipai_1:
+                playRate = 0.5f;
+                return R.drawable.music_jiepaiqi_manpai_1;
+            case R.drawable.music_jiepaiqi_zhongpai_1:
+                playRate = 1.4f;
+                return R.drawable.music_jiepaiqi_kuaipai_1;
+            case R.drawable.music_jiepaiqi_manpai_1:
+                playRate = 1f;
+                return R.drawable.music_jiepaiqi_zhongpai_1;
+        }
+        return R.drawable.music_jiepaiqi_zhongpai_1;
+    }
+
+    private void clickStopPlay() {
+        if (playThread != null) {
+            shouldStop = 1;
+//            playThread.stop();
+            playThread.interrupt();
+            playThread = null;
+        }
+//        soundDestroy();
+        if (vIndicator == null) return;
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) vIndicator.getLayoutParams();
+        if (layoutParams == null) return;
+        layoutParams.leftMargin = 0;
+        vIndicator.setLayoutParams(layoutParams);
+
+        while (shouldStop != 2) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.e("JerryZhu", "WHILE 。。 clickStopPlay: " + shouldStop);
+        }
+        startPlay(duration * playRate);
+        initAnimation();
+    }
+
+    private void startPlay(float duration) {
+        float startPx = imYuePu.getWidth() * 0.26f;
+        float width = imYuePu.getWidth() * 0.6046f;
+        resultSequences.clear();
+        resultSequences.addAll(saveResultSequences);
+        shouldStop = 0;
+        playThread = new Thread(() -> {
+            load = soundPool.play(load, 1, 1, 1, 0, playRate);
+
+            startPlayTimeMillis = System.currentTimeMillis();
+            while (resultSequences.size() > 0 && shouldStop == 0) {
+                float currentPlay = (System.currentTimeMillis() - startPlayTimeMillis) * playRate;
+
+                if (currentPlay > 6520 || currentPlay > duration) {
+                    resultSequences.clear();
+                    break;
+                }
+                double currentNoteTime = resultSequences.get(0).getCurrentTime() * 1000;
+                if (currentPlay > currentNoteTime) {
+                    double marginLeft = startPx + width * (currentNoteTime / 5420);
+//                    Log.e("jerry", "大于了: 节点 " + currentNoteTime + " 当前：" + ((double) currentPlay) + "ms  marleft: " + px2dip((int) marginLeft) + "   int：" + (int) marginLeft);
+                    runOnUiThread(() -> {
+                        LayoutParams layoutParams = (LayoutParams) vIndicator.getLayoutParams();
+                        layoutParams.leftMargin = (int) marginLeft;
+                        vIndicator.setLayoutParams(layoutParams);
+                    });
+                    resultSequences.remove(0);
+                    resultSequences.remove(0);
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            Log.e("JerryZhu", "startPlay 线程: 结束 " + load);
+            soundDestroy();
+            shouldStop = 2;
+            playThread = null;
+        });
+        playThread.start();
     }
 
     private void initAnimation() {
@@ -155,9 +258,10 @@ public class Rhythm extends BaseActivity {
 
     private void soundDestroy() {
         if (soundPool != null) {
+            Log.e("JerryZhu", "soundDestroy: 停止播放 " + load + "  " + shouldStop);
             soundPool.stop(load);
-            soundPool.release();
-            soundPool = null;
+            soundPool.unload(load);
+            load = soundPool.load(this, R.raw.jiequ, 1);
         }
         runOnUiThread(() -> {
             Animation animation = imIndicator.getAnimation();
@@ -165,68 +269,5 @@ public class Rhythm extends BaseActivity {
             imIndicator.clearAnimation();
             animation.setAnimationListener(null);
         });
-    }
-
-    public static int px2dip(float pxValue) {
-        float scale = Resources.getSystem().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
-
-    private void startPlay(float duration) {
-        float startPx = imYuePu.getWidth() * 0.26f;
-        float width = imYuePu.getWidth() * 0.6046f;
-        Log.e("jerry", "startPlay: " + px2dip(width));
-
-
-        Log.e("jerry", "startPlay: " + " 开始偏移量: " + px2dip(startPx) + " 宽度：" + px2dip(width) + "  时间:" + duration);
-        new Thread(() -> {
-            soundPool.play(load, 1, 1, 1, 0, playRate);
-
-            startPlayTimeMillis = System.currentTimeMillis();
-            while (resultSequences.size() > 0) {
-                float currentPlay = (System.currentTimeMillis() - startPlayTimeMillis) * playRate;
-
-                if (currentPlay > 6520 || currentPlay > duration) {
-                    resultSequences.clear();
-                    soundDestroy();
-                    return;
-                }
-                double currentNoteTime = resultSequences.get(0).getCurrentTime() * 1000;
-                if (currentPlay > currentNoteTime) {
-                    double marginLeft = startPx + width * (currentNoteTime / 5420);
-                    Log.e("jerry", "大于了: 节点 " + currentNoteTime + " 当前：" + ((double) currentPlay) + "ms  marleft: " + px2dip((int) marginLeft) + "   int：" + (int) marginLeft);
-                    runOnUiThread(() -> {
-                        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) vIndicator.getLayoutParams();
-                        layoutParams.leftMargin = (int) marginLeft;
-                        vIndicator.setLayoutParams(layoutParams);
-                    });
-                    resultSequences.remove(0);
-                    resultSequences.remove(0);
-                }
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-    }
-
-    public int getNextBeatRes() {
-        if (imPaiZi == null) return R.drawable.music_jiepaiqi_zhongpai_1;
-        int currentID = (int) imPaiZi.getTag();
-        switch (currentID) {
-            case R.drawable.music_jiepaiqi_kuaipai_1:
-                playRate = 1.4f;
-                return R.drawable.music_jiepaiqi_zhongpai_1;
-            case R.drawable.music_jiepaiqi_zhongpai_1:
-                playRate = 1f;
-                return R.drawable.music_jiepaiqi_manpai_1;
-            case R.drawable.music_jiepaiqi_manpai_1:
-                playRate = 0.5f;
-                return R.drawable.music_jiepaiqi_kuaipai_1;
-        }
-        return R.drawable.music_jiepaiqi_zhongpai_1;
     }
 }
