@@ -6,12 +6,30 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/im_ge_dan"
+        android:layout_width="@dimen/dp_75"
+        android:layout_height="@dimen/dp_36"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_17"
+        android:layout_marginRight="@dimen/dp_32"
+        android:src="@drawable/music_yinlv_xiaogedan" />
+
+    <ImageView
         android:id="@+id/im_return"
         android:layout_width="@dimen/dp_34"
         android:layout_height="@dimen/dp_33"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_17"
         android:src="@drawable/music_return" />
+
+    <ImageView
+        android:id="@+id/im_jiezou_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_180"
+        android:layout_marginTop="@dimen/dp_152"
+        android:src="@drawable/play"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -24,47 +42,31 @@
             android:id="@+id/im_yue_pu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/music_yinlv_xiaoxingxing"
-            android:visibility="invisible" />
+            android:src="@drawable/music_yinlv_xiaoxingxing" />
 
         <View
             android:id="@+id/v_indicator"
-            android:layout_width="@dimen/dp_1"
-            android:layout_height="@dimen/dp_21"
-            android:background="@android:color/black"
-            android:visibility="gone" />
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_29"
+            android:background="@drawable/music_yinlv_top" />
+
+        <View
+            android:id="@+id/v_indicator2"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_40"
+            android:layout_marginTop="@dimen/dp_122"
+            android:background="@drawable/music_yinlv_bottom" />
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_select_song"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/music_yinlv_kuang" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/music_yinlv_lan"
-            android:gravity="center"
-            android:text="测试"
-            android:textSize="@dimen/sp_18" />
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_crontor"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_112"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone">
+        android:layout_centerHorizontal="true">
 
         <ImageView
             android:id="@+id/im_jiepaiqi"
@@ -88,7 +90,32 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="23dp"
+            android:layout_marginBottom="@dimen/dp_16"
             android:src="@drawable/music_jiepaiqi_zhongpai_1" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_select_song"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/music_yinlv_kuang" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/music_yinlv_lan"
+            android:gravity="center_vertical"
+            android:text="《咕咕,你在哪》"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp_18"
+            android:textStyle="bold" />
     </RelativeLayout>
 </RelativeLayout>
