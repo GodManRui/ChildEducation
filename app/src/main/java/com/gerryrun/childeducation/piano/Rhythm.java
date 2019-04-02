@@ -62,6 +62,9 @@ public class Rhythm extends BaseActivity {
         vIndicator2 = findViewById(R.id.v_indicator2);
         imIndicator = findViewById(R.id.im_jie_pai_indicator);
         rlContorl = findViewById(R.id.rl_crontor);
+        findViewById(R.id.tv_song_name).setOnClickListener(v -> {
+            selectView.setVisibility(View.GONE);
+        });
         findViewById(R.id.im_jiezou_play).setOnClickListener((v) -> {
 //            if (!firstPlay) {
 //                if (isPlaying) {
