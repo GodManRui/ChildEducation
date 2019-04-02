@@ -92,8 +92,10 @@ public class Rhythm extends BaseActivity {
             vIndicator.setLayoutParams(layoutParams);*/
         });
         selectView = findViewById(R.id.rl_select_song);
-        selectView.setOnClickListener((v) -> {
-            v.setVisibility(v.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+        selectView.setOnClickListener(v -> {
+        });
+        findViewById(R.id.im_select_close).setOnClickListener((v) -> {
+            selectView.setVisibility(selectView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
 //            v.setVisibility(View.GONE);
 //            vIndicator.setVisibility(View.VISIBLE);
 //            imYuePu.setVisibility(View.VISIBLE);

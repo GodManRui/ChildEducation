@@ -32,30 +32,31 @@
         android:visibility="invisible" />
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_510"
+        android:layout_height="@dimen/dp_182"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_70">
 
 
         <ImageView
             android:id="@+id/im_yue_pu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:src="@drawable/music_yinlv_xiaoxingxing" />
 
         <View
             android:id="@+id/v_indicator"
             android:layout_width="@dimen/dp_10"
             android:layout_height="@dimen/dp_40"
-            android:layout_marginTop="@dimen/dp_29"
+            android:layout_marginTop="@dimen/dp_30"
             android:background="@drawable/music_yinlv_top" />
 
         <View
             android:id="@+id/v_indicator2"
             android:layout_width="@dimen/dp_10"
             android:layout_height="@dimen/dp_40"
-            android:layout_marginTop="@dimen/dp_122"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_14"
             android:background="@drawable/music_yinlv_bottom" />
 
     </RelativeLayout>
@@ -96,20 +97,39 @@
 
     <RelativeLayout
         android:id="@+id/rl_select_song"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTranslucent"
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/im_mb"
+            android:layout_width="@dimen/dp_308"
+            android:layout_height="@dimen/dp_268"
             android:layout_centerInParent="true"
+            android:paddingTop="@dimen/dp_8"
+            android:paddingEnd="@dimen/dp_4"
             android:src="@drawable/music_yinlv_kuang" />
 
+        <ImageView
+            android:id="@+id/im_select_close"
+            android:layout_width="@dimen/dp_47"
+            android:layout_height="@dimen/dp_44"
+            android:layout_marginLeft="@dimen/dp_m_40"
+            android:layout_marginTop="@dimen/dp_50"
+            android:layout_toRightOf="@id/im_mb"
+            android:src="@drawable/music_yinlv_guanbi" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_47"
+            android:layout_height="@dimen/dp_44"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_273"
+            android:src="@drawable/music_tingyijwang_xilai" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_248"
+            android:layout_height="@dimen/dp_38"
             android:layout_centerInParent="true"
             android:background="@drawable/music_yinlv_lan"
             android:gravity="center_vertical"
