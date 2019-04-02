@@ -94,7 +94,7 @@ public class StartLearnSong2 extends BaseActivity {
             leftSpacePx = flAddPitch.getWidth() * baselineScaling;
             rightSpacePx = flAddPitch.getWidth() * (1 - baselineScaling);
             pitchMarginPx = rightSpacePx / pitchSpace;
-            Log.w("JerryZhu", "左边: " + leftSpacePx + "  右边: " + rightSpacePx + "  最终比例:" + pitchMarginPx);
+
 
             int height = flAddPitch.getHeight();
             pitchWH = (int) (height * 0.19f);

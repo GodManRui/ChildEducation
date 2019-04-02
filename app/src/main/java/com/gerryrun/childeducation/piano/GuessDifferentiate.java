@@ -208,7 +208,7 @@ public class GuessDifferentiate extends BaseActivity {
                     imJudge2.setVisibility(View.INVISIBLE);
                     imJudge3.setVisibility(View.INVISIBLE);
                     new Handler().postDelayed(() -> {
-                        Log.e("JerryZhu", "onAnimationEnd: " + imJudge1.getVisibility());
+
                         isChecked = false;
                         nextQuestion(data.get(currentIndex++));
                     }, 500);

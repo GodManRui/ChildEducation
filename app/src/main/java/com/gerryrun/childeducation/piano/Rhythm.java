@@ -1,10 +1,12 @@
 package com.gerryrun.childeducation.piano;
 
+import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -101,7 +103,7 @@ public class Rhythm extends BaseActivity {
         }
         soundPool = new SoundPool(8, AudioManager.STREAM_MUSIC, 100);
         load = soundPool.load(this, R.raw.jiequ, 1);
-        Log.e("JerryZhu", "初始化播放Init " + load);
+
 
         Toast.makeText(this, " = " + load, Toast.LENGTH_SHORT).show();
     }
@@ -119,12 +121,15 @@ public class Rhythm extends BaseActivity {
         switch (currentID) {
             case R.drawable.music_jiepaiqi_kuaipai_1:
                 playRate = 0.5f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_manpa);
                 return R.drawable.music_jiepaiqi_manpai_1;
             case R.drawable.music_jiepaiqi_zhongpai_1:
                 playRate = 1.4f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_kuaipa);
                 return R.drawable.music_jiepaiqi_kuaipai_1;
             case R.drawable.music_jiepaiqi_manpai_1:
                 playRate = 1f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_zhongpa);
                 return R.drawable.music_jiepaiqi_zhongpai_1;
         }
         return R.drawable.music_jiepaiqi_zhongpai_1;
@@ -144,16 +149,23 @@ public class Rhythm extends BaseActivity {
         layoutParams.leftMargin = 0;
         vIndicator.setLayoutParams(layoutParams);
 
-        while (shouldStop != 2) {
+       /* while (shouldStop != 2) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.e("JerryZhu", "WHILE 。。 clickStopPlay: " + shouldStop);
-        }
-        startPlay(duration * playRate);
-        initAnimation();
+
+        }*/
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("正在切换节拍...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        new Handler().postDelayed(() -> {
+            progressDialog.dismiss();
+            startPlay(duration * playRate);
+            initAnimation();
+        }, 3000);
     }
 
     private void startPlay(float duration) {
@@ -163,6 +175,7 @@ public class Rhythm extends BaseActivity {
         resultSequences.addAll(saveResultSequences);
         shouldStop = 0;
         playThread = new Thread(() -> {
+
             load = soundPool.play(load, 1, 1, 1, 0, playRate);
 
             startPlayTimeMillis = System.currentTimeMillis();
@@ -191,7 +204,7 @@ public class Rhythm extends BaseActivity {
                     e.printStackTrace();
                 }
             }
-            Log.e("JerryZhu", "startPlay 线程: 结束 " + load);
+
             soundDestroy();
             shouldStop = 2;
             playThread = null;
@@ -200,15 +213,23 @@ public class Rhythm extends BaseActivity {
     }
 
     private void initAnimation() {
+        int duration = 0;
+        if (playRate > 1.0f) {
+            duration = 535;
+        } else if (playRate < 1.0f) {
+            duration = 1250;
+        } else {
+            duration = 833;
+        }
         RotateAnimation rotate = new RotateAnimation(-20f, 20f, Animation.RELATIVE_TO_SELF, 0.6f, Animation.RELATIVE_TO_SELF, 1f);
         LinearInterpolator lin = new LinearInterpolator();
         rotate.setInterpolator(lin);
-        rotate.setDuration(1000);  //设置动画持续周期
+        rotate.setDuration(duration);  //设置动画持续周期
         rotate.setFillAfter(true); //动画执行完后是否停留在执行完的状态
         RotateAnimation rotateReturn = new RotateAnimation(20f, -20f, Animation.RELATIVE_TO_SELF, 0.6f, Animation.RELATIVE_TO_SELF, 1f);
         LinearInterpolator lin2 = new LinearInterpolator();
         rotateReturn.setInterpolator(lin2);
-        rotateReturn.setDuration(1000);  //设置动画持续周期
+        rotateReturn.setDuration(duration);  //设置动画持续周期
         rotateReturn.setFillAfter(true); //动画执行完后是否停留在执行完的状态
         rotateReturn.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -247,6 +268,8 @@ public class Rhythm extends BaseActivity {
             }
         });
         imIndicator.setAnimation(rotate);
+        imIndicator.startAnimation(rotate);
+
     }
 
     @Override
@@ -258,14 +281,15 @@ public class Rhythm extends BaseActivity {
 
     private void soundDestroy() {
         if (soundPool != null) {
-            Log.e("JerryZhu", "soundDestroy: 停止播放 " + load + "  " + shouldStop);
             soundPool.stop(load);
             soundPool.unload(load);
             load = soundPool.load(this, R.raw.jiequ, 1);
+
         }
         runOnUiThread(() -> {
             Animation animation = imIndicator.getAnimation();
             if (animation == null) return;
+
             imIndicator.clearAnimation();
             animation.setAnimationListener(null);
         });
