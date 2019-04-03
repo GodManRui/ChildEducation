@@ -18,8 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.gerryrun.childeducation.piano.R;
-
 import com.gerryrun.childeducation.piano.customview.FullVideoView;
 import com.gerryrun.childeducation.piano.parse.ReadMIDI;
 import com.gerryrun.childeducation.piano.parse.entity.ResultSequence;
@@ -42,7 +40,7 @@ public class StartLearnSong2 extends BaseActivity {
     private Thread playerThread;
     private boolean isPlaying;
     private float pitchSpace = 6.3f;               //音符间距 占rightSpacePx宽度的比例 也就是说，基线右边屏准备最多放几个音符
-    private float baselineScaling = 0.218f;         //绿色线位置在屏幕宽度的比例
+    private float baselineScaling = 0.245f;         //绿色线位置在屏幕宽度的比例
 
     private float pitchMarginPx;      //标准一个音符的间距
     private float leftSpacePx;      //基线左边的像素个数
@@ -64,6 +62,7 @@ public class StartLearnSong2 extends BaseActivity {
 
     private FullVideoView videoView;
     private ImageView imMusicBear;
+    private volatile boolean measureOk;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,11 +108,11 @@ public class StartLearnSong2 extends BaseActivity {
             mBlastWH = pitchWH * 3;
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(mBlastWH, mBlastWH);
             params.leftMargin = (int) leftSpacePx - mBlastWH / 2;
-            Log.w("jerry", "initBackgroundAnim: " + params.leftMargin);
             imageBoomAnimationView = new ImageView(this);
             imageBoomAnimationView.setLayoutParams(params);
             imageBoomAnimationView.setVisibility(View.INVISIBLE);
             flAddPitch.addView(imageBoomAnimationView);
+            measureOk = true;
         });
 
       /*  ImageView imBg = findViewById(R.id.bg_im);
@@ -142,7 +141,6 @@ public class StartLearnSong2 extends BaseActivity {
             Toast.makeText(this, "正在初始化,请稍后", Toast.LENGTH_SHORT).show();
             return;
         }
-        Log.e("jerry", "clickPlayPause: " + Thread.currentThread().getName());
         if (isPlaying) {  //播放状态 ，暂停播放
             imPlayPause.setBackgroundResource(R.drawable.play);
             for (ImageView imagePitchView : imagePitchViews) {
@@ -158,6 +156,8 @@ public class StartLearnSong2 extends BaseActivity {
                 if (resetPlay) {             //如果是从头播放的
                     if (imagePitchView.getParent() == null)
                         flAddPitch.addView(imagePitchView);
+                    if (imagePitchView.getVisibility() != View.VISIBLE)
+                        imagePitchView.setVisibility(View.VISIBLE);
                     translationX.start();
                     continue;
                 }
@@ -174,14 +174,6 @@ public class StartLearnSong2 extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         onMyDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (videoView != null && !videoView.isPlaying()) {
-            videoView.start();
-        }
     }
 
     private void onMyDestroy() {
@@ -206,6 +198,14 @@ public class StartLearnSong2 extends BaseActivity {
         try {
             onMyDestroy();
         } catch (Exception e) {
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (videoView != null && !videoView.isPlaying()) {
+            videoView.start();
         }
     }
 
@@ -263,7 +263,7 @@ public class StartLearnSong2 extends BaseActivity {
         ObjectAnimator translationX = ObjectAnimator.ofFloat(imageView, "translationX", flAddPitch.getWidth() * fromXValue, flAddPitch.getWidth() * baselineScaling);
         long round = Math.round(resultSequence.getCurrentTime() * 1000);
         translationX.setInterpolator(new LinearInterpolator());
-        Log.e("jerry", "clickPlayPause: 创建 " + Thread.currentThread().getName() + "   round: " + round);
+//        Log.e("jerry", "clickPlayPause: 创建 " + Thread.currentThread().getName() + "   round: " + round);
         translationX.setDuration(round);
         translationX.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -274,7 +274,8 @@ public class StartLearnSong2 extends BaseActivity {
         });
         imageView.setTag(translationX);
         imagePitchViews.add(imageView);
-        imageView.setVisibility(View.VISIBLE);
+//        flAddPitch.addView(imageView);
+//        imageView.setVisibility(View.VISIBLE);
     }
 
     private float getMarginTop(String pitchNote) {
@@ -334,7 +335,9 @@ public class StartLearnSong2 extends BaseActivity {
                 Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
                 return;
             }
-            runOnUiThread(() -> preparePlay());
+            while (!measureOk) {
+            }
+            runOnUiThread(StartLearnSong2.this::preparePlay);
         }
     }
 }
