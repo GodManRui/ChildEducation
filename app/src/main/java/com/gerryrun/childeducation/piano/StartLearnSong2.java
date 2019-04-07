@@ -263,7 +263,7 @@ public class StartLearnSong2 extends BaseActivity {
         ObjectAnimator translationX = ObjectAnimator.ofFloat(imageView, "translationX", flAddPitch.getWidth() * fromXValue, flAddPitch.getWidth() * baselineScaling);
         long round = Math.round(resultSequence.getCurrentTime() * 1000);
         translationX.setInterpolator(new LinearInterpolator());
-//        Log.e("jerry", "clickPlayPause: 创建 " + Thread.currentThread().getName() + "   round: " + round);
+
         translationX.setDuration(round);
         translationX.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -332,7 +332,7 @@ public class StartLearnSong2 extends BaseActivity {
             ReadMIDI readMIDI = new ReadMIDI();
             resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.small_start));
             if (resultSequences == null) {
-                Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
+
                 return;
             }
             while (!measureOk) {

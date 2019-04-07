@@ -20,6 +20,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static com.gerryrun.childeducation.piano.util.NetUtil.getQuestion;
+
 public class Guess extends BaseActivity {
 
     private int select;
@@ -45,42 +47,38 @@ public class Guess extends BaseActivity {
         progressDialog.show();
         isLoading = true;
 
-        OkHttpClient okHttpClient = new OkHttpClient();
-        String url = select == 1 ? Constont.QUESTION_LIFE : Constont.QUESTION_MUSICAL;
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        //异步，需要设置一个回调接口
-        okHttpClient.newCall(request).enqueue(new Callback() {
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                isLoading = false;
-                runOnUiThread(() -> {
-                    progressDialog.dismiss();
-                    Toast.makeText(Guess.this, "服务器链接失败: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                isLoading = false;
-                if (!response.isSuccessful()) {
+        try {
+            getQuestion(select == 1 ? Constont.QUESTION_LIFE : Constont.QUESTION_MUSICAL, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    isLoading = false;
                     runOnUiThread(() -> {
-                        Toast.makeText(Guess.this, "服务器响应失败: " + response.code(), Toast.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                        Toast.makeText(Guess.this, "服务器链接失败: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     });
-                    return;
+                    e.printStackTrace();
                 }
-                Gson gson = new Gson();
-                String responseStr = response.body().string();
-                questionLife = gson.fromJson(responseStr, QuestionLife.class);
-                startNextActivity();
-                Log.e("jerry", "onResponse:  " + response);
-            }
-        });
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    isLoading = false;
+                    if (!response.isSuccessful() || response.body() == null) {
+                        runOnUiThread(() -> Toast.makeText(Guess.this,
+                                "服务器响应失败: " + response.code(), Toast.LENGTH_LONG).show());
+                        return;
+                    }
+                    Gson gson = new Gson();
+                    String responseStr = response.body().string();
+                    questionLife = gson.fromJson(responseStr, QuestionLife.class);
+                    startNextActivity();
+
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     private void initView() {
         findViewById(R.id.im_guess_go_home).setOnClickListener(v -> finish());

@@ -6,14 +6,12 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 import com.gerryrun.childeducation.piano.parse.ReadMIDI;
@@ -34,13 +32,18 @@ public class Rhythm extends BaseActivity {
     private float playRate = 1f;
     private ImageView imIndicator;
     private ImageView imPaiZi;
-    private View rlContorl;
     private ArrayList<ResultSequence> saveResultSequences;
     private int duration;
     private Thread playThread;
     private int shouldStop = 2;
     private View selectView;
-//    private boolean isPlaying;
+    private ImageView imPlayPause;
+    /**
+     * 0未播放  1 播放中  2暂停
+     */
+    private int soundPoolPlayState;
+    private ProgressDialog progressDialog;
+    //    private boolean isPlaying;
 //    private boolean firstPlay = true;
 
     public static int px2dip(float pxValue) {
@@ -61,61 +64,63 @@ public class Rhythm extends BaseActivity {
         vIndicator = findViewById(R.id.v_indicator);
         vIndicator2 = findViewById(R.id.v_indicator2);
         imIndicator = findViewById(R.id.im_jie_pai_indicator);
-        rlContorl = findViewById(R.id.rl_crontor);
+        imPlayPause = findViewById(R.id.im_rhythm_play_pause);
+        imPlayPause.setOnClickListener(v -> {
+            if (soundPool != null) {
+
+                if (soundPoolPlayState == 0) { //停止播放
+                    soundPoolPlayState = 1;
+                    imPlayPause.setImageResource(R.drawable.pause);
+                    clickStopPlay();
+                } else if (soundPoolPlayState == 1) {   //播放中
+                    soundPool.pause(load);
+                    soundPoolPlayState = 2;
+                    imPlayPause.setImageResource(R.drawable.play);
+                } else if (soundPoolPlayState == 2) {   //暂停中
+                    soundPool.resume(load);
+                    soundPoolPlayState = 1;
+                    imPlayPause.setImageResource(R.drawable.pause);
+                }
+            }
+        });
         findViewById(R.id.tv_song_name).setOnClickListener(v -> {
             selectView.setVisibility(View.GONE);
         });
-        findViewById(R.id.im_jiezou_play).setOnClickListener((v) -> {
-//            if (!firstPlay) {
-//                if (isPlaying) {
-//                    isPlaying = false;
-//                    soundPool.pause(load);
-//                } else {
-//                    isPlaying = true;
-//                    soundPool.resume(load);
-//                }
-//            } else {
-//                startPlay(duration * playRate);
-//                initAnimation();
-//                firstPlay = false;
-//            }
-        });
+
         findViewById(R.id.im_ge_dan).setOnClickListener(v -> {
             selectView.setVisibility(View.VISIBLE);
         });
 
         findViewById(R.id.im_return).setOnClickListener(v -> {
+            soundDestroy(false);
             finish();
         });
-        imYuePu.post(() -> {
-           /* RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) vIndicator.getLayoutParams();
-            layoutParams.leftMargin = imYuePu.getLeft();
-            layoutParams.height = imYuePu.getHeight();
-            layoutParams.topMargin = imYuePu.getTop();
-            vIndicator.setLayoutParams(layoutParams);*/
-        });
+
         selectView = findViewById(R.id.rl_select_song);
         selectView.setOnClickListener(v -> {
         });
         findViewById(R.id.im_select_close).setOnClickListener((v) -> {
             selectView.setVisibility(selectView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
-//            v.setVisibility(View.GONE);
-//            vIndicator.setVisibility(View.VISIBLE);
-//            imYuePu.setVisibility(View.VISIBLE);
-//            rlContorl.setVisibility(View.VISIBLE);
-//            startPlay();
-//            startPlay2();
         });
         findViewById(R.id.im_jiepaiqi).setOnClickListener((v) -> {
             //点击节拍器,切换快慢拍
+
             int nextBeatRes = getNextBeatRes();
             imPaiZi.setImageResource(nextBeatRes);
             imPaiZi.setTag(nextBeatRes);
-            clickStopPlay();
+
+            if (playThread != null) {
+                shouldStop = 1;
+                playThread.interrupt();
+                playThread = null;
+            }
+            resetIndicator();
         });
         imPaiZi = findViewById(R.id.im_paizi);
         imPaiZi.setTag(R.drawable.music_jiepaiqi_zhongpai_1);
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("资源准备中...");
+        progressDialog.setCancelable(false);
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
         duration = mediaPlayer.getDuration();
     }
@@ -124,37 +129,59 @@ public class Rhythm extends BaseActivity {
         ReadMIDI readMIDI = new ReadMIDI();
         resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.jiequ));
         if (resultSequences == null) {
-            Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
+
             return;
         }
         saveResultSequences = new ArrayList<>(resultSequences.size());
         saveResultSequences.addAll(this.resultSequences);
         for (ResultSequence resultSequence : this.resultSequences) {
-            Log.e("jerry", "initPlayer: " + resultSequence.toString());
+
         }
         soundPool = new SoundPool(18, AudioManager.STREAM_MUSIC, 100);
+        soundPool.setOnLoadCompleteListener((soundPool, sampleId, status) -> {
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+        });
         load = soundPool.load(this, R.raw.jiequ, 1);
-        clickStopPlay();
+        if (progressDialog != null) progressDialog.show();
     }
 
     private void startPlay(float duration) {
-        float startPx = imYuePu.getWidth() * 0.26f;
+        float startPx = imYuePu.getWidth() * 0.255f;
         float width = imYuePu.getWidth() * 0.6046f;
         resultSequences.clear();
         resultSequences.addAll(saveResultSequences);
         shouldStop = 0;
+        vIndicator.setVisibility(View.VISIBLE);
+        vIndicator2.setVisibility(View.VISIBLE);
         playThread = new Thread(() -> {
-
             load = soundPool.play(load, 1, 1, 1, 0, playRate);
-
             startPlayTimeMillis = System.currentTimeMillis();
-
+            float currentProgress = 0;
             while (resultSequences.size() > 0 && shouldStop == 0) {
-               /* if (!isPlaying) {
-                    startPlayTimeMillis = System.currentTimeMillis() - startPlayTimeMillis;
+                if (soundPoolPlayState == 2) {
+                    if (currentProgress == 0) {
+                        currentProgress = (System.currentTimeMillis() - startPlayTimeMillis) * playRate;
+
+                    }
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     continue;
-                }*/
-                float currentPlay = (System.currentTimeMillis() - startPlayTimeMillis) * playRate;
+                }
+
+                float currentPlay;
+                if (currentProgress != 0) {
+                    currentPlay = currentProgress + 10;
+                    long current = System.currentTimeMillis();
+                    long diff = Float.valueOf((currentProgress / playRate) + "").longValue();
+                    startPlayTimeMillis = current - diff;
+                    currentProgress = 0;
+                } else
+                    currentPlay = (System.currentTimeMillis() - startPlayTimeMillis) * playRate;
 
                 if (currentPlay > 6520 || currentPlay > duration) {
                     resultSequences.clear();
@@ -163,7 +190,7 @@ public class Rhythm extends BaseActivity {
                 double currentNoteTime = resultSequences.get(0).getCurrentTime() * 1000;
                 if (currentPlay > currentNoteTime) {
                     double marginLeft = startPx + width * (currentNoteTime / 5420);
-//                    Log.e("jerry", "大于了: 节点 " + currentNoteTime + " 当前：" + ((double) currentPlay) + "ms  marleft: " + px2dip((int) marginLeft) + "   int：" + (int) marginLeft);
+
                     runOnUiThread(() -> {
                         LayoutParams layoutParams = (LayoutParams) vIndicator.getLayoutParams();
                         layoutParams.leftMargin = (int) marginLeft;
@@ -181,12 +208,93 @@ public class Rhythm extends BaseActivity {
                     e.printStackTrace();
                 }
             }
-
-            soundDestroy();
+            soundDestroy(false);
             shouldStop = 2;
             playThread = null;
         });
         playThread.start();
+    }
+
+    public int getNextBeatRes() {
+        if (imPaiZi == null) return R.drawable.music_jiepaiqi_zhongpai_1;
+        int currentID = (int) imPaiZi.getTag();
+        switch (currentID) {
+            case R.drawable.music_jiepaiqi_kuaipai_1:
+                playRate = 0.5f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_manpa);
+                return R.drawable.music_jiepaiqi_manpai_1;
+            case R.drawable.music_jiepaiqi_zhongpai_1:
+                playRate = 1.4f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_kuaipa);
+                return R.drawable.music_jiepaiqi_kuaipai_1;
+            case R.drawable.music_jiepaiqi_manpai_1:
+                playRate = 1f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_zhongpa);
+                return R.drawable.music_jiepaiqi_zhongpai_1;
+        }
+        return R.drawable.music_jiepaiqi_zhongpai_1;
+    }
+
+    private void clickStopPlay() {
+        if (playThread != null) {
+            shouldStop = 1;
+            playThread.interrupt();
+            playThread = null;
+        }
+        if (resetIndicator()) return;
+        startPlay(duration * playRate);
+        initAnimation();
+    }
+
+    private boolean resetIndicator() {
+        if (vIndicator == null) return true;
+        if (vIndicator2 == null) return true;
+        LayoutParams layoutParams = (LayoutParams) vIndicator.getLayoutParams();
+        if (layoutParams == null) return true;
+        layoutParams.leftMargin = 0;
+        vIndicator.setLayoutParams(layoutParams);
+
+        LayoutParams layoutParams2 = (LayoutParams) vIndicator2.getLayoutParams();
+        if (layoutParams2 == null) return true;
+        layoutParams2.leftMargin = 0;
+        vIndicator2.setLayoutParams(layoutParams2);
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        soundDestroy(true);
+        resultSequences.clear();
+    }
+
+    private void soundDestroy(boolean isFinish) {
+        try {
+            soundPoolPlayState = 0;
+            runOnUiThread(() -> {
+                vIndicator.setVisibility(View.INVISIBLE);
+                vIndicator2.setVisibility(View.INVISIBLE);
+                if (progressDialog != null && isFinish)
+                    progressDialog.show();
+                if (soundPool != null) {
+                    soundPool.stop(load);
+                    if (isFinish) {
+                        soundPool.release();
+                        soundPool = null;
+                    } else {
+                        soundPool.unload(load);
+                        load = soundPool.load(this, R.raw.jiequ, 1);
+                    }
+                }
+                if (!isFinish)
+                    imPlayPause.setImageResource(R.drawable.play);
+                Animation animation = imIndicator.getAnimation();
+                imIndicator.clearAnimation();
+                if (animation == null) return;
+                animation.setAnimationListener(null);
+            });
+        } catch (Exception ignore) {
+        }
     }
 
     private void initAnimation() {
@@ -247,94 +355,5 @@ public class Rhythm extends BaseActivity {
         imIndicator.setAnimation(rotate);
         imIndicator.startAnimation(rotate);
 
-    }
-
-    public int getNextBeatRes() {
-        if (imPaiZi == null) return R.drawable.music_jiepaiqi_zhongpai_1;
-        int currentID = (int) imPaiZi.getTag();
-        switch (currentID) {
-            case R.drawable.music_jiepaiqi_kuaipai_1:
-                playRate = 0.5f;
-                imIndicator.setImageResource(R.drawable.music_jiepaiqi_manpa);
-                return R.drawable.music_jiepaiqi_manpai_1;
-            case R.drawable.music_jiepaiqi_zhongpai_1:
-                playRate = 1.4f;
-                imIndicator.setImageResource(R.drawable.music_jiepaiqi_kuaipa);
-                return R.drawable.music_jiepaiqi_kuaipai_1;
-            case R.drawable.music_jiepaiqi_manpai_1:
-                playRate = 1f;
-                imIndicator.setImageResource(R.drawable.music_jiepaiqi_zhongpa);
-                return R.drawable.music_jiepaiqi_zhongpai_1;
-        }
-        return R.drawable.music_jiepaiqi_zhongpai_1;
-    }
-
-    private void clickStopPlay() {
-        if (playThread != null) {
-            shouldStop = 1;
-//            playThread.stop();
-            playThread.interrupt();
-            playThread = null;
-        }
-//        soundDestroy();
-        if (vIndicator == null) return;
-        if (vIndicator2 == null) return;
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) vIndicator.getLayoutParams();
-        if (layoutParams == null) return;
-        layoutParams.leftMargin = 0;
-        vIndicator.setLayoutParams(layoutParams);
-
-        RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) vIndicator2.getLayoutParams();
-        if (layoutParams2 == null) return;
-        layoutParams2.leftMargin = 0;
-        vIndicator2.setLayoutParams(layoutParams2);
-
-       /* while (shouldStop != 2) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }*/
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("正在换拍...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        new Handler().postDelayed(() -> {
-            progressDialog.dismiss();
-            startPlay(duration * playRate);
-            initAnimation();
-        }, 3000);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        soundDestroy();
-        resultSequences.clear();
-    }
-
-   /* private void startPlay2() {
-        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
-        duration = mediaPlayer.getDuration();
-        startPlay(duration * playRate);
-        initAnimation();
-    }*/
-
-    private void soundDestroy() {
-        if (soundPool != null) {
-            soundPool.stop(load);
-            soundPool.unload(load);
-            load = soundPool.load(this, R.raw.jiequ, 1);
-
-        }
-        runOnUiThread(() -> {
-            Animation animation = imIndicator.getAnimation();
-            if (animation == null) return;
-
-            imIndicator.clearAnimation();
-            animation.setAnimationListener(null);
-        });
     }
 }

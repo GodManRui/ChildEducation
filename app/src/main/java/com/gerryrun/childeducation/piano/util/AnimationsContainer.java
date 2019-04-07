@@ -60,6 +60,10 @@ public class AnimationsContainer {
         this.FPS = fps;
     }
 
+    public int getResId() {
+        return resId;
+    }
+
     public void createProgressDialogAnim(ImageView imageView) {
         createProgressDialogAnim(imageView, true);
     }

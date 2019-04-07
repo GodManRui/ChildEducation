@@ -30,7 +30,7 @@ public class StartLearnSong extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.w("jerry", "Handler: " + msg.what);
+
         }
     };
     private MediaPlayer mediaPlayer;
@@ -196,7 +196,7 @@ public class StartLearnSong extends BaseActivity {
             ReadMIDI readMIDI = new ReadMIDI();
             ArrayList<ResultSequence> resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.elise));
             if (resultSequences == null) {
-                Log.e("jerry", "run: 文件解析失败，可能不是标准的mid文件");
+
                 return;
             }
             if (mediaPlayer == null) return;
@@ -280,7 +280,7 @@ public class StartLearnSong extends BaseActivity {
         frameAnimation.setAnimationListener(new FrameAnimation.AnimationListener() {
             @Override
             public void onAnimationStart() {
-                Log.w("jerry", "onAnimationStart: " );
+
             }
 
             @Override

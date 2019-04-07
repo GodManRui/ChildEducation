@@ -22,7 +22,7 @@ public class MyApplication extends Application {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                Log.e("jerry", "onActivityCreated: " + activity.getClass().getName());
+
             }
 
             @Override

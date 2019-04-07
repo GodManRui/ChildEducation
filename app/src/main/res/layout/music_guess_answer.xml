@@ -9,21 +9,22 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="@dimen/dp_14">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingBottom="8dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/music_jingcai_dengguang" />
 
         <ImageView
             android:id="@+id/im_right_answer"
-            android:layout_width="@dimen/dp_122"
-            android:layout_height="@dimen/dp_122"
+            android:layout_width="@dimen/dp_152"
+            android:layout_height="@dimen/dp_152"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp_10"
+            android:scaleType="centerInside"
             android:src="@drawable/music_woshitingyinwang_sakesi" />
     </RelativeLayout>
     <!--幕布-->
@@ -94,8 +95,8 @@
             android:layout_height="@dimen/dp_49"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/dp_66"
-            android:maxHeight="@dimen/dp_49"
             android:maxWidth="@dimen/dp_57"
+            android:maxHeight="@dimen/dp_49"
             android:src="@drawable/music_duihao"
             android:visibility="invisible" />
 
@@ -113,14 +114,14 @@
             android:id="@+id/im_judge_3"
             android:layout_width="@dimen/dp_57"
             android:layout_height="@dimen/dp_49"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:src="@drawable/music_cuohao"
             android:translationX="@dimen/dp_24"
             android:visibility="invisible" />
     </RelativeLayout>
 
-
+    <!--返回键-->
     <ImageView
         android:id="@+id/im_guess_return"
         android:layout_width="@dimen/dp_48"
@@ -128,4 +129,48 @@
         android:layout_marginStart="@dimen/dp_28"
         android:layout_marginTop="@dimen/dp_20"
         android:src="@drawable/music_return" />
+    <!--本轮结束-->
+    <RelativeLayout
+        android:id="@+id/rl_this_shutdown"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/music_jieshu_beijing"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/music_baiguang" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/music_caidai" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_328"
+            android:layout_height="@dimen/dp_113"
+            android:layout_centerInParent="true"
+            android:src="@drawable/music_jieshu_beijing_datijieshu" />
+
+        <ImageView
+            android:id="@+id/im_benlun_return"
+            android:layout_width="@dimen/dp_34"
+            android:layout_height="@dimen/dp_32"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_269"
+            android:layout_marginBottom="@dimen/dp_85"
+            android:src="@drawable/music_return" />
+
+        <ImageView
+            android:id="@+id/im_next_group"
+            android:layout_width="@dimen/dp_34"
+            android:layout_height="@dimen/dp_32"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dp_342"
+            android:layout_marginBottom="@dimen/dp_85"
+            android:src="@drawable/music_chongfu" />
+
+    </RelativeLayout>
 </RelativeLayout>

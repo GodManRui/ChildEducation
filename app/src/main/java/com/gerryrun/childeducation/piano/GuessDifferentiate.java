@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -14,12 +15,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.gerryrun.childeducation.piano.bean.Constont;
 import com.gerryrun.childeducation.piano.bean.QuestionLife;
 import com.gerryrun.childeducation.piano.bean.QuestionLife.DataBean;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.gerryrun.childeducation.piano.util.NetUtil.getQuestion;
 
 public class GuessDifferentiate extends BaseActivity {
 
@@ -42,11 +52,16 @@ public class GuessDifferentiate extends BaseActivity {
     private int size;
     private int currentIndex = 0;
     private List<DataBean> data;
+    private View rlShutdown;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         onDestroyPlayer();
+        try {
+            Picasso.get().shutdown();
+        } catch (Throwable ignore) {
+        }
     }
 
     private void onDestroyPlayer() {
@@ -77,7 +92,7 @@ public class GuessDifferentiate extends BaseActivity {
 
     private void initView() {
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("初始化资源中...");
+        progressDialog.setMessage("初始化资源...");
         progressDialog.setCancelable(false);
         progressDialog.show();
         rlAnswer = findViewById(R.id.rl_answer);
@@ -88,28 +103,90 @@ public class GuessDifferentiate extends BaseActivity {
         findViewById(R.id.im_guess_return).setOnClickListener(v -> finish());
 
         mQuestion1 = findViewById(R.id.im_questions_1);
-        mQuestion1.setOnClickListener(v -> clickAnswer(1));
+        mQuestion1.setOnClickListener(v -> clickAnswer());
         mQuestion2 = findViewById(R.id.im_questions_2);
-        mQuestion2.setOnClickListener(v -> clickAnswer(2));
+        mQuestion2.setOnClickListener(v -> clickAnswer());
         mQuestion3 = findViewById(R.id.im_questions_3);
-        mQuestion3.setOnClickListener(v -> clickAnswer(3));
+        mQuestion3.setOnClickListener(v -> clickAnswer());
 
         imJudge1 = findViewById(R.id.im_judge_1);
         imJudge2 = findViewById(R.id.im_judge_2);
         imJudge3 = findViewById(R.id.im_judge_3);
 
+        rlShutdown = findViewById(R.id.rl_this_shutdown);
+        findViewById(R.id.im_next_group).setOnClickListener(v -> {
+            //todo
+            data.clear();
+            currentIndex = 0;
+            getData();
+        });
+        findViewById(R.id.im_benlun_return).setOnClickListener(v -> {
+            onDestroyPlayer();
+            finish();
+        });
 
-//        for (int i = 0; i < data.size(); i++) {
         nextQuestion(data.get(currentIndex++));
         size = data.size();
+    }
 
-//        }
-   /*     if (guessType == 1) {
-            imRightAnswer.setImageResource(R.drawable.music_woshitingyinwang_qingwa);
-            mQuestion1.setImageResource(R.drawable.music_tingyinwang_qinfwa_1);
-            mQuestion2.setImageResource(R.drawable.music_tingyinwang_mao);
-            mQuestion3.setImageResource(R.drawable.music_tingyinwang_gou);
-        }*/
+    private void getData() {
+        if (progressDialog != null) {
+            progressDialog.show();
+        }
+        try {
+            getQuestion(guessType == 1 ? Constont.QUESTION_LIFE : Constont.QUESTION_MUSICAL, new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    runOnUiThread(() -> {
+                        if (progressDialog != null)
+                            progressDialog.dismiss();
+                        Toast.makeText(GuessDifferentiate.this, "服务器链接失败: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        finish();
+                    });
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if (!response.isSuccessful() || response.body() == null) {
+                        runOnUiThread(() -> {
+                            if (progressDialog != null)
+                                progressDialog.dismiss();
+                            Toast.makeText(GuessDifferentiate.this, "服务器响应失败: " + response.code(), Toast.LENGTH_LONG).show();
+                            finish();
+                        });
+                        return;
+                    }
+                    Gson gson = new Gson();
+                    String responseStr = response.body().string();
+                    QuestionLife questionLife = gson.fromJson(responseStr, QuestionLife.class);
+                    if (questionLife != null) {
+                        data = questionLife.getData();
+                        runOnUiThread(() -> {
+                            if (progressDialog != null) {
+                                progressDialog.dismiss();
+                            }
+                            if (data == null || data.size() <= 0) {
+                                Toast.makeText(GuessDifferentiate.this, "没有下一轮了!", Toast.LENGTH_LONG).show();
+                                finish();
+                            } else {
+                                Toast.makeText(GuessDifferentiate.this, "Question pull success!", Toast.LENGTH_LONG).show();
+                                nextQuestion(data.get(currentIndex++));
+                                size = data.size();
+                            }
+                        });
+                    }
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            runOnUiThread(() -> {
+                if (progressDialog != null)
+                    progressDialog.dismiss();
+                Toast.makeText(GuessDifferentiate.this, "Response parse Exception !!! ", Toast.LENGTH_LONG).show();
+                finish();
+            });
+        }
     }
 
     private void nextQuestion(DataBean dataBean) {
@@ -150,16 +227,18 @@ public class GuessDifferentiate extends BaseActivity {
         mediaPlayer = new MediaPlayer();
         try {
             mediaPlayer.setDataSource(dataBean.getVoice());
-            mediaPlayer.setOnPreparedListener(mp1 -> {
-                runOnUiThread(() -> {
-                    mediaPlayer.start();
-                    progressDialog.dismiss();
-                });
-            });
+            mediaPlayer.setOnPreparedListener(mp1 -> runOnUiThread(() -> {
+                mediaPlayer.start();
+                progressDialog.dismiss();
+                if (rlShutdown.getVisibility() == View.VISIBLE) {
+                    rlShutdown.setVisibility(View.GONE);
+                }
+            }));
             mediaPlayer.setOnErrorListener((mp, what, extra) -> {
                 runOnUiThread(() -> {
                     Toast.makeText(GuessDifferentiate.this, "音频资源加载失败 :errorId: " + what + "  extra: " + extra, Toast.LENGTH_LONG).show();
                     progressDialog.dismiss();
+                    finish();
                 });
                 return false;
             });
@@ -169,9 +248,10 @@ public class GuessDifferentiate extends BaseActivity {
             finish();
         }
         Picasso.get().load(dataBean.getRight_pic()).into(imRightAnswer);
+        isChecked = false;
     }
 
-    private void clickAnswer(int answer) {
+    private void clickAnswer() {
         if (isChecked) return;
         isChecked = true;
         imJudge1.setVisibility(View.VISIBLE);
@@ -200,18 +280,20 @@ public class GuessDifferentiate extends BaseActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    if (currentIndex >= size) {
-                        Toast.makeText(GuessDifferentiate.this, "没有下一题了哦！", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
                     imJudge1.setVisibility(View.INVISIBLE);
                     imJudge2.setVisibility(View.INVISIBLE);
                     imJudge3.setVisibility(View.INVISIBLE);
+                    if (currentIndex >= size) {
+//                        Toast.makeText(GuessDifferentiate.this, "没有下一题了哦！", Toast.LENGTH_SHORT).show();
+                        if (mediaPlayer != null) {
+                            mediaPlayer.stop();
+                        }
+                        rlShutdown.setVisibility(View.VISIBLE);
+                        return;
+                    }
                     new Handler().postDelayed(() -> {
-
-                        isChecked = false;
                         nextQuestion(data.get(currentIndex++));
-                    }, 500);
+                    }, 1000);
                 }
 
                 @Override

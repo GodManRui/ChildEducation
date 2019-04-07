@@ -36,6 +36,7 @@ public class LearnPitch extends BaseActivity {
     private View imSi;
     private View imDol;
     private ImageView imTvAnimation;
+    private long mLastPlay;
 
 
     @Override
@@ -100,8 +101,8 @@ public class LearnPitch extends BaseActivity {
     private boolean onTouchListener(View v, MotionEvent event) {
 
         Configuration config = getResources().getConfiguration();
-        int  smallestScreenWidth = config.smallestScreenWidthDp;
-        Log.e("jerry", "onTouchListener: "+smallestScreenWidth);
+        int smallestScreenWidth = config.smallestScreenWidthDp;
+
         int temp;
         int tempIndex;
         int pointercount;
@@ -312,13 +313,21 @@ public class LearnPitch extends BaseActivity {
         Object tag = imTvAnimation.getTag();
         if (tag != null) {
             AnimationsContainer old = (AnimationsContainer) tag;
+            if (mLastPlay != 0 && System.currentTimeMillis() - mLastPlay < 2000 && old.getResId() == R.array.music_tv_continuation) {
+                mLastPlay = System.currentTimeMillis();
+                return;
+            }
             old.stop();
             old = null;
             tag = null;
         }
-        AnimationsContainer mBgAnimation
-                = new AnimationsContainer(arrays, 34).createProgressDialogAnim(imTvAnimation, false);
+        AnimationsContainer mBgAnimation;
+        if (mLastPlay != 0 && System.currentTimeMillis() - mLastPlay < 2000) {
+            mBgAnimation = new AnimationsContainer(R.array.music_tv_continuation, 34).createProgressDialogAnim(imTvAnimation, true);
+        } else
+            mBgAnimation = new AnimationsContainer(arrays, 34).createProgressDialogAnim(imTvAnimation, false);
         imTvAnimation.setTag(mBgAnimation);
+        mLastPlay = System.currentTimeMillis();
         mBgAnimation.start();
     }
 
