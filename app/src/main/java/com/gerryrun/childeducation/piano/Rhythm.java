@@ -6,7 +6,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -104,7 +103,6 @@ public class Rhythm extends BaseActivity {
         });
         findViewById(R.id.im_jiepaiqi).setOnClickListener((v) -> {
             //点击节拍器,切换快慢拍
-
             int nextBeatRes = getNextBeatRes();
             imPaiZi.setImageResource(nextBeatRes);
             imPaiZi.setTag(nextBeatRes);
@@ -129,7 +127,6 @@ public class Rhythm extends BaseActivity {
         ReadMIDI readMIDI = new ReadMIDI();
         resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.jiequ));
         if (resultSequences == null) {
-
             return;
         }
         saveResultSequences = new ArrayList<>(resultSequences.size());
@@ -272,26 +269,29 @@ public class Rhythm extends BaseActivity {
         try {
             soundPoolPlayState = 0;
             runOnUiThread(() -> {
-                vIndicator.setVisibility(View.INVISIBLE);
-                vIndicator2.setVisibility(View.INVISIBLE);
-                if (progressDialog != null && isFinish)
-                    progressDialog.show();
-                if (soundPool != null) {
-                    soundPool.stop(load);
-                    if (isFinish) {
-                        soundPool.release();
-                        soundPool = null;
-                    } else {
-                        soundPool.unload(load);
-                        load = soundPool.load(this, R.raw.jiequ, 1);
+                try {
+                    if (progressDialog != null && !isFinish)
+                        progressDialog.show();
+                    vIndicator.setVisibility(View.INVISIBLE);
+                    vIndicator2.setVisibility(View.INVISIBLE);
+                    if (soundPool != null) {
+                        soundPool.stop(load);
+                        if (isFinish) {
+                            soundPool.release();
+                            soundPool = null;
+                        } else {
+                            soundPool.unload(load);
+                            load = soundPool.load(this, R.raw.jiequ, 1);
+                        }
                     }
+                    if (!isFinish)
+                        imPlayPause.setImageResource(R.drawable.play);
+                    Animation animation = imIndicator.getAnimation();
+                    imIndicator.clearAnimation();
+                    if (animation == null) return;
+                    animation.setAnimationListener(null);
+                } catch (Exception ignore) {
                 }
-                if (!isFinish)
-                    imPlayPause.setImageResource(R.drawable.play);
-                Animation animation = imIndicator.getAnimation();
-                imIndicator.clearAnimation();
-                if (animation == null) return;
-                animation.setAnimationListener(null);
             });
         } catch (Exception ignore) {
         }

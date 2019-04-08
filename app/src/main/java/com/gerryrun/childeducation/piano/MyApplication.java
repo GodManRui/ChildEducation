@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.gerryrun.childeducation.piano.util.CrashHandler;
+
 
 public class MyApplication extends Application {
     private static Context context;
@@ -19,6 +21,8 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
 //        Pandora.get().open();
+        CrashHandler catchHandler = CrashHandler.getInstance();
+        catchHandler.init(getApplicationContext());
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {

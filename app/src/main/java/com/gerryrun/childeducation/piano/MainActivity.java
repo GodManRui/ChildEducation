@@ -1,19 +1,22 @@
 package com.gerryrun.childeducation.piano;
 
+import android.Manifest.permission;
 import android.content.Intent;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 
-import com.gerryrun.childeducation.piano.R;
+public class MainActivity extends BaseActivity {
 
-public class MainActivity extends BaseActivity  {
-
+    @RequiresApi(api = VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         /*this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//去掉信息栏*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        requestPermissions(new String[]{permission.WRITE_EXTERNAL_STORAGE}, 100);
     }
 
     //节奏
@@ -29,6 +32,7 @@ public class MainActivity extends BaseActivity  {
     //竞猜
     public void Guess(View view) {
         startActivity(new Intent(this, Guess.class));
-
+        int a = 0;
+        System.out.println(10 / a);
     }
 }

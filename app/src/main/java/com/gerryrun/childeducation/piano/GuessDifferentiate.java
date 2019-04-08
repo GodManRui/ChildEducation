@@ -115,7 +115,6 @@ public class GuessDifferentiate extends BaseActivity {
 
         rlShutdown = findViewById(R.id.rl_this_shutdown);
         findViewById(R.id.im_next_group).setOnClickListener(v -> {
-            //todo
             data.clear();
             currentIndex = 0;
             getData();

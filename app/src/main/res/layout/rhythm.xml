@@ -9,10 +9,10 @@
         android:id="@+id/im_ge_dan"
         android:layout_width="@dimen/dp_75"
         android:layout_height="@dimen/dp_36"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dp_17"
-        android:layout_marginRight="@dimen/dp_32"
-        android:src="@drawable/music_yinlv_xiaogedan" />
+        android:layout_marginEnd="@dimen/dp_32"
+        android:src="@drawable/music_xiaogedan_dianjiqian" />
 
     <ImageView
         android:id="@+id/im_return"
@@ -33,7 +33,14 @@
             android:id="@+id/im_yue_pu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/music_yinlv_xiaoxingxing" />
+            android:src="@drawable/music_yinlv_xiaoxingxing_2" />
+
+        <ImageView
+            android:layout_width="@dimen/dp_95"
+            android:layout_height="@dimen/dp_19"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@drawable/music_yinlv_xiaoxingxing_1" />
 
         <View
             android:id="@+id/v_indicator"

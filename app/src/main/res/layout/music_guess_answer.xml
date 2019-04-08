@@ -24,7 +24,7 @@
             android:layout_height="@dimen/dp_152"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:src="@drawable/music_woshitingyinwang_sakesi" />
     </RelativeLayout>
     <!--幕布-->
@@ -154,23 +154,27 @@
             android:layout_centerInParent="true"
             android:src="@drawable/music_jieshu_beijing_datijieshu" />
 
-        <ImageView
-            android:id="@+id/im_benlun_return"
-            android:layout_width="@dimen/dp_34"
-            android:layout_height="@dimen/dp_32"
+        <RelativeLayout
+            android:layout_width="@dimen/dp_106"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_269"
-            android:layout_marginBottom="@dimen/dp_85"
-            android:src="@drawable/music_return" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_85">
 
-        <ImageView
-            android:id="@+id/im_next_group"
-            android:layout_width="@dimen/dp_34"
-            android:layout_height="@dimen/dp_32"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/dp_342"
-            android:layout_marginBottom="@dimen/dp_85"
-            android:src="@drawable/music_chongfu" />
+            <ImageView
+                android:id="@+id/im_benlun_return"
+                android:layout_width="@dimen/dp_34"
+                android:layout_height="@dimen/dp_32"
+                android:src="@drawable/music_return" />
+
+            <ImageView
+                android:id="@+id/im_next_group"
+                android:layout_width="@dimen/dp_34"
+                android:layout_height="@dimen/dp_32"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/music_chongfu" />
+        </RelativeLayout>
+
 
     </RelativeLayout>
 </RelativeLayout>
