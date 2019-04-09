@@ -42,6 +42,7 @@ public class Rhythm extends BaseActivity {
      */
     private int soundPoolPlayState;
     private ProgressDialog progressDialog;
+    private float startPx;
     //    private boolean isPlaying;
 //    private boolean firstPlay = true;
 
@@ -112,7 +113,7 @@ public class Rhythm extends BaseActivity {
                 playThread.interrupt();
                 playThread = null;
             }
-            resetIndicator();
+            resetIndicator(startPx);
         });
         imPaiZi = findViewById(R.id.im_paizi);
         imPaiZi.setTag(R.drawable.music_jiepaiqi_zhongpai_1);
@@ -145,13 +146,14 @@ public class Rhythm extends BaseActivity {
     }
 
     private void startPlay(float duration) {
-        float startPx = imYuePu.getWidth() * 0.255f;
+        startPx = imYuePu.getWidth() * 0.255f;
         float width = imYuePu.getWidth() * 0.6046f;
         resultSequences.clear();
         resultSequences.addAll(saveResultSequences);
         shouldStop = 0;
         vIndicator.setVisibility(View.VISIBLE);
         vIndicator2.setVisibility(View.VISIBLE);
+        resetIndicator(startPx);
         playThread = new Thread(() -> {
             load = soundPool.play(load, 1, 1, 1, 0, playRate);
             startPlayTimeMillis = System.currentTimeMillis();
@@ -160,7 +162,6 @@ public class Rhythm extends BaseActivity {
                 if (soundPoolPlayState == 2) {
                     if (currentProgress == 0) {
                         currentProgress = (System.currentTimeMillis() - startPlayTimeMillis) * playRate;
-
                     }
                     try {
                         Thread.sleep(10);
@@ -187,7 +188,6 @@ public class Rhythm extends BaseActivity {
                 double currentNoteTime = resultSequences.get(0).getCurrentTime() * 1000;
                 if (currentPlay > currentNoteTime) {
                     double marginLeft = startPx + width * (currentNoteTime / 5420);
-
                     runOnUiThread(() -> {
                         LayoutParams layoutParams = (LayoutParams) vIndicator.getLayoutParams();
                         layoutParams.leftMargin = (int) marginLeft;
@@ -238,22 +238,24 @@ public class Rhythm extends BaseActivity {
             playThread.interrupt();
             playThread = null;
         }
-        if (resetIndicator()) return;
+        if (resetIndicator(startPx)) return;
         startPlay(duration * playRate);
         initAnimation();
     }
 
-    private boolean resetIndicator() {
+    private boolean resetIndicator(float startPx) {
         if (vIndicator == null) return true;
         if (vIndicator2 == null) return true;
         LayoutParams layoutParams = (LayoutParams) vIndicator.getLayoutParams();
         if (layoutParams == null) return true;
-        layoutParams.leftMargin = 0;
+        layoutParams.leftMargin =
+                Float.valueOf(startPx + "").intValue();
         vIndicator.setLayoutParams(layoutParams);
 
         LayoutParams layoutParams2 = (LayoutParams) vIndicator2.getLayoutParams();
         if (layoutParams2 == null) return true;
-        layoutParams2.leftMargin = 0;
+        layoutParams2.leftMargin =
+                Float.valueOf(startPx + "").intValue();
         vIndicator2.setLayoutParams(layoutParams2);
         return false;
     }
@@ -298,6 +300,7 @@ public class Rhythm extends BaseActivity {
     }
 
     private void initAnimation() {
+
         int duration = 0;
         if (playRate > 1.0f) {
             duration = 535;

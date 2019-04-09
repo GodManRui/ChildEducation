@@ -135,8 +135,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/music_jieshu_beijing"
-        android:clipChildren="false"
-        android:visibility="gone">
+        android:clipChildren="false">
 
         <ImageView
             android:id="@+id/im_back_light"
