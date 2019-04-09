@@ -6,10 +6,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -53,6 +54,7 @@ public class GuessDifferentiate extends BaseActivity {
     private int currentIndex = 0;
     private List<DataBean> data;
     private View rlShutdown;
+    private View imBackLight;
 
     @Override
     protected void onDestroy() {
@@ -114,6 +116,7 @@ public class GuessDifferentiate extends BaseActivity {
         imJudge3 = findViewById(R.id.im_judge_3);
 
         rlShutdown = findViewById(R.id.rl_this_shutdown);
+        imBackLight = findViewById(R.id.im_back_light);
         findViewById(R.id.im_next_group).setOnClickListener(v -> {
             data.clear();
             currentIndex = 0;
@@ -231,6 +234,7 @@ public class GuessDifferentiate extends BaseActivity {
                 progressDialog.dismiss();
                 if (rlShutdown.getVisibility() == View.VISIBLE) {
                     rlShutdown.setVisibility(View.GONE);
+                    imBackLight.clearAnimation();
                 }
             }));
             mediaPlayer.setOnErrorListener((mp, what, extra) -> {
@@ -288,6 +292,13 @@ public class GuessDifferentiate extends BaseActivity {
                             mediaPlayer.stop();
                         }
                         rlShutdown.setVisibility(View.VISIBLE);
+                        RotateAnimation rotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                        LinearInterpolator lin = new LinearInterpolator();
+                        rotate.setInterpolator(lin);
+                        rotate.setDuration(15000);//设置动画持续时间
+                        rotate.setRepeatCount(-1);//设置重复次数
+                        rotate.setFillAfter(true);//动画执行完后是否停留在执行完的状态
+                        imBackLight.setAnimation(rotate);
                         return;
                     }
                     new Handler().postDelayed(() -> {

@@ -1,5 +1,15 @@
 package com.gerryrun.childeducation.piano.util;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
+import android.os.Environment;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,15 +28,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Build;
-import android.os.Environment;
-import android.os.Looper;
-import android.util.Log;
-import android.widget.Toast;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类来接管程序,并记录发送错误报告.
@@ -36,12 +40,10 @@ import android.widget.Toast;
 public class CrashHandler implements UncaughtExceptionHandler {
 
     public static final String TAG = "CrashHandler";
-
-    //系统默认的UncaughtException处理类
-    private Thread.UncaughtExceptionHandler mDefaultHandler;
     //CrashHandler实例
     private static CrashHandler instance;
-
+    //系统默认的UncaughtException处理类
+    private Thread.UncaughtExceptionHandler mDefaultHandler;
     //程序的Context对象
     private Context mContext;
     //用来存储设备信息和异常信息
@@ -193,6 +195,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
                 fos.write(sb.toString().getBytes());
                 //发送给开发人员
 //                sendCrashLog2PM(path + fileName);
+                sendCrashLog2PM(sb);
                 fos.close();
             }
             return fileName;
@@ -200,6 +203,32 @@ public class CrashHandler implements UncaughtExceptionHandler {
             Log.e(TAG, "an error occured while writing file...", e);
         }
         return null;
+    }
+
+    private void sendCrashLog2PM(StringBuffer sb) {
+        try {
+            NetUtil.getQuestion("http://dp.ink520.cn/music/log?log=" + sb.toString(), new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response == null || !response.isSuccessful()) return;
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            Looper.prepare();
+                            Toast.makeText(mContext, "异常信息已发送至后端.", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
+                    }.start();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

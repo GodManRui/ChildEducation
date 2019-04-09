@@ -1,7 +1,6 @@
 package com.gerryrun.childeducation.piano;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,8 +13,6 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import com.gerryrun.childeducation.piano.R;
 
 import com.gerryrun.childeducation.piano.util.AnimationsContainer;
 import com.gerryrun.childeducation.piano.util.PianoMusic;
@@ -94,128 +91,142 @@ public class LearnPitch extends BaseActivity {
         for (int j = 0; j < pressedkey.length; j++) {
             pressedkey[j] = -1;
         }
-
-
     }
 
     private boolean onTouchListener(View v, MotionEvent event) {
 
-        Configuration config = getResources().getConfiguration();
-        int smallestScreenWidth = config.smallestScreenWidthDp;
+        /*Configuration config = getResources().getConfiguration();
+        int smallestScreenWidth = config.smallestScreenWidthDp;*/
+        try {
+            int temp;
+            int tempIndex;
+            int pointercount;
+            pointercount = event.getPointerCount();
+            Log.e("JerryZhu", "onTouchListener: " + pointercount + "   M: " + event.getActionMasked() + "  A: " + event.getAction());
 
-        int temp;
-        int tempIndex;
-        int pointercount;
-        pointercount = event.getPointerCount();
-        for (int count = 0; count < pointercount; count++) {
-            boolean moveflag = false;// 标记是否是在按键上移动
-            temp = isInAnyScale(event.getX(count), event.getY(count),
-                    button);
-            if (temp != -1) {// 事件对应的是当前点
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        // // 单独一根手指或最先按下的那个
-                        // pressedkey = temp;
-                    case MotionEvent.ACTION_POINTER_DOWN:
-                        pressedkey[count] = temp;
-                        if (!havePlayed[temp]) {// 在某个按键范围内
-                            button[temp].setBackgroundResource(getBackgroundPressed(temp, true));
-                            // 播放音阶
-                            player.soundPlay(temp);
-                            havePlayed[temp] = true;
-                        }
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        temp = pressedkey[count];
-                        for (int i = temp + 1; i >= temp - 1; i--) {
-                            // 当在两端的按钮时，会有一边越界
-                            if (i < 0 || i >= button.length) {
-                                continue;
+            for (int count = 0; count < pointercount; count++) {
+                boolean moveflag = false;// 标记是否是在按键上移动
+                temp = isInAnyScale(event.getX(count), event.getY(count),
+                        button);
+                if (temp != -1) {// 事件对应的是当前点
+                    switch (event.getActionMasked()) {
+                        case MotionEvent.ACTION_DOWN:
+                            // // 单独一根手指或最先按下的那个
+                            // pressedkey = temp;
+                        case MotionEvent.ACTION_POINTER_DOWN:
+                            pressedkey[count] = temp;
+                            if (!havePlayed[temp]) {// 在某个按键范围内
+                                button[temp].setBackgroundResource(getBackgroundPressed(temp, true));
+                                // 播放音阶
+                                player.soundPlay(temp);
+                                havePlayed[temp] = true;
                             }
-                            if (isInScale(event.getX(count),
-                                    event.getY(count), button[i])) {// 在某个按键内
-                                moveflag = true;
-                                if (i != temp) {// 在相邻按键内
-                                    boolean laststill = false;
-                                    boolean nextstill = false;
-                                    // 假设手指已经从上一个位置抬起，但是没有真的抬起，所以不移位
-                                    pressedkey[count] = -1;
-                                    for (int j = 0; j < pointercount; j++) {
-                                        if (pressedkey[j] == temp) {
-                                            laststill = true;
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            temp = pressedkey[count];
+                            for (int i = temp + 1; i >= temp - 1; i--) {
+                                // 当在两端的按钮时，会有一边越界
+                                if (i < 0 || i >= button.length) {
+                                    continue;
+                                }
+                                if (isInScale(event.getX(count),
+                                        event.getY(count), button[i])) {// 在某个按键内
+                                    moveflag = true;
+                                    if (i != temp) {// 在相邻按键内
+                                        boolean laststill = false;
+                                        boolean nextstill = false;
+                                        // 假设手指已经从上一个位置抬起，但是没有真的抬起，所以不移位
+                                        pressedkey[count] = -1;
+                                        for (int j = 0; j < pointercount; j++) {
+                                            if (pressedkey[j] == temp) {
+                                                laststill = true;
+                                            }
+                                            if (pressedkey[j] == i) {
+                                                nextstill = true;
+                                            }
                                         }
-                                        if (pressedkey[j] == i) {
-                                            nextstill = true;
+                                        if (!nextstill) {// 移入的按键没有按下
+                                            // 设置当前按键
+                                            button[i]
+                                                    .setBackgroundResource(getBackgroundPressed(i, true));
+                                            // 发音
+                                            player.soundPlay(i);
+                                            havePlayed[i] = true;
                                         }
+                                        pressedkey[count] = i;
+                                        if (!laststill) {// 没有手指按在上面
+                                            // 设置上一个按键
+                                            button[temp]
+                                                    .setBackgroundResource(getBackgroundPressed(temp, false));
+                                            havePlayed[temp] = false;
+                                        }
+                                        break;
                                     }
-
-                                    if (!nextstill) {// 移入的按键没有按下
-                                        // 设置当前按键
-                                        button[i]
-                                                .setBackgroundResource(getBackgroundPressed(i, true));
-                                        // 发音
-                                        player.soundPlay(i);
-                                        havePlayed[i] = true;
-                                    }
-
-                                    pressedkey[count] = i;
-
-                                    if (!laststill) {// 没有手指按在上面
-                                        // 设置上一个按键
-                                        button[temp]
-                                                .setBackgroundResource(getBackgroundPressed(temp, false));
-                                        havePlayed[temp] = false;
-                                    }
-
-                                    break;
                                 }
                             }
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                    case MotionEvent.ACTION_POINTER_UP:
-                        // 事件与点对应
-                        tempIndex = event.getActionIndex();
-                        if (tempIndex == count) {
-                            Log.i("--", "index" + tempIndex);
-                            boolean still = false;
-                            // 当前点已抬起
-                            for (int t = count; t < 5; t++) {
-                                if (t != 4) {
-                                    if (pressedkey[t + 1] >= 0) {
-                                        pressedkey[t] = pressedkey[t + 1];
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            Log.w("JerryZhu", "onTouchListener: 离开了");
+                            for (int i = 0; i < button.length; i++) {
+                                button[i].setBackgroundResource(getBackgroundPressed(i, false));
+                            }
+                        case MotionEvent.ACTION_POINTER_UP:
+                            Log.w("JerryZhu", "onTouchListener: 某个离开了");
+
+                            // 事件与点对应
+                            tempIndex = event.getActionIndex();
+                            if (tempIndex == count) {
+                                Log.i("--", "index" + tempIndex);
+                                boolean still = false;
+                                // 当前点已抬起
+                                for (int t = count; t < 5; t++) {
+                                    if (t != 4) {
+                                        if (pressedkey[t + 1] >= 0) {
+                                            pressedkey[t] = pressedkey[t + 1];
+                                        } else {
+                                            pressedkey[t] = -1;
+                                        }
                                     } else {
                                         pressedkey[t] = -1;
                                     }
-                                } else {
-                                    pressedkey[t] = -1;
                                 }
-
-                            }
-                            for (int aPressedkey : pressedkey) {// 是否还有其他点
-                                if (aPressedkey == temp) {
-                                    still = true;
-                                    break;
+                                for (int aPressedkey : pressedkey) {// 是否还有其他点
+                                    if (aPressedkey == temp) {
+                                        still = true;
+                                        break;
+                                    }
                                 }
+                                if (!still) {// 已经没有手指按在该键上
+                                    button[temp]
+                                            .setBackgroundResource(getBackgroundPressed(temp, false));
+                                    havePlayed[temp] = false;
+                                    Log.i("--", "button" + temp + "up");
+                                }
+                                break;
                             }
-                            if (!still) {// 已经没有手指按在该键上
-                                button[temp]
-                                        .setBackgroundResource(getBackgroundPressed(temp, false));
-                                havePlayed[temp] = false;
-                                Log.i("--", "button" + temp + "up");
-                            }
-                            break;
-                        }
+                    }
+                }
+                //
+                if (event.getActionMasked() == MotionEvent.ACTION_MOVE
+                        && !moveflag) {
+                    if (pressedkey[count] != -1) {
+                        button[pressedkey[count]]
+                                .setBackgroundResource(getBackgroundPressed(pressedkey[count], false));
+                        havePlayed[pressedkey[count]] = false;
+                    }
                 }
             }
-            //
-            if (event.getActionMasked() == MotionEvent.ACTION_MOVE
-                    && !moveflag) {
-                if (pressedkey[count] != -1) {
-                    button[pressedkey[count]]
-                            .setBackgroundResource(getBackgroundPressed(pressedkey[count], false));
-                    havePlayed[pressedkey[count]] = false;
+        } catch (Exception e) {
+            e.printStackTrace();
+          /*  for (int i = 0; i < button.length; i++) {
+                button[i].setBackgroundResource(getBackgroundPressed(i, false));
+            }*/
+        } finally {
+            if (event.getActionMasked() == MotionEvent.ACTION_CANCEL || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                for (int i = 0; i < button.length; i++) {
+                    button[i].setBackgroundResource(getBackgroundPressed(i, false));
                 }
+//                return false;
             }
         }
         return false;
@@ -309,6 +320,22 @@ public class LearnPitch extends BaseActivity {
         return 0;
     }
 
+    /**
+     * 判断某个点是否在某个按钮的范围内
+     *
+     * @param x      横坐标
+     * @param y      纵坐标
+     * @param button 按钮对象
+     * @return 在：true；不在：false
+     */
+    private boolean isInScale(float x, float y, Button button) {
+        // keys.getTop()是获取按钮所在父视图相对其父视图的右上角纵坐标
+
+        return x > button.getLeft() && x < button.getRight()
+                && y > button.getTop()
+                && y < button.getBottom();
+    }
+
     private void showTvAnimation(int arrays) {
         Object tag = imTvAnimation.getTag();
         if (tag != null) {
@@ -335,15 +362,6 @@ public class LearnPitch extends BaseActivity {
         if (imageView != null && imageView.getVisibility() != View.VISIBLE)
             imageView.setVisibility(View.VISIBLE);
         showMenu(imageView);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (player != null) {
-            player.shutdown();
-            player = null;
-        }
     }
 
     public void showMenu(View view) {
@@ -375,22 +393,14 @@ public class LearnPitch extends BaseActivity {
         animatorSet.start();*/
     }
 
-    /**
-     * 判断某个点是否在某个按钮的范围内
-     *
-     * @param x      横坐标
-     * @param y      纵坐标
-     * @param button 按钮对象
-     * @return 在：true；不在：false
-     */
-    private boolean isInScale(float x, float y, Button button) {
-        // keys.getTop()是获取按钮所在父视图相对其父视图的右上角纵坐标
-
-        return x > button.getLeft() && x < button.getRight()
-                && y > button.getTop()
-                && y < button.getBottom();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (player != null) {
+            player.shutdown();
+            player = null;
+        }
     }
-
 
     public void learnChildSong(View view) {
         startActivity(new Intent(this, LearnChildSong.class));
