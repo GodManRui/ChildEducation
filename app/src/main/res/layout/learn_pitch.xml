@@ -24,7 +24,7 @@
         android:layout_height="@dimen/dp_46"
         android:layout_marginStart="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_17"
-        android:src="@drawable/music_homepage" />
+        android:src="@drawable/home" />
 
 
     <ImageButton

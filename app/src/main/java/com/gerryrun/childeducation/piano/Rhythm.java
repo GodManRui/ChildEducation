@@ -27,6 +27,7 @@ public class Rhythm extends BaseActivity {
     private long startPlayTimeMillis;
     //    private MediaPlayer mediaPlayer;
     private SoundPool soundPool;
+    private SoundPool soundPool2;
     private int load;
     private float playRate = 1f;
     private ImageView imIndicator;
@@ -43,6 +44,7 @@ public class Rhythm extends BaseActivity {
     private int soundPoolPlayState;
     private ProgressDialog progressDialog;
     private float startPx;
+    private int jiepaiLoad;
     //    private boolean isPlaying;
 //    private boolean firstPlay = true;
 
@@ -68,7 +70,7 @@ public class Rhythm extends BaseActivity {
         imPlayPause.setOnClickListener(v -> {
             if (soundPool != null) {
 
-                if (soundPoolPlayState == 0) { //停止播放
+                if (soundPoolPlayState == 0) { //没有播放
                     soundPoolPlayState = 1;
                     imPlayPause.setImageResource(R.drawable.pause);
                     clickStopPlay();
@@ -76,10 +78,16 @@ public class Rhythm extends BaseActivity {
                     soundPool.pause(load);
                     soundPoolPlayState = 2;
                     imPlayPause.setImageResource(R.drawable.play);
+
+                    Animation animation = imIndicator.getAnimation();
+                    imIndicator.clearAnimation();
+                    if (animation == null) return;
+                    animation.setAnimationListener(null);
                 } else if (soundPoolPlayState == 2) {   //暂停中
                     soundPool.resume(load);
                     soundPoolPlayState = 1;
                     imPlayPause.setImageResource(R.drawable.pause);
+                    initAnimation();
                 }
             }
         });
@@ -132,17 +140,163 @@ public class Rhythm extends BaseActivity {
         }
         saveResultSequences = new ArrayList<>(resultSequences.size());
         saveResultSequences.addAll(this.resultSequences);
-        for (ResultSequence resultSequence : this.resultSequences) {
+     /*   for (ResultSequence resultSequence : this.resultSequences) {
 
-        }
+        }*/
         soundPool = new SoundPool(18, AudioManager.STREAM_MUSIC, 100);
+        soundPool2 = new SoundPool(2, AudioManager.STREAM_MUSIC, 100);
         soundPool.setOnLoadCompleteListener((soundPool, sampleId, status) -> {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
         });
         load = soundPool.load(this, R.raw.jiequ, 1);
+        jiepaiLoad = soundPool2.load(this, R.raw.music_jiepaiqi, 1);
         if (progressDialog != null) progressDialog.show();
+    }
+
+    private void clickStopPlay() {
+        if (playThread != null) {
+            shouldStop = 1;
+            playThread.interrupt();
+            playThread = null;
+        }
+        if (resetIndicator(startPx)) return;
+        startPlay(duration * playRate);
+        initAnimation();
+    }
+
+    private void initAnimation() {
+
+        int duration = 0;
+        if (playRate > 1.0f) {
+            duration = 535;
+        } else if (playRate < 1.0f) {
+            duration = 1250;
+        } else {
+            duration = 833;
+        }
+        RotateAnimation rotate = new RotateAnimation(-18f, 18f, Animation.RELATIVE_TO_SELF, 0.6f, Animation.RELATIVE_TO_SELF, 1f);
+        LinearInterpolator lin = new LinearInterpolator();
+        rotate.setInterpolator(lin);
+        rotate.setDuration(duration);  //设置动画持续周期
+        rotate.setFillAfter(true); //动画执行完后是否停留在执行完的状态
+        RotateAnimation rotateReturn = new RotateAnimation(18f, -18f, Animation.RELATIVE_TO_SELF, 0.6f, Animation.RELATIVE_TO_SELF, 1f);
+        LinearInterpolator lin2 = new LinearInterpolator();
+        rotateReturn.setInterpolator(lin2);
+        rotateReturn.setDuration(duration);  //设置动画持续周期
+        rotateReturn.setFillAfter(true); //动画执行完后是否停留在执行完的状态
+        rotateReturn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                soundPool2.play(jiepaiLoad, 1, 1, 1, 0, 1.0f);
+
+                imIndicator.clearAnimation();
+                rotate.start();
+                imIndicator.setAnimation(rotate);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        rotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                soundPool2.play(jiepaiLoad, 1, 1, 1, 0, 1.0f);
+
+                imIndicator.clearAnimation();
+                rotateReturn.start();
+                imIndicator.setAnimation(rotateReturn);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        imIndicator.setAnimation(rotate);
+        imIndicator.startAnimation(rotate);
+
+    }
+
+    private void soundDestroy(boolean isFinish) {
+        try {
+            soundPoolPlayState = 0;
+            runOnUiThread(() -> {
+                try {
+                    if (progressDialog != null && !isFinish)
+                        progressDialog.show();
+                    vIndicator.setVisibility(View.INVISIBLE);
+                    vIndicator2.setVisibility(View.INVISIBLE);
+                    if (soundPool != null) {
+                        soundPool.stop(load);
+                        if (isFinish) {
+                            soundPool.release();
+                            soundPool = null;
+                        } else {
+                            soundPool.unload(load);
+                            load = soundPool.load(this, R.raw.jiequ, 1);
+                        }
+                    }
+                    if (!isFinish)
+                        imPlayPause.setImageResource(R.drawable.play);
+                    Animation animation = imIndicator.getAnimation();
+                    imIndicator.clearAnimation();
+                    if (animation == null) return;
+                    animation.setAnimationListener(null);
+                } catch (Exception ignore) {
+                }
+            });
+        } catch (Exception ignore) {
+        }
+    }
+
+    public int getNextBeatRes() {
+        if (imPaiZi == null) return R.drawable.music_jiepaiqi_zhongpai_1;
+        int currentID = (int) imPaiZi.getTag();
+        switch (currentID) {
+            case R.drawable.music_jiepaiqi_kuaipai_1:
+                playRate = 0.5f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_manpa);
+                return R.drawable.music_jiepaiqi_manpai_1;
+            case R.drawable.music_jiepaiqi_zhongpai_1:
+                playRate = 1.4f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_kuaipa);
+                return R.drawable.music_jiepaiqi_kuaipai_1;
+            case R.drawable.music_jiepaiqi_manpai_1:
+                playRate = 1f;
+                imIndicator.setImageResource(R.drawable.music_jiepaiqi_zhongpa);
+                return R.drawable.music_jiepaiqi_zhongpai_1;
+        }
+        return R.drawable.music_jiepaiqi_zhongpai_1;
+    }
+
+    private boolean resetIndicator(float startPx) {
+        if (vIndicator == null) return true;
+        if (vIndicator2 == null) return true;
+        LayoutParams layoutParams = (LayoutParams) vIndicator.getLayoutParams();
+        if (layoutParams == null) return true;
+        layoutParams.leftMargin =
+                Float.valueOf(startPx + "").intValue();
+        vIndicator.setLayoutParams(layoutParams);
+
+        LayoutParams layoutParams2 = (LayoutParams) vIndicator2.getLayoutParams();
+        if (layoutParams2 == null) return true;
+        layoutParams2.leftMargin =
+                Float.valueOf(startPx + "").intValue();
+        vIndicator2.setLayoutParams(layoutParams2);
+        return false;
     }
 
     private void startPlay(float duration) {
@@ -212,151 +366,10 @@ public class Rhythm extends BaseActivity {
         playThread.start();
     }
 
-    public int getNextBeatRes() {
-        if (imPaiZi == null) return R.drawable.music_jiepaiqi_zhongpai_1;
-        int currentID = (int) imPaiZi.getTag();
-        switch (currentID) {
-            case R.drawable.music_jiepaiqi_kuaipai_1:
-                playRate = 0.5f;
-                imIndicator.setImageResource(R.drawable.music_jiepaiqi_manpa);
-                return R.drawable.music_jiepaiqi_manpai_1;
-            case R.drawable.music_jiepaiqi_zhongpai_1:
-                playRate = 1.4f;
-                imIndicator.setImageResource(R.drawable.music_jiepaiqi_kuaipa);
-                return R.drawable.music_jiepaiqi_kuaipai_1;
-            case R.drawable.music_jiepaiqi_manpai_1:
-                playRate = 1f;
-                imIndicator.setImageResource(R.drawable.music_jiepaiqi_zhongpa);
-                return R.drawable.music_jiepaiqi_zhongpai_1;
-        }
-        return R.drawable.music_jiepaiqi_zhongpai_1;
-    }
-
-    private void clickStopPlay() {
-        if (playThread != null) {
-            shouldStop = 1;
-            playThread.interrupt();
-            playThread = null;
-        }
-        if (resetIndicator(startPx)) return;
-        startPlay(duration * playRate);
-        initAnimation();
-    }
-
-    private boolean resetIndicator(float startPx) {
-        if (vIndicator == null) return true;
-        if (vIndicator2 == null) return true;
-        LayoutParams layoutParams = (LayoutParams) vIndicator.getLayoutParams();
-        if (layoutParams == null) return true;
-        layoutParams.leftMargin =
-                Float.valueOf(startPx + "").intValue();
-        vIndicator.setLayoutParams(layoutParams);
-
-        LayoutParams layoutParams2 = (LayoutParams) vIndicator2.getLayoutParams();
-        if (layoutParams2 == null) return true;
-        layoutParams2.leftMargin =
-                Float.valueOf(startPx + "").intValue();
-        vIndicator2.setLayoutParams(layoutParams2);
-        return false;
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         soundDestroy(true);
         resultSequences.clear();
-    }
-
-    private void soundDestroy(boolean isFinish) {
-        try {
-            soundPoolPlayState = 0;
-            runOnUiThread(() -> {
-                try {
-                    if (progressDialog != null && !isFinish)
-                        progressDialog.show();
-                    vIndicator.setVisibility(View.INVISIBLE);
-                    vIndicator2.setVisibility(View.INVISIBLE);
-                    if (soundPool != null) {
-                        soundPool.stop(load);
-                        if (isFinish) {
-                            soundPool.release();
-                            soundPool = null;
-                        } else {
-                            soundPool.unload(load);
-                            load = soundPool.load(this, R.raw.jiequ, 1);
-                        }
-                    }
-                    if (!isFinish)
-                        imPlayPause.setImageResource(R.drawable.play);
-                    Animation animation = imIndicator.getAnimation();
-                    imIndicator.clearAnimation();
-                    if (animation == null) return;
-                    animation.setAnimationListener(null);
-                } catch (Exception ignore) {
-                }
-            });
-        } catch (Exception ignore) {
-        }
-    }
-
-    private void initAnimation() {
-
-        int duration = 0;
-        if (playRate > 1.0f) {
-            duration = 535;
-        } else if (playRate < 1.0f) {
-            duration = 1250;
-        } else {
-            duration = 833;
-        }
-        RotateAnimation rotate = new RotateAnimation(-20f, 20f, Animation.RELATIVE_TO_SELF, 0.6f, Animation.RELATIVE_TO_SELF, 1f);
-        LinearInterpolator lin = new LinearInterpolator();
-        rotate.setInterpolator(lin);
-        rotate.setDuration(duration);  //设置动画持续周期
-        rotate.setFillAfter(true); //动画执行完后是否停留在执行完的状态
-        RotateAnimation rotateReturn = new RotateAnimation(20f, -20f, Animation.RELATIVE_TO_SELF, 0.6f, Animation.RELATIVE_TO_SELF, 1f);
-        LinearInterpolator lin2 = new LinearInterpolator();
-        rotateReturn.setInterpolator(lin2);
-        rotateReturn.setDuration(duration);  //设置动画持续周期
-        rotateReturn.setFillAfter(true); //动画执行完后是否停留在执行完的状态
-        rotateReturn.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                imIndicator.clearAnimation();
-                rotate.start();
-                imIndicator.setAnimation(rotate);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        rotate.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                imIndicator.clearAnimation();
-                rotateReturn.start();
-                imIndicator.setAnimation(rotateReturn);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        imIndicator.setAnimation(rotate);
-        imIndicator.startAnimation(rotate);
-
     }
 }

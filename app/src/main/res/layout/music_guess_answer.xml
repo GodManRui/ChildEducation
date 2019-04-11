@@ -128,9 +128,10 @@
         android:layout_height="@dimen/dp_46"
         android:layout_marginStart="@dimen/dp_28"
         android:layout_marginTop="@dimen/dp_20"
-        android:src="@drawable/music_return" />
+        android:src="@drawable/return_" />
     <!--本轮结束-->
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/rl_this_shutdown"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -166,7 +167,7 @@
                 android:id="@+id/im_benlun_return"
                 android:layout_width="@dimen/dp_34"
                 android:layout_height="@dimen/dp_32"
-                android:src="@drawable/music_return" />
+                android:src="@drawable/return_" />
 
             <ImageView
                 android:id="@+id/im_next_group"

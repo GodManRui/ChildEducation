@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
@@ -139,6 +138,11 @@ public class StartLearnSong2 extends BaseActivity {
     private void clickPlayPause() {
         if (imagePitchViews == null || imagePitchViews.size() <= 0) {
             Toast.makeText(this, "正在初始化,请稍后", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (mediaPlayer == null) {
+            Toast.makeText(this, "退出时间过长,请重新进入...", Toast.LENGTH_SHORT).show();
+            finish();
             return;
         }
         if (isPlaying) {  //播放状态 ，暂停播放

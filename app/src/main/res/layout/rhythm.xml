@@ -12,15 +12,15 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dp_17"
         android:layout_marginEnd="@dimen/dp_32"
-        android:src="@drawable/music_xiaogedan_dianjiqian" />
+        android:src="@drawable/song_list" />
 
     <ImageView
         android:id="@+id/im_return"
-        android:layout_width="@dimen/dp_34"
-        android:layout_height="@dimen/dp_33"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_17"
-        android:src="@drawable/music_return" />
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_46"
+        android:layout_marginStart="@dimen/dp_28"
+        android:layout_marginTop="@dimen/dp_20"
+        android:src="@drawable/return_" />
 
 
     <RelativeLayout
@@ -71,15 +71,15 @@
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dp_75"
         android:layout_height="@dimen/dp_112"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
         <ImageView
             android:id="@+id/im_jiepaiqi"
-            android:layout_width="@dimen/dp_75"
-            android:layout_height="@dimen/dp_112"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:src="@drawable/music_jiepaiqi" />
 

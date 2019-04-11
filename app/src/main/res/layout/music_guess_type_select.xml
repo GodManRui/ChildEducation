@@ -10,7 +10,7 @@
         android:layout_height="@dimen/dp_46"
         android:layout_marginStart="@dimen/dp_28"
         android:layout_marginTop="@dimen/dp_20"
-        android:src="@drawable/music_homepage" />
+        android:src="@drawable/home" />
 
     <RelativeLayout
         android:layout_width="match_parent"
