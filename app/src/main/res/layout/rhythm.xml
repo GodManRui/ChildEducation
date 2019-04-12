@@ -40,7 +40,7 @@
             android:id="@+id/v_indicator"
             android:layout_width="@dimen/dp_10"
             android:layout_height="@dimen/dp_40"
-            android:layout_marginTop="@dimen/dp_30"
+            android:layout_marginTop="@dimen/dp_36"
             android:background="@drawable/music_yinlv_top"
             android:visibility="invisible" />
 
