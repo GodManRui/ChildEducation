@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/im_ge_dan"
-        android:layout_width="@dimen/dp_75"
-        android:layout_height="@dimen/dp_36"
+        android:layout_width="@dimen/dp_96"
+        android:layout_height="@dimen/dp_42"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/dp_17"
         android:layout_marginEnd="@dimen/dp_32"
@@ -33,14 +33,8 @@
             android:id="@+id/im_yue_pu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/music_yinlv_xiaoxingxing_2" />
+            android:src="@drawable/music_yinlv_xiaoxingxing" />
 
-        <ImageView
-            android:layout_width="@dimen/dp_95"
-            android:layout_height="@dimen/dp_19"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/dp_5"
-            android:src="@drawable/music_yinlv_xiaoxingxing_1" />
 
         <View
             android:id="@+id/v_indicator"
@@ -71,8 +65,8 @@
 
 
     <RelativeLayout
-        android:layout_width="@dimen/dp_75"
-        android:layout_height="@dimen/dp_112"
+        android:layout_width="@dimen/dp_73"
+        android:layout_height="@dimen/dp_111"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
@@ -86,11 +80,11 @@
         <ImageView
             android:id="@+id/im_jie_pai_indicator"
             android:layout_width="@dimen/dp_20"
-            android:layout_height="@dimen/dp_68"
+            android:layout_height="@dimen/dp_73"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp_31"
-            android:src="@drawable/music_jiepaiqi_kuaipa" />
+            android:layout_marginBottom="@dimen/dp_26"
+            android:src="@drawable/music_jiepaiqi_zhongpa" />
 
         <ImageView
             android:id="@+id/im_paizi"
@@ -98,7 +92,7 @@
             android:layout_height="@dimen/dp_11"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/dp_14"
+            android:layout_marginBottom="@dimen/dp_8"
             android:src="@drawable/music_jiepaiqi_zhongpai_1" />
     </RelativeLayout>
 
