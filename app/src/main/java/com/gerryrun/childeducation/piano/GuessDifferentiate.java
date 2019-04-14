@@ -1,16 +1,20 @@
 package com.gerryrun.childeducation.piano;
 
 import android.app.ProgressDialog;
+import android.graphics.Matrix;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -54,7 +58,7 @@ public class GuessDifferentiate extends BaseActivity {
     private int currentIndex = 0;
     private List<DataBean> data;
     private View rlShutdown;
-    private View imBackLight;
+    private ImageView imBackLight;
 
     @Override
     protected void onDestroy() {

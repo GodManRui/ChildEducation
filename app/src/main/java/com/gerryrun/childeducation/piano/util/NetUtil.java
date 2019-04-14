@@ -9,7 +9,10 @@ import com.gerryrun.childeducation.piano.bean.Constont;
 import com.gerryrun.childeducation.piano.bean.QuestionLife;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -19,7 +22,7 @@ import okhttp3.Response;
 
 public class NetUtil {
 
-    public static void getQuestion(String url, okhttp3.Callback callback) throws IOException {
+    public static void getQuestion(String url, okhttp3.Callback callback) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)

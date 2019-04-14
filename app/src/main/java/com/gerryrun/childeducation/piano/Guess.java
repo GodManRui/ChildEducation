@@ -74,7 +74,7 @@ public class Guess extends BaseActivity {
 
                 }
             });
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

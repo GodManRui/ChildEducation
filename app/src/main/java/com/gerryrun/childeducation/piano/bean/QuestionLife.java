@@ -8,7 +8,7 @@ public class QuestionLife implements Serializable {
 
     /**
      * code : 1
-     * data : [{"title":"这是什么声音","voice":"http://dp.ink520.cn/Admin/upload/voice/155132954782765.wav","right":"41","right_pic":"http://dp.ink520.cn/Admin/upload/right_pic/155124425243149.png","right_file":"155124425243149.png","voice_file":"155132954782765.wav","choose":{"43":"http://dp.ink520.cn/Admin/upload/2019-02-28/15513292312896089.png","41":"http://dp.ink520.cn/Admin/upload/2019-02-28/15513292316199456.png","42":"http://dp.ink520.cn/Admin/upload/2019-02-28/15513292311126184.png"},"choose_file":{"43":"15513292312896089.png","41":"15513292316199456.png","42":"15513292311126184.png"}}]
+     * data : [{"songName":"这是什么声音","voice":"http://dp.ink520.cn/Admin/upload/voice/155132954782765.wav","right":"41","right_pic":"http://dp.ink520.cn/Admin/upload/right_pic/155124425243149.png","right_file":"155124425243149.png","voice_file":"155132954782765.wav","choose":{"43":"http://dp.ink520.cn/Admin/upload/2019-02-28/15513292312896089.png","41":"http://dp.ink520.cn/Admin/upload/2019-02-28/15513292316199456.png","42":"http://dp.ink520.cn/Admin/upload/2019-02-28/15513292311126184.png"},"choose_file":{"43":"15513292312896089.png","41":"15513292316199456.png","42":"15513292311126184.png"}}]
      */
 
     private int code;
@@ -32,7 +32,7 @@ public class QuestionLife implements Serializable {
 
     public static class DataBean implements Serializable {
         /**
-         * title : 这是什么声音
+         * songName : 这是什么声音
          * voice : http://dp.ink520.cn/Admin/upload/voice/155132954782765.wav
          * right : 41
          * right_pic : http://dp.ink520.cn/Admin/upload/right_pic/155124425243149.png

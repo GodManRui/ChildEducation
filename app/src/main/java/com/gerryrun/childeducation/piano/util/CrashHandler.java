@@ -226,7 +226,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
                     }.start();
                 }
             });
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

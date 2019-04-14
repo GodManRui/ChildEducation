@@ -41,7 +41,7 @@
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".LearnChildSong"
+            android:name=".SelectChildSong"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity

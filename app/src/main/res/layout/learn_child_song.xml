@@ -5,39 +5,18 @@
     android:background="@drawable/bg_select_music">
 
     <ImageView
-        android:id="@+id/im_go_home"
+        android:id="@+id/im_go_back"
         android:layout_width="@dimen/dp_48"
         android:layout_height="@dimen/dp_46"
         android:layout_marginStart="@dimen/dp_28"
         android:layout_marginTop="@dimen/dp_20"
         android:src="@drawable/return_" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/song_list_recyclerView"
+        android:layout_width="@dimen/dp_301"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/dp_30"
-        android:paddingBottom="@dimen/dp_30">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp_41" />
 
-        <ImageView
-            android:id="@+id/xiaoxingxing"
-            android:layout_width="@dimen/dp_250"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/ss_xiaoxingxing1" />
-
-        <ImageView
-            android:layout_width="@dimen/dp_250"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/ss_liangzhilaohu" />
-
-        <ImageView
-            android:layout_width="@dimen/dp_250"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/ss_baluobo" />
-
-    </LinearLayout>
 </RelativeLayout>

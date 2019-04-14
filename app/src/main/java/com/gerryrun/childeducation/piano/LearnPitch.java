@@ -403,6 +403,6 @@ public class LearnPitch extends BaseActivity {
     }
 
     public void learnChildSong(View view) {
-        startActivity(new Intent(this, LearnChildSong.class));
+        startActivity(new Intent(this, SelectChildSong.class));
     }
 }

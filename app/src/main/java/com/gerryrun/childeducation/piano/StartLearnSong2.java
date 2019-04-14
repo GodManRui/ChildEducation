@@ -3,13 +3,17 @@ package com.gerryrun.childeducation.piano;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
@@ -17,12 +21,25 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.gerryrun.childeducation.piano.bean.SelectSong.DataBean;
 import com.gerryrun.childeducation.piano.customview.FullVideoView;
 import com.gerryrun.childeducation.piano.parse.ReadMIDI;
 import com.gerryrun.childeducation.piano.parse.entity.ResultSequence;
 import com.gerryrun.childeducation.piano.util.AnimationsContainer;
+import com.gerryrun.childeducation.piano.util.NetUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static com.gerryrun.childeducation.piano.StartLearnSong.getBearArrays;
 import static com.gerryrun.childeducation.piano.StartLearnSong.getFrameArrays;
@@ -62,13 +79,83 @@ public class StartLearnSong2 extends BaseActivity {
     private FullVideoView videoView;
     private ImageView imMusicBear;
     private volatile boolean measureOk;
+    private DataBean mData;
+    private boolean videoViewPrepared;
+    private boolean mediaPlayerPrepared;
+    private ProgressDialog progressDialog;
+    private InputStream inputStream;
+    private File musicFile;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_learn_song);
-        initBackgroundAnim();
-        initPlayer();
+        initData();
+
+    }
+
+    private void initData() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("初始化资源...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        try {
+            mData = (DataBean) getIntent().getSerializableExtra("data");
+        } catch (Exception e) {
+        }
+        String musicUrl = mData.getUrl();
+        String[] split = musicUrl.split("/");
+        musicFile = new File(getCacheDir().getAbsolutePath() + "/" + split[split.length - 1]);
+        Log.w("JerryZhu", "写入路径:: " + musicFile.getAbsolutePath());
+       /* if (!file.canWrite()) {
+            Toast.makeText(this, "未授予读写权限！", Toast.LENGTH_SHORT).show();
+            finish();
+        }*/
+        NetUtil.getQuestion(musicUrl, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                InputStream is = null;
+                byte[] buf = new byte[2048];
+                int len = 0;
+                FileOutputStream fos = null;
+                try {
+                    long total = response.body().contentLength();
+                    Log.e("jerry", "total------>" + total);
+                    long current = 0;
+                    is = response.body().byteStream();
+                    fos = new FileOutputStream(musicFile);
+                    while ((len = is.read(buf)) != -1) {
+                        current += len;
+                        fos.write(buf, 0, len);
+                    }
+                    fos.flush();
+                    Log.w("JerryZhu", "onResponse: SUCCESS");
+                    runOnUiThread(() -> {
+                        initBackgroundAnim();
+                        initPlayer();
+                    });
+//                    successCallBack((T) file, callBack);
+                } catch (Exception e) {
+//                    failedCallBack("下载失败", callBack);
+                } finally {
+                    try {
+                        if (is != null) {
+                            is.close();
+                        }
+                        if (fos != null) {
+                            fos.close();
+                        }
+                    } catch (IOException e) {
+                    }
+                }
+            }
+        });
     }
 
     private void initBackgroundAnim() {
@@ -114,12 +201,14 @@ public class StartLearnSong2 extends BaseActivity {
             measureOk = true;
         });
 
-      /*  ImageView imBg = findViewById(R.id.bg_im);
-        AnimationsContainer mBgAnimation
-                = new AnimationsContainer(R.array.bg_res, 30).createProgressDialogAnim(imBg, true);
-        mBgAnimation.start();*/
         videoView = findViewById(R.id.bg_video);
-        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.music_woniu));
+        videoView.setVideoURI(Uri.parse(mData.getGift()));
+        videoView.setOnPreparedListener(mp -> {
+            if (mediaPlayerPrepared && progressDialog != null)
+                progressDialog.dismiss();
+            videoViewPrepared = true;
+        });
+//        videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.music_woniu));
         videoView.start();
 
         AnimationsContainer mBgAnimation
@@ -130,7 +219,15 @@ public class StartLearnSong2 extends BaseActivity {
 
     private void initPlayer() {
         //将声音资源文件设置给MediaPlayer对象
-        mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
+//        mediaPlayer = MediaPlayer.create(this, R.raw.small_start);
+//        mediaPlayer = MediaPlayer.create(this, Uri.parse(mData.getUrl()));
+        mediaPlayer = MediaPlayer.create(this, Uri.fromFile(musicFile));
+        mediaPlayer.setOnPreparedListener(mp -> {
+            if (videoViewPrepared && progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            mediaPlayerPrepared = true;
+        });
         playerThread = new Thread(new MusicThread());
         playerThread.start();
     }
@@ -334,12 +431,21 @@ public class StartLearnSong2 extends BaseActivity {
         public void run() {
             //todo 解析文件
             ReadMIDI readMIDI = new ReadMIDI();
-            resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.small_start));
-            if (resultSequences == null) {
+//            resultSequences = readMIDI.myRead(null, getResources().openRawResource(R.raw.small_start));
+            try {
+                FileInputStream fileInputStream = new FileInputStream(musicFile);
 
-                return;
-            }
-            while (!measureOk) {
+                resultSequences = readMIDI.myRead(null, fileInputStream);
+                if (resultSequences == null) {
+                    return;
+                }
+                for (ResultSequence resultSequence : resultSequences) {
+                    Log.w("JerryZhu", "run: " + resultSequence);
+                }
+                while (!measureOk) {
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
             runOnUiThread(StartLearnSong2.this::preparePlay);
         }
