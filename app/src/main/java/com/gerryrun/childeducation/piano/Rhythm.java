@@ -6,17 +6,33 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.Toast;
 
+import com.gerryrun.childeducation.piano.bean.SongList;
+import com.gerryrun.childeducation.piano.bean.SongList.DataBean;
 import com.gerryrun.childeducation.piano.parse.ReadMIDI;
 import com.gerryrun.childeducation.piano.parse.entity.ResultSequence;
+import com.gerryrun.childeducation.piano.util.NetUtil;
+import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.gerryrun.childeducation.piano.bean.Constont.SONG_LIST;
 
 public class Rhythm extends BaseActivity {
 
@@ -45,6 +61,9 @@ public class Rhythm extends BaseActivity {
     private ProgressDialog progressDialog;
     private float startPx;
     private int jiepaiLoad;
+    private RecyclerView rvSongList;
+    private List<DataBean> mDatas;
+    private LinearLayoutManager layoutManager;
     //    private boolean isPlaying;
 //    private boolean firstPlay = true;
 
@@ -58,7 +77,49 @@ public class Rhythm extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rhythm);
         initView();
+        initData();
         initPlayer();
+    }
+
+    private void initData() {
+        NetUtil.getQuestion(SONG_LIST, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful() || response.body() == null) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Rhythm.this, "服务器错误", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                }
+                String responseStr = response.body().string();
+                Gson gson = new Gson();
+                SongList songList = gson.fromJson(responseStr, SongList.class);
+                runOnUiThread(() -> {
+                    if (songList == null || songList.getData() == null || songList.getData().size() <= 0) {
+                        Toast.makeText(Rhythm.this, "服务器错误", Toast.LENGTH_SHORT).show();
+                        finish();
+                        return;
+                    }
+                    mDatas = songList.getData();
+                    initRecyclerView();
+                });
+                Log.w("JerryZhu", "onResponse: " + responseStr);
+
+            }
+
+        });
+    }
+
+    private void initRecyclerView() {
+        SongListAdapter songListAdapter = new SongListAdapter(mDatas);
+        layoutManager = new LinearLayoutManager(this);
+        rvSongList.setLayoutManager(layoutManager);
+        rvSongList.setAdapter(songListAdapter);
     }
 
     private void initView() {
@@ -91,10 +152,10 @@ public class Rhythm extends BaseActivity {
                 }
             }
         });
-        findViewById(R.id.tv_song_name).setOnClickListener(v -> {
+      /*  findViewById(R.id.tv_song_name).setOnClickListener(v -> {
             selectView.setVisibility(View.GONE);
         });
-
+*/
         findViewById(R.id.im_ge_dan).setOnClickListener(v -> {
             selectView.setVisibility(View.VISIBLE);
         });
@@ -105,8 +166,17 @@ public class Rhythm extends BaseActivity {
         });
 
         selectView = findViewById(R.id.rl_select_song);
-        selectView.setOnClickListener(v -> {
+
+        rvSongList = findViewById(R.id.rv_song_list);
+
+        findViewById(R.id.im_next_page).setOnClickListener(v -> {
+            if (rvSongList == null) return;
+            int firstCompletelyVisibleItemPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
+//            int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+//            Log.w("JerryZhu", "initView: " + firstCompletelyVisibleItemPosition + " == " + firstVisibleItemPosition);
+            rvSongList.scrollToPosition(firstCompletelyVisibleItemPosition + 3);
         });
+
         findViewById(R.id.im_select_close).setOnClickListener((v) -> {
             selectView.setVisibility(selectView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
         });

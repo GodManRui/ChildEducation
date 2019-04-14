@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 
 import com.gerryrun.childeducation.piano.bean.SelectSong;
 import com.gerryrun.childeducation.piano.bean.SelectSong.DataBean;
-import com.gerryrun.childeducation.piano.customview.SpacesItemDecoration;
 import com.gerryrun.childeducation.piano.util.NetUtil;
 import com.google.gson.Gson;
 
@@ -115,7 +113,7 @@ public class SelectChildSong extends BaseActivity {
         @NonNull
         @Override
         public VY onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_song_list, viewGroup, false);
+            View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_learn_song, viewGroup, false);
             return new VY(v);
         }
 

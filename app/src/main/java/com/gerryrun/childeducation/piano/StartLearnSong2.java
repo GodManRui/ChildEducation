@@ -83,7 +83,6 @@ public class StartLearnSong2 extends BaseActivity {
     private boolean videoViewPrepared;
     private boolean mediaPlayerPrepared;
     private ProgressDialog progressDialog;
-    private InputStream inputStream;
     private File musicFile;
 
     @Override

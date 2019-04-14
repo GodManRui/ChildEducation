@@ -5,17 +5,18 @@
     android:orientation="vertical">
 
     <View
-        android:id="@+id/v_space"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_19" />
+        android:layout_height="@dimen/dp_12" />
 
     <TextView
-        android:id="@+id/tv_item_song_name"
-        android:layout_width="@dimen/dp_300"
-        android:layout_height="@dimen/dp_49"
-        android:background="@drawable/beijing_cai"
-        android:gravity="center"
+        android:id="@+id/tv_list_song_name"
+        android:layout_width="@dimen/dp_248"
+        android:layout_height="@dimen/dp_38"
+        android:background="@drawable/music_yinlv_lan"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_17"
         android:text="小星星"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/sp_22" />
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp_18"
+        android:textStyle="bold" />
 </LinearLayout>

@@ -175,7 +175,6 @@ public class GuessDifferentiate extends BaseActivity {
                                 Toast.makeText(GuessDifferentiate.this, "没有下一轮了!", Toast.LENGTH_LONG).show();
                                 finish();
                             } else {
-                                Toast.makeText(GuessDifferentiate.this, "Question pull success!", Toast.LENGTH_LONG).show();
                                 nextQuestion(data.get(currentIndex++));
                                 size = data.size();
                             }

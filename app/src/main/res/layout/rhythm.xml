@@ -100,8 +100,7 @@
         android:id="@+id/rl_select_song"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorTranslucent"
-        android:visibility="gone">
+        android:background="@color/colorTranslucent">
 
         <ImageView
             android:id="@+id/im_mb"
@@ -121,23 +120,30 @@
             android:layout_toRightOf="@id/im_mb"
             android:src="@drawable/music_yinlv_guanbi" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_song_list"
+            android:layout_width="@dimen/dp_248"
+            android:layout_height="@dimen/dp_151"
+            android:layout_centerInParent="true" />
+
         <ImageView
+            android:id="@+id/im_next_page"
             android:layout_width="@dimen/dp_47"
             android:layout_height="@dimen/dp_44"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dp_273"
             android:src="@drawable/music_tingyijwang_xilai" />
 
-        <TextView
-            android:id="@+id/tv_song_name"
-            android:layout_width="@dimen/dp_248"
-            android:layout_height="@dimen/dp_38"
-            android:layout_centerInParent="true"
-            android:background="@drawable/music_yinlv_lan"
-            android:gravity="center_vertical"
-            android:text="《小星星》"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/sp_18"
-            android:textStyle="bold" />
+        <!-- <TextView
+             android:id="@+id/tv_song_name"
+             android:layout_width="@dimen/dp_248"
+             android:layout_height="@dimen/dp_38"
+             android:layout_centerInParent="true"
+             android:background="@drawable/music_yinlv_lan"
+             android:gravity="center_vertical"
+             android:text="《小星星》"
+             android:textColor="@android:color/black"
+             android:textSize="@dimen/sp_18"
+             android:textStyle="bold" />-->
     </RelativeLayout>
 </RelativeLayout>
