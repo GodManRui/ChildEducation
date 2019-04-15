@@ -100,7 +100,8 @@
         android:id="@+id/rl_select_song"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorTranslucent">
+        android:background="@color/colorTranslucent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/im_mb"

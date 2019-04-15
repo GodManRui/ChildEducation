@@ -81,47 +81,6 @@ public class Rhythm extends BaseActivity {
         initPlayer();
     }
 
-    private void initData() {
-        NetUtil.getQuestion(SONG_LIST, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (!response.isSuccessful() || response.body() == null) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(Rhythm.this, "服务器错误", Toast.LENGTH_SHORT).show();
-                        finish();
-                    });
-                }
-                String responseStr = response.body().string();
-                Gson gson = new Gson();
-                SongList songList = gson.fromJson(responseStr, SongList.class);
-                runOnUiThread(() -> {
-                    if (songList == null || songList.getData() == null || songList.getData().size() <= 0) {
-                        Toast.makeText(Rhythm.this, "服务器错误", Toast.LENGTH_SHORT).show();
-                        finish();
-                        return;
-                    }
-                    mDatas = songList.getData();
-                    initRecyclerView();
-                });
-                Log.w("JerryZhu", "onResponse: " + responseStr);
-
-            }
-
-        });
-    }
-
-    private void initRecyclerView() {
-        SongListAdapter songListAdapter = new SongListAdapter(mDatas);
-        layoutManager = new LinearLayoutManager(this);
-        rvSongList.setLayoutManager(layoutManager);
-        rvSongList.setAdapter(songListAdapter);
-    }
-
     private void initView() {
         imYuePu = findViewById(R.id.im_yue_pu);
         vIndicator = findViewById(R.id.v_indicator);
@@ -200,6 +159,40 @@ public class Rhythm extends BaseActivity {
         progressDialog.setCancelable(false);
         MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.jiequ);
         duration = mediaPlayer.getDuration();
+    }
+
+    private void initData() {
+        NetUtil.getQuestion(SONG_LIST, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful() || response.body() == null) {
+                    runOnUiThread(() -> {
+                        Toast.makeText(Rhythm.this, "服务器错误", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                }
+                String responseStr = response.body().string();
+                Gson gson = new Gson();
+                SongList songList = gson.fromJson(responseStr, SongList.class);
+                runOnUiThread(() -> {
+                    if (songList == null || songList.getData() == null || songList.getData().size() <= 0) {
+                        Toast.makeText(Rhythm.this, "服务器错误", Toast.LENGTH_SHORT).show();
+                        finish();
+                        return;
+                    }
+                    mDatas = songList.getData();
+                    initRecyclerView();
+                });
+                Log.w("JerryZhu", "onResponse: " + responseStr);
+
+            }
+
+        });
     }
 
     private void initPlayer() {
@@ -367,6 +360,13 @@ public class Rhythm extends BaseActivity {
                 Float.valueOf(startPx + "").intValue();
         vIndicator2.setLayoutParams(layoutParams2);
         return false;
+    }
+
+    private void initRecyclerView() {
+        SongListAdapter songListAdapter = new SongListAdapter(mDatas);
+        layoutManager = new LinearLayoutManager(this);
+        rvSongList.setLayoutManager(layoutManager);
+        rvSongList.setAdapter(songListAdapter);
     }
 
     private void startPlay(float duration) {
